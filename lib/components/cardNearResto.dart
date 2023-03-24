@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+import 'package:kuliner_go_mobile/theme.dart';
+
+class CardNearResto extends StatelessWidget {
+  final String imageUrl;
+  final String restoName;
+  final String rate;
+  final String distance;
+
+  const CardNearResto(
+      {required this.imageUrl,
+      required this.restoName,
+      required this.rate,
+      required this.distance});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Image.asset(imageUrl),
+        SizedBox(
+          width: 14,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              restoName,
+              style: blackTextStyle.copyWith(
+                  fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Colors.yellow,
+                ),
+                Text(rate),
+                SizedBox(
+                  width: 20,
+                ),
+                Row(
+                  children: [
+                    Image.asset('assets/location.png'),
+                    Text(distance),
+                  ],
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Image.asset('assets/price.png')
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Image.asset('assets/time_circle.png'),
+                SizedBox(
+                  width: 4,
+                ),
+                Text(
+                  "Buka Sekarang",
+                  style: blueTextStyle,
+                )
+              ],
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
