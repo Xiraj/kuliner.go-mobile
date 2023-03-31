@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Color blueColor = Color(0xff0190FF);
-Color orangeColor = Color(0xffFF9376);
-Color blackColor = Color(0xff000000);
-Color whiteColor = Color(0xffFFFFFF);
-Color greyColor = Color(0xff82868E);
+const blueColor = Color(0xff0190FF);
+const orangeColor = Color(0xffFF9376);
+const blackColor = Color(0xff000000);
+const whiteColor = Color(0xffFFFFFF);
+const greyColor = Color(0xff82868E);
+const altColor = Color(0xffFAFAFA);
 
 double edge = 24;
 
