@@ -3,6 +3,8 @@ import 'package:kuliner_go_mobile/components/cardCategory.dart';
 import 'package:kuliner_go_mobile/components/cardNearResto.dart';
 import 'package:kuliner_go_mobile/components/cardPopular.dart';
 import 'package:kuliner_go_mobile/components/search.dart';
+import 'package:kuliner_go_mobile/pages/near_resto_page.dart';
+import 'package:kuliner_go_mobile/pages/popular_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -191,11 +193,21 @@ class HomePage extends StatelessWidget {
                             fontSize: 20, fontWeight: FontWeight.w600),
                       ),
                       Spacer(),
-                      Text(
-                        "Lihat Semua",
-                        style: blueTextStyle.copyWith(
-                            fontSize: 14, fontWeight: FontWeight.w600),
-                      )
+                      Container(
+                        alignment: const Alignment(0.7, 0.0),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const NearResto()));
+                          },
+                          child: const Text(
+                            'Lihat semua',
+                            style: TextStyle(color: blueColor, fontSize: 14),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -240,10 +252,21 @@ class HomePage extends StatelessWidget {
                             fontSize: 20, fontWeight: FontWeight.w600),
                       ),
                       Spacer(),
-                      Text(
-                        "Lihat Semua",
-                        style: blueTextStyle.copyWith(
-                            fontSize: 14, fontWeight: FontWeight.w600),
+                      Container(
+                        alignment: const Alignment(0.7, 0.0),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PopularResto()));
+                          },
+                          child: const Text(
+                            'Lihat semua',
+                            style: TextStyle(color: blueColor, fontSize: 14),
+                          ),
+                        ),
                       ),
                     ],
                   ),
