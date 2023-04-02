@@ -120,7 +120,7 @@ class HomePage extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50))),
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.all(6.0),
                           child: Row(
                             children: [
                               Text("Buka Sekarang"),
