@@ -94,6 +94,11 @@ class _registerPageState extends State<registerPage> {
                       Column(
                         children: <Widget>[
                           RoundedInputField(
+                            hintText: "Masukkan nama restoranmu",
+                            icon: Icons.person_2_rounded,
+                            onChanged: (value) {},
+                          ),
+                          RoundedInputField(
                             hintText: "alamat@gmail.com",
                             icon: Icons.email_rounded,
                             onChanged: (value) {},

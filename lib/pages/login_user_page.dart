@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:kuliner_go_mobile/components/rounded_google_button.dart';
 import 'package:kuliner_go_mobile/pages/forgotpass_page.dart';
-import 'package:kuliner_go_mobile/pages/home_page.dart';
+import 'package:kuliner_go_mobile/pages/home_bottomnav.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
 import 'package:kuliner_go_mobile/pages/register_user_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
@@ -55,7 +54,7 @@ class _loginUserState extends State<loginUser> {
                   ],
                 ),
               ),
-              SizedBox(
+              Container(
                 height: screenHeight * 0.816,
                 child: Container(
                   decoration: const BoxDecoration(
@@ -108,11 +107,11 @@ class _loginUserState extends State<loginUser> {
                           ),
                         ],
                       ),
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 0),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Container(
+                            margin: EdgeInsets.only(left: 220.0),
                             child: TextButton(
                               onPressed: () {
                                 Navigator.push(
@@ -127,14 +126,16 @@ class _loginUserState extends State<loginUser> {
                                     TextStyle(color: blueColor, fontSize: 14),
                               ),
                             ),
-                          )),
+                          ))
+                        ],
+                      ),
                       RoundedButton(
                         text: "Masuk",
                         press: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePage()));
+                                  builder: (context) => const homeBottomNav()));
                         },
                         height: screenHeight * 0.07,
                       ),
