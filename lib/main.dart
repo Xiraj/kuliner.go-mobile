@@ -6,8 +6,8 @@ import 'package:kuliner_go_mobile/pages/splashscreen_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent));
-
+      SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent)
+  );
   runApp(const MyApp());
 }
 

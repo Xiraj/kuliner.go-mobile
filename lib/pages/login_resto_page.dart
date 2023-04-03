@@ -109,21 +109,27 @@ class _loginPageState extends State<loginPage> {
                             ),
                           ],
                         ),
-                        Container(
-                          alignment: const Alignment(0.7, 0.0),
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const forgotPass()));
-                            },
-                            child: const Text(
-                              'Lupa kata sandi?',
-                              style: TextStyle(color: blueColor, fontSize: 14),
-                            ),
-                          ),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Container(
+                              margin: EdgeInsets.only(left: 220.0),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const forgotPass()));
+                                },
+                                child: const Text(
+                                  'Lupa kata sandi?',
+                                  style:
+                                      TextStyle(color: blueColor, fontSize: 14),
+                                ),
+                              ),
+                            ))
+                          ],
                         ),
                         RoundedButton(
                           text: "Masuk",
