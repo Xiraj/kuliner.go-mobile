@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/cardCategory.dart';
 import 'package:kuliner_go_mobile/components/cardNearResto.dart';
@@ -12,6 +13,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final username = user?.displayName ?? "User";
+    // if currentUser is null, use "User" as the default username
     return Scaffold(
       backgroundColor: Colors.blue,
       body: SafeArea(
@@ -59,7 +63,7 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Halo Jeremia",
+                    "Halo $username",
                     style: whiteTextStyle.copyWith(
                         fontSize: 24, fontWeight: FontWeight.w600),
                   ),

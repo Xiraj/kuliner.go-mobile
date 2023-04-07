@@ -37,9 +37,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.0
   dots_indicator: ^2.1.0
-  flutter_signin_button: ^2.0.0
   shared_preferences: ^2.0.18
   flutter_otp_text_field: ^1.1.0+2
+  cloud_firestore: ^4.5.0
+  firebase_core: ^2.9.0
+  firebase_auth: ^4.4.0
+  fluttertoast: ^8.2.1
+  google_sign_in: ^6.0.2
 
 dev_dependencies:
   flutter_test:
