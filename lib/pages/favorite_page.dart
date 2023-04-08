@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kuliner_go_mobile/components/cardFavoriteResto.dart';
 import 'package:kuliner_go_mobile/theme.dart';
+
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
 
@@ -13,39 +15,97 @@ class _FavoritePageState extends State<FavoritePage> {
     return Scaffold(
       backgroundColor: blueColor,
       body: SafeArea(
-          child: Column(
+          child: ListView(
         children: [
-          SizedBox(
-            height: 60,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 280),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Favorit",
-                  style: whiteTextStyle.copyWith(
-                      fontSize: 24, fontWeight: FontWeight.w600),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(30),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(35),
+          Column(
+            children: [
+              SizedBox(
+                height: 20,
               ),
-              color: whiteColor,
-            ),
+              Padding(
+                padding: const EdgeInsets.only(right: 280),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Favorit",
+                      style: whiteTextStyle.copyWith(
+                          fontSize: 24, fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(35),
+                  ),
+                  color: whiteColor,
+                ),
+                child: Column(
+                  children: [
+                    CardFavoriteResto(
+                      imageUrl: 'assets/mcd.png',
+                      restoName: "McDonald’s",
+                      rate: "4.8",
+                      distance: "1.5 km",
+                      place: "Podomor Park",
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CardFavoriteResto(
+                      imageUrl: 'assets/mcd.png',
+                      restoName: "McDonald’s",
+                      rate: "4.8",
+                      distance: "1.5 km",
+                      place: "Podomor Park",
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CardFavoriteResto(
+                      imageUrl: 'assets/mcd.png',
+                      restoName: "McDonald’s",
+                      rate: "4.8",
+                      distance: "1.5 km",
+                      place: "Podomor Park",
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CardFavoriteResto(
+                      imageUrl: 'assets/mcd.png',
+                      restoName: "McDonald’s",
+                      rate: "4.8",
+                      distance: "1.5 km",
+                      place: "Podomor Park",
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CardFavoriteResto(
+                      imageUrl: 'assets/mcd.png',
+                      restoName: "McDonald’s",
+                      rate: "4.8",
+                      distance: "1.5 km",
+                      place: "Podomor Park",
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       )),

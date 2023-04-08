@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:kuliner_go_mobile/components/cardNearResto.dart';
+import 'package:kuliner_go_mobile/components/cardResto.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class RestoReviewList extends StatefulWidget {
@@ -108,7 +108,7 @@ class _RestoReviewListState extends State<RestoReviewList> {
                   ),
                   Column(
                     children: [
-                      CardNearResto(
+                      CardResto(
                         imageUrl: 'assets/warunk_mulya.png',
                         restoName: "Warunk Mulya Buah Batu",
                         rate: "4.8",
@@ -117,7 +117,7 @@ class _RestoReviewListState extends State<RestoReviewList> {
                       SizedBox(
                         height: 20,
                       ),
-                      CardNearResto(
+                      CardResto(
                         imageUrl: 'assets/mcd.png',
                         restoName: "McDonald’s Podomoro",
                         rate: "4.7",
@@ -126,7 +126,7 @@ class _RestoReviewListState extends State<RestoReviewList> {
                       SizedBox(
                         height: 20,
                       ),
-                      CardNearResto(
+                      CardResto(
                         imageUrl: 'assets/kfc.png',
                         restoName: "KFC Bojongsoang",
                         rate: "4.9",
@@ -135,7 +135,7 @@ class _RestoReviewListState extends State<RestoReviewList> {
                       SizedBox(
                         height: 20,
                       ),
-                      CardNearResto(
+                      CardResto(
                         imageUrl: 'assets/kfc.png',
                         restoName: "KFC Bojongsoang",
                         rate: "4.9",
@@ -144,7 +144,7 @@ class _RestoReviewListState extends State<RestoReviewList> {
                       SizedBox(
                         height: 20,
                       ),
-                      CardNearResto(
+                      CardResto(
                         imageUrl: 'assets/kfc.png',
                         restoName: "KFC Bojongsoang",
                         rate: "4.9",
@@ -153,7 +153,7 @@ class _RestoReviewListState extends State<RestoReviewList> {
                       SizedBox(
                         height: 20,
                       ),
-                      CardNearResto(
+                      CardResto(
                         imageUrl: 'assets/kfc.png',
                         restoName: "KFC Bojongsoang",
                         rate: "4.9",

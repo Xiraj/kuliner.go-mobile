@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kuliner_go_mobile/components/cardNearResto.dart';
+import 'package:kuliner_go_mobile/components/cardResto.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class PopularResto extends StatelessWidget {
@@ -19,7 +19,7 @@ class PopularResto extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: ListView(
             children: [
-              CardNearResto(
+              CardResto(
                 imageUrl: 'assets/kfc.png',
                 restoName: "KFC Bojongsoang",
                 rate: "4.9",
@@ -28,7 +28,7 @@ class PopularResto extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              CardNearResto(
+              CardResto(
                 imageUrl: 'assets/warunk_mulya.png',
                 restoName: "Warunk Mulya Buah Batu",
                 rate: "4.8",
@@ -37,7 +37,7 @@ class PopularResto extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              CardNearResto(
+              CardResto(
                 imageUrl: 'assets/mcd.png',
                 restoName: "McDonald’s Podomoro",
                 rate: "4.7",
@@ -46,7 +46,7 @@ class PopularResto extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              CardNearResto(
+              CardResto(
                 imageUrl: 'assets/kfc.png',
                 restoName: "KFC Bojongsoang",
                 rate: "4.9",
@@ -55,7 +55,7 @@ class PopularResto extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              CardNearResto(
+              CardResto(
                 imageUrl: 'assets/kfc.png',
                 restoName: "KFC Bojongsoang",
                 rate: "4.9",
@@ -64,7 +64,7 @@ class PopularResto extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              CardNearResto(
+              CardResto(
                 imageUrl: 'assets/kfc.png',
                 restoName: "KFC Bojongsoang",
                 rate: "4.9",

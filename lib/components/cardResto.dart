@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
-class CardNearResto extends StatelessWidget {
+class CardResto extends StatelessWidget {
   final String imageUrl;
   final String restoName;
   final String rate;
   final String distance;
 
-  const CardNearResto(
+  const CardResto(
       {required this.imageUrl,
       required this.restoName,
       required this.rate,

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/cardCategory.dart';
-import 'package:kuliner_go_mobile/components/cardNearResto.dart';
+import 'package:kuliner_go_mobile/components/cardResto.dart';
 import 'package:kuliner_go_mobile/components/cardPopular.dart';
 import 'package:kuliner_go_mobile/components/search.dart';
 import 'package:kuliner_go_mobile/pages/near_resto_page.dart';
@@ -219,7 +219,7 @@ class HomePage extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      CardNearResto(
+                      CardResto(
                         imageUrl: 'assets/warunk_mulya.png',
                         restoName: "Warunk Mulya Buah Batu",
                         rate: "4.8",
@@ -228,7 +228,7 @@ class HomePage extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      CardNearResto(
+                      CardResto(
                         imageUrl: 'assets/mcd.png',
                         restoName: "McDonald’s Podomoro",
                         rate: "4.7",
@@ -237,7 +237,7 @@ class HomePage extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      CardNearResto(
+                      CardResto(
                         imageUrl: 'assets/kfc.png',
                         restoName: "KFC Bojongsoang",
                         rate: "4.9",
