@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+
+class RestoProfile extends StatefulWidget {
+  const RestoProfile({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<RestoProfile> createState() => _RestoProfileState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _RestoProfileState extends State<RestoProfile> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
