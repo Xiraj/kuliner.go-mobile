@@ -1,20 +1,18 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:kuliner_go_mobile/pages/login_resto_page.dart';
 import 'package:kuliner_go_mobile/pages/login_user_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
-import 'login_resto_page.dart';
-
 // ignore: camel_case_types
-class optionLoginPage extends StatefulWidget {
-  const optionLoginPage({super.key});
+class OptionLoginPage extends StatefulWidget {
+  const OptionLoginPage({super.key});
 
   @override
-  State<optionLoginPage> createState() => _optionLoginPageState();
+  State<OptionLoginPage> createState() => _OptionLoginPageState();
 }
 
 // ignore: camel_case_types
-class _optionLoginPageState extends State<optionLoginPage> {
+class _OptionLoginPageState extends State<OptionLoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +58,7 @@ class _optionLoginPageState extends State<optionLoginPage> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => loginUser()));
+                        MaterialPageRoute(builder: (context) => LoginUser()));
                   },
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(340, 50),
@@ -86,7 +84,7 @@ class _optionLoginPageState extends State<optionLoginPage> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => loginPage()));
+                        MaterialPageRoute(builder: (context) => LoginResto()));
                   },
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(340, 50),

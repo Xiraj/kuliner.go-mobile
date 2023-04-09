@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:kuliner_go_mobile/components/cardResto.dart';
+import 'package:kuliner_go_mobile/components/cardReview.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class RestoReviewList extends StatefulWidget {
@@ -108,56 +107,50 @@ class _RestoReviewListState extends State<RestoReviewList> {
                   ),
                   Column(
                     children: [
-                      CardResto(
-                        imageUrl: 'assets/warunk_mulya.png',
-                        restoName: "Warunk Mulya Buah Batu",
-                        rate: "4.8",
-                        distance: "0.6",
+                      CardReview(
+                        imageUrl: 'assets/prof.png',
+                        username: 'Alexander Yupo',
+                        comments:
+                            '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      CardResto(
-                        imageUrl: 'assets/mcd.png',
-                        restoName: "McDonald’s Podomoro",
-                        rate: "4.7",
-                        distance: "1.5",
+                      CardReview(
+                        imageUrl: 'assets/prof2.png',
+                        username: 'Charlie Van Houten',
+                        comments:
+                            '“Rasa makanannya enak banget, seperti buatan bunda, cocok buat yang homesick contohnya saya, ehhe”',
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      CardResto(
-                        imageUrl: 'assets/kfc.png',
-                        restoName: "KFC Bojongsoang",
-                        rate: "4.9",
-                        distance: "0.4",
+                      CardReview(
+                        imageUrl: 'assets/prof3.png',
+                        username: 'Mamang Garox',
+                        comments:
+                            '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      CardResto(
-                        imageUrl: 'assets/kfc.png',
-                        restoName: "KFC Bojongsoang",
-                        rate: "4.9",
-                        distance: "0.4",
+                      CardReview(
+                        imageUrl: 'assets/prof4.png',
+                        username: 'Bolehhhh',
+                        comments:
+                            '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      CardResto(
-                        imageUrl: 'assets/kfc.png',
-                        restoName: "KFC Bojongsoang",
-                        rate: "4.9",
-                        distance: "0.4",
+                      CardReview(
+                        imageUrl: 'assets/prof5.png',
+                        username: 'Jeremia Carlo :)',
+                        comments:
+                            '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
                       ),
                       SizedBox(
                         height: 20,
-                      ),
-                      CardResto(
-                        imageUrl: 'assets/kfc.png',
-                        restoName: "KFC Bojongsoang",
-                        rate: "4.9",
-                        distance: "0.4",
                       ),
                     ],
                   ),

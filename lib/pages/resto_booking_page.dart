@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:kuliner_go_mobile/components/cardResto.dart';
+import 'package:kuliner_go_mobile/components/cardBooking.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class RestoBookingList extends StatefulWidget {
@@ -108,56 +106,46 @@ class _RestoBookingListState extends State<RestoBookingList> {
                   ),
                   Column(
                     children: [
-                      CardResto(
-                        imageUrl: 'assets/warunk_mulya.png',
-                        restoName: "Warunk Mulya Buah Batu",
-                        rate: "4.8",
-                        distance: "0.6",
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CardResto(
+                      CardBooking(
                         imageUrl: 'assets/mcd.png',
-                        restoName: "McDonald’s Podomoro",
-                        rate: "4.7",
-                        distance: "1.5",
+                        bookingCode: '#BOOK12495813735',
+                        username: 'Jeremia Carlo',
+                        date: '10-10-2023',
+                        status: 'Pending',
+                        textColor: greyColor,
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      CardResto(
-                        imageUrl: 'assets/kfc.png',
-                        restoName: "KFC Bojongsoang",
-                        rate: "4.9",
-                        distance: "0.4",
+                      CardBooking(
+                        imageUrl: 'assets/mcd.png',
+                        bookingCode: '#BOOK21351516575',
+                        username: 'Jeremia Carlo',
+                        date: '10-10-2023',
+                        status: 'Success',
+                        textColor: Colors.greenAccent,
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      CardResto(
-                        imageUrl: 'assets/kfc.png',
-                        restoName: "KFC Bojongsoang",
-                        rate: "4.9",
-                        distance: "0.4",
+                      CardBooking(
+                        imageUrl: 'assets/mcd.png',
+                        bookingCode: '#BOOK21351516575',
+                        username: 'Jeremia Carlo',
+                        date: '10-10-2023',
+                        status: 'Cancel',
+                        textColor: Colors.red,
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      CardResto(
-                        imageUrl: 'assets/kfc.png',
-                        restoName: "KFC Bojongsoang",
-                        rate: "4.9",
-                        distance: "0.4",
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CardResto(
-                        imageUrl: 'assets/kfc.png',
-                        restoName: "KFC Bojongsoang",
-                        rate: "4.9",
-                        distance: "0.4",
+                      CardBooking(
+                        imageUrl: 'assets/mcd.png',
+                        bookingCode: '#BOOK21351516575',
+                        username: 'Jeremia Carlo',
+                        date: '10-10-2023',
+                        status: 'Pending',
+                        textColor: greyColor,
                       ),
                     ],
                   ),
