@@ -9,6 +9,56 @@ class RestoMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> addData() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Tambah Data'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Nama menu',
+                    ),
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Harga menu',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text(
+                  'Tambah',
+                  style: TextStyle(color: Color.fromARGB(255, 2, 189, 98)),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     final user = FirebaseAuth.instance.currentUser;
     final username = user?.displayName ?? "User";
     // if currentUser is null, use "User" as the default username
@@ -102,46 +152,46 @@ class RestoMenu extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 14,
                   ),
                   Column(
                     children: [
                       CardMenu(
-                        imageUrl:'assets/menu1.png',
+                        imageUrl: 'assets/menu1.png',
                         menuName: 'Panas 1 Spicy, Large',
-                        harga:'Rp. 52.000',
+                        harga: 'Rp. 52.000',
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       CardMenu(
-                        imageUrl:'assets/menu1.png',
+                        imageUrl: 'assets/menu1.png',
                         menuName: 'Panas 1 Original, Large',
-                        harga:'Rp. 52.000',
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                       CardMenu(
-                        imageUrl:'assets/menu1.png',
-                        menuName:'Panas 1 Original, Medium',
-                        harga:'Rp. 52.000',
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                       CardMenu(
-                        imageUrl:'assets/menu2.png',
-                        menuName:'Mixed Berries McFlurry with OREO',
-                        harga:'Rp. 17.000',
+                        harga: 'Rp. 52.000',
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       CardMenu(
-                        imageUrl:'assets/menu2.png',
-                        menuName:'Mixed Berries McFlurry with Choco',
-                        harga:'Rp. 17.000',
+                        imageUrl: 'assets/menu1.png',
+                        menuName: 'Panas 1 Original, Medium',
+                        harga: 'Rp. 52.000',
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CardMenu(
+                        imageUrl: 'assets/menu2.png',
+                        menuName: 'Mixed Berries McFlurry with OREO',
+                        harga: 'Rp. 17.000',
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CardMenu(
+                        imageUrl: 'assets/menu2.png',
+                        menuName: 'Mixed Berries McFlurry with Choco',
+                        harga: 'Rp. 17.000',
                       ),
                     ],
                   ),
@@ -152,7 +202,9 @@ class RestoMenu extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          addData();
+        },
         label: Text('Tambah Menu'),
         icon: Icon(Icons.add_rounded),
         backgroundColor: blueColor,

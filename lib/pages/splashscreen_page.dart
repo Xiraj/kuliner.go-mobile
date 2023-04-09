@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
         return introduction == 0
             ? const OnboardingPage(title: 'Introduction')
-            : const optionLoginPage();
+            : const OptionLoginPage();
       }));
     });
   }

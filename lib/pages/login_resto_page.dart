@@ -10,16 +10,15 @@ import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_password_field.dart';
 
-// ignore: camel_case_types
-class loginPage extends StatefulWidget {
-  const loginPage({super.key});
+class LoginResto extends StatefulWidget {
+  const LoginResto({super.key});
 
   @override
-  State<loginPage> createState() => _loginPageState();
+  State<LoginResto> createState() => _LoginRestoState();
 }
 
 // ignore: camel_case_types
-class _loginPageState extends State<loginPage> {
+class _LoginRestoState extends State<LoginResto> {
   late String email;
   late String password;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -68,7 +67,7 @@ class _loginPageState extends State<loginPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const optionLoginPage()));
+                                        const OptionLoginPage()));
                           },
                           child: const Icon(
                             Icons.keyboard_arrow_left,
@@ -151,7 +150,7 @@ class _loginPageState extends State<loginPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const forgotPass()));
+                                            const ForgotPass()));
                               },
                               child: const Text(
                                 'Lupa kata sandi?',

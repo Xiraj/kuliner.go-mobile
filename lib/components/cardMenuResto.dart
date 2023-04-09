@@ -12,7 +12,7 @@ class CardMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(imageUrl, width: 80, height: 80),
+        Image.asset(imageUrl, width: 90, height: 90),
         SizedBox(
           width: 14,
         ),
@@ -34,10 +34,26 @@ class CardMenu extends StatelessWidget {
                   style: blackTextStyle.copyWith(
                       fontSize: 12, fontWeight: FontWeight.w600),
                 ),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Edit',
+                        style:
+                            TextStyle(color: Color.fromARGB(255, 2, 189, 98)),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Delete',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ],
+                ),
               ],
-            ),
-            SizedBox(
-              height: 10,
             ),
           ],
         ),

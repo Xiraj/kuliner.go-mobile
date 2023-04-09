@@ -12,14 +12,14 @@ import 'package:kuliner_go_mobile/components/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class loginUser extends StatefulWidget {
-  const loginUser({super.key});
+class LoginUser extends StatefulWidget {
+  const LoginUser({super.key});
 
   @override
-  State<loginUser> createState() => _loginUserState();
+  State<LoginUser> createState() => _LoginUserState();
 }
 
-class _loginUserState extends State<loginUser> {
+class _LoginUserState extends State<LoginUser> {
   late String email;
   late String password;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -37,6 +37,30 @@ class _loginUserState extends State<loginUser> {
       Fluttertoast.showToast(
           msg: error.message.toString(), gravity: ToastGravity.TOP);
     }
+  }
+  
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => homeBottomNav()),
+      (route) => false,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   @override
@@ -68,7 +92,7 @@ class _loginUserState extends State<loginUser> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const optionLoginPage()));
+                                      const OptionLoginPage()));
                         },
                         child: const Icon(
                           Icons.keyboard_arrow_left,
@@ -147,7 +171,7 @@ class _loginUserState extends State<loginUser> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const forgotPass()));
+                                              const ForgotPass()));
                                 },
                                 child: const Text(
                                   'Lupa kata sandi?',
@@ -195,7 +219,11 @@ class _loginUserState extends State<loginUser> {
                             ),
                           ],
                         ),
-                        GoogleButton(text: 'Google Account', press: () {}),
+                        GoogleButton(
+                            text: 'Google Account',
+                            press: () {
+                              signInWithGoogle();
+                            }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
