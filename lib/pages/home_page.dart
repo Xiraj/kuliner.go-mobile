@@ -6,6 +6,7 @@ import 'package:kuliner_go_mobile/components/cardPopular.dart';
 import 'package:kuliner_go_mobile/components/search.dart';
 import 'package:kuliner_go_mobile/pages/near_resto_page.dart';
 import 'package:kuliner_go_mobile/pages/popular_page.dart';
+import 'package:kuliner_go_mobile/pages/restaurant_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -228,11 +229,21 @@ class HomePage extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      CardResto(
-                        imageUrl: 'assets/mcd.png',
-                        restoName: "McDonald’s Podomoro",
-                        rate: "4.7",
-                        distance: "1.5",
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => restaurantPage(),
+                            ),
+                          );
+                        },
+                        child: CardResto(
+                          imageUrl: 'assets/mcd.png',
+                          restoName: "McDonald’s Podomoro",
+                          rate: "4.7",
+                          distance: "1.5",
+                        ),
                       ),
                       SizedBox(
                         height: 20,
