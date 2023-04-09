@@ -2,14 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kuliner_go_mobile/components/rounded_google_button.dart';
-import 'package:kuliner_go_mobile/pages/home_bottomnav.dart';
 import 'package:kuliner_go_mobile/pages/login_user_page.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_password_field.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class registerUser extends StatefulWidget {
   const registerUser({super.key});
@@ -31,7 +29,7 @@ class _registerUserState extends State<registerUser> {
       User? user = result.user;
       user?.updateDisplayName(username);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const loginUser()));
+          context, MaterialPageRoute(builder: (context) => const LoginUser()));
     } on FirebaseAuthException catch (error) {
       Fluttertoast.showToast(
           msg: error.message.toString(), gravity: ToastGravity.TOP);
@@ -67,7 +65,7 @@ class _registerUserState extends State<registerUser> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const optionLoginPage()));
+                                        const OptionLoginPage()));
                           },
                           child: const Icon(
                             Icons.keyboard_arrow_left,
@@ -189,7 +187,7 @@ class _registerUserState extends State<registerUser> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const loginUser()));
+                                                const LoginUser()));
                                   },
                                   child: const Text("Masuk disini")),
                             ],

@@ -102,6 +102,16 @@ class _FavoritePageState extends State<FavoritePage> {
                     SizedBox(
                       height: 20,
                     ),
+                    CardFavoriteResto(
+                      imageUrl: 'assets/mcd.png',
+                      restoName: "McDonald’s",
+                      rate: "4.8",
+                      distance: "1.5 km",
+                      place: "Podomor Park",
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),

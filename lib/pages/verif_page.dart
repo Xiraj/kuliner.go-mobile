@@ -5,14 +5,14 @@ import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
-class verifPage extends StatefulWidget {
-  const verifPage({super.key});
+class VerifPage extends StatefulWidget {
+  const VerifPage({super.key});
 
   @override
-  State<verifPage> createState() => _verifPageState();
+  State<VerifPage> createState() => _VerifPageState();
 }
 
-class _verifPageState extends State<verifPage> {
+class _VerifPageState extends State<VerifPage> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData _mediaQueryData = MediaQuery.of(context);
@@ -39,7 +39,7 @@ class _verifPageState extends State<verifPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const optionLoginPage()));
+                                builder: (context) => const OptionLoginPage()));
                       },
                       child: const Icon(
                         Icons.keyboard_arrow_left,
@@ -116,7 +116,7 @@ class _verifPageState extends State<verifPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const forgotPass()));
+                                          const ForgotPass()));
                             },
                             child: const Text(
                               'Kirim ulang kode OTP?',
@@ -131,7 +131,7 @@ class _verifPageState extends State<verifPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const optionLoginPage()));
+                                        const OptionLoginPage()));
                           },
                           height: screenHeight * 0.07,
                         ),
