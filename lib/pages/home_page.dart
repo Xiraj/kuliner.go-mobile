@@ -8,9 +8,14 @@ import 'package:kuliner_go_mobile/pages/near_resto_page.dart';
 import 'package:kuliner_go_mobile/pages/popular_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -292,8 +297,8 @@ class HomePage extends StatelessWidget {
                           width: 20,
                         ),
                         cardPopular(
-                          imagePopular: 'assets/warkop_add.jpg',
-                          restoName: 'Warunk Uhuyy',
+                          imagePopular: 'assets/mcd.png',
+                          restoName: 'McDonald’s Buah Batu',
                           distance: '2.2 km',
                           time: '00.00 - 23.59',
                         ),
@@ -301,7 +306,7 @@ class HomePage extends StatelessWidget {
                           width: 20,
                         ),
                         cardPopular(
-                          imagePopular: 'assets/warkop_add.jpg',
+                          imagePopular: 'assets/jardin.jpg',
                           restoName: 'Jardin Cafe',
                           distance: '3.4 km',
                           time: '10.00 - 22.00',

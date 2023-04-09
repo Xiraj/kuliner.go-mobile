@@ -2,9 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/cardResto.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
-class NearResto extends StatelessWidget {
+class NearResto extends StatefulWidget {
   const NearResto({super.key});
 
+  @override
+  State<NearResto> createState() => _NearRestoState();
+}
+
+List<Map<String, dynamic>> data = [
+  {
+    "id": 1,
+    "imageUrl": "assets/kfc.png",
+    "restoName": "KFC BojongSoang",
+    "rate": "4.9",
+    "distance": "0.5",
+  },
+  {
+    "id": 2,
+    "imageUrl": "assets/mcd.png",
+    "restoName": "MCDonal'ds Podomoro",
+    "rate": "4.8",
+    "distance": "0.3",
+  },
+  {
+    "id": 3,
+    "imageUrl": "assets/warunk_mulya.png",
+    "restoName": "Warunk Mulya",
+    "rate": "4.7",
+    "distance": "0.7",
+  },
+];
+
+class _NearRestoState extends State<NearResto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,69 +46,23 @@ class NearResto extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: ListView(
-            children: [
-              CardResto(
-                imageUrl: 'assets/warunk_mulya.png',
-                restoName: "Warunk Mulya Buah Batu",
-                rate: "4.8",
-                distance: "0.6",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CardResto(
-                imageUrl: 'assets/mcd.png',
-                restoName: "McDonald’s Podomoro",
-                rate: "4.7",
-                distance: "1.5",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CardResto(
-                imageUrl: 'assets/kfc.png',
-                restoName: "KFC Bojongsoang",
-                rate: "4.9",
-                distance: "0.4",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CardResto(
-                imageUrl: 'assets/kfc.png',
-                restoName: "KFC Bojongsoang",
-                rate: "4.9",
-                distance: "0.4",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CardResto(
-                imageUrl: 'assets/kfc.png',
-                restoName: "KFC Bojongsoang",
-                rate: "4.9",
-                distance: "0.4",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CardResto(
-                imageUrl: 'assets/kfc.png',
-                restoName: "KFC Bojongsoang",
-                rate: "4.9",
-                distance: "0.4",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CardResto(
-                imageUrl: 'assets/kfc.png',
-                restoName: "KFC Bojongsoang",
-                rate: "4.9",
-                distance: "0.4",
-              ),
-            ],
+          child: ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  CardResto(
+                    imageUrl: data[index]["imageUrl"],
+                    restoName: data[index]["restoName"],
+                    rate: data[index]["rate"],
+                    distance: data[index]["distance"],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  )
+                ],
+              );
+            },
           ),
         ),
       ),
