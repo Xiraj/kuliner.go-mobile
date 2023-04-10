@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './formBooking.dart';
 import './restaurant_page.dart';
+import 'home_bottomnav.dart';
 
 // ignore: camel_case_types
 class bookingPage extends StatefulWidget {
@@ -137,7 +138,32 @@ class _bookingPageState extends State<bookingPage> {
               Container(
                 margin: EdgeInsets.only(top: 30, right: 215),
                 child: formBookingPage(),
-              )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 150,
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        border: Border.all()),
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => homeBottomNav()));
+                      },
+                      child: Text('Pesan Tempat'),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ],

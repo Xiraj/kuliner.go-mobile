@@ -76,7 +76,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        optionLoginPage()));
+                                                        OptionLoginPage()));
                                           },
                                           child: Text(
                                             'Lewati',
@@ -482,7 +482,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            optionLoginPage()));
+                                                            OptionLoginPage()));
                                               },
                                               style: ElevatedButton.styleFrom(
                                                   minimumSize: Size(167, 66),

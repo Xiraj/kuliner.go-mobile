@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kuliner_go_mobile/components/buttonProfile.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
@@ -18,6 +19,16 @@ class _ProfilePageState extends State<ProfilePage> {
     final user = FirebaseAuth.instance.currentUser;
     final username = user?.displayName ?? "User";
     final email = user?.email;
+    FirebaseAuth auth = FirebaseAuth.instance;
+    GoogleSignIn googleSignIn = GoogleSignIn();
+    logout() async {
+      // Logout from email authentication
+      await auth.signOut();
+
+      // Logout from Google Firebase
+      await googleSignIn.signOut();
+    }
+
     return Scaffold(
       backgroundColor: blueColor,
       body: SafeArea(
@@ -41,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontSize: 24, fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: 10,
                         ),
                       ],
                     ),
@@ -61,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 40,
+                          height: 60,
                         ),
                         Text(
                           '$username',
@@ -134,23 +145,23 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             Divider(),
                             SizedBox(
-                              height: 10,
+                              height: 40,
                             ),
                           ],
                         ),
                         RoundedButton(
                           text: "Keluar",
                           press: () async {
-                            await FirebaseAuth.instance.signOut();
+                            await logout();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const optionLoginPage()));
+                                        const OptionLoginPage()));
                           },
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 62,
                         ),
                       ],
                     ),
@@ -158,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               Positioned(
-                top: 80,
+                top: 60,
                 left: 140,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),

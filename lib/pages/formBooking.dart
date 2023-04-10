@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
+import 'package:kuliner_go_mobile/pages/home_bottomnav.dart';
 
 // ignore: camel_case_types
 class formBookingPage extends StatefulWidget {
@@ -24,7 +26,6 @@ class _formBookingPageState extends State<formBookingPage> {
           ),
         ),
         Container(
-          width: 389,
           padding: const EdgeInsets.only(left: 30, top: 8),
           child: const Text(
             'Pastikan data sudah benar.',
@@ -46,7 +47,6 @@ class _formBookingPageState extends State<formBookingPage> {
               Container(
                 padding: EdgeInsets.only(top: 12),
                 child: RoundedInputField(
-                  ratioWidth: 354,
                   hintText: "Masukkan nomor telepon",
                   icon: Icons.call,
                   onChanged: (value) {},
@@ -59,10 +59,10 @@ class _formBookingPageState extends State<formBookingPage> {
                   icon: Icons.email_rounded,
                   onChanged: (value) {},
                 ),
-              )
+              ),
             ],
           ),
-        )
+        ),
 
         // const formUserPage()
       ],

@@ -17,10 +17,10 @@ class _HistoryPageState extends State<HistoryPage> {
           child: Column(
         children: [
           SizedBox(
-            height: 60,
+            height: 20,
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 280),
+            padding: const EdgeInsets.only(right: 270),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -46,6 +46,38 @@ class _HistoryPageState extends State<HistoryPage> {
                 top: Radius.circular(35),
               ),
               color: whiteColor,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 31,
+                ),
+                Image.asset(
+                  'assets/notAvailable.png',
+                  width: 169,
+                  height: 245,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Kamu belum pernah pesan\ntempat di resto manapun',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Silahkan pesan restoran favoritmu\ndan kembali lagi kesini',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14),
+                ),
+                SizedBox(
+                  height: 107.6,
+                ),
+              ],
             ),
           ),
         ],

@@ -5,14 +5,14 @@ import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
 import 'package:kuliner_go_mobile/pages/verif_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
-class forgotPass extends StatefulWidget {
-  const forgotPass({super.key});
+class ForgotPass extends StatefulWidget {
+  const ForgotPass({super.key});
 
   @override
-  State<forgotPass> createState() => _forgotPassState();
+  State<ForgotPass> createState() => _ForgotPassState();
 }
 
-class _forgotPassState extends State<forgotPass> {
+class _ForgotPassState extends State<ForgotPass> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData _mediaQueryData = MediaQuery.of(context);
@@ -39,7 +39,7 @@ class _forgotPassState extends State<forgotPass> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const optionLoginPage()));
+                                builder: (context) => const OptionLoginPage()));
                       },
                       child: const Icon(
                         Icons.keyboard_arrow_left,
@@ -106,7 +106,7 @@ class _forgotPassState extends State<forgotPass> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const verifPage()));
+                                    builder: (context) => const VerifPage()));
                           },
                           height: screenHeight * 0.07,
                         ),

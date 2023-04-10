@@ -44,6 +44,8 @@ dependencies:
   firebase_auth: ^4.4.0
   fluttertoast: ^8.2.1
   google_sign_in: ^6.0.2
+  flutter_rating_bar: ^4.0.1
+  image_picker: ^0.8.7+1
 
 dev_dependencies:
   flutter_test:

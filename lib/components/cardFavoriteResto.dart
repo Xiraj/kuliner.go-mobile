@@ -40,14 +40,21 @@ class CardFavoriteResto extends StatelessWidget {
                   Icons.star,
                   color: Colors.yellow,
                 ),
+                SizedBox(
+                  width: 20,
+                ),
                 Text(rate),
                 SizedBox(
                   width: 20,
                 ),
+                Image.asset('assets/price.png'),
                 SizedBox(
-                  width: 20,
+                  width: 60,
                 ),
-                Image.asset('assets/price.png')
+                Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )
               ],
             ),
             SizedBox(
@@ -69,10 +76,6 @@ class CardFavoriteResto extends StatelessWidget {
             )
           ],
         ),
-        Icon(
-          Icons.favorite,
-          color: Colors.red,
-        )
       ],
     );
   }

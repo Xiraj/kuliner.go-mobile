@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kuliner_go_mobile/pages/login_resto_page.dart';
+import 'package:kuliner_go_mobile/pages/login_resto_page.dart';import 'package:kuliner_go_mobile/pages/login_user_page.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
@@ -28,7 +28,7 @@ class _registerPageState extends State<registerPage> {
       User? user = result.user;
       user?.updateDisplayName(username);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const loginPage()));
+          context, MaterialPageRoute(builder: (context) => const LoginResto()));
     } on FirebaseAuthException catch (error) {
       Fluttertoast.showToast(
           msg: error.message.toString(), gravity: ToastGravity.TOP);
@@ -63,7 +63,7 @@ class _registerPageState extends State<registerPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const optionLoginPage()));
+                                      const OptionLoginPage()));
                         },
                         child: const Icon(
                           Icons.keyboard_arrow_left,
@@ -154,7 +154,7 @@ class _registerPageState extends State<registerPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const loginPage()));
+                                              const LoginResto()));
                                 },
                                 child: const Text("Masuk disini")),
                           ],
