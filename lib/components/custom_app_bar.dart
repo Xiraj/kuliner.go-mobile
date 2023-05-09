@@ -32,7 +32,10 @@ class CustomAppBar extends StatelessWidget {
                     ),
                   );
                 },
-                child: _buildIcon(leftIcon)),
+                child: Padding(
+                  padding: EdgeInsets.only(right: 15),
+                  child: _buildIcon(leftIcon),
+                )),
           ),
           Padding(
             padding: EdgeInsets.only(left: 190),

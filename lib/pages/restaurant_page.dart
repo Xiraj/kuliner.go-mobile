@@ -92,7 +92,7 @@ class _restaurantPageState extends State<restaurantPage> {
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(left: 20, bottom: 20),
                       child: Text(
@@ -103,17 +103,15 @@ class _restaurantPageState extends State<restaurantPage> {
                     )
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: SizedBox(
-                    width: 320,
-                    height: 80,
-                    child: Text(
-                      'Franchise makanan cepat saji klasik yang telah lama berdiri, terkenal dengan burger dan kentang gorengnya.',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                      ),
+                Container(
+                  width: 390,
+                  height: 80,
+                  padding: EdgeInsets.only(left: 20, right: 15),
+                  child: Text(
+                    "Franchise makanan cepat saji klasik yang telah lama berdiri, terkenal dengan burger dan kentang gorengnya.",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
                     ),
                   ),
                 ),
@@ -178,7 +176,7 @@ class _restaurantPageState extends State<restaurantPage> {
                 SizedBox(height: 12),
                 Center(
                   child: Container(
-                    width: 300,
+                    width: 354,
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.all(Radius.circular(50)),
