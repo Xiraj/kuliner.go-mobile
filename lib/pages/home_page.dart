@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/cardCategory.dart';
@@ -93,6 +94,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               width: double.infinity,
+              
               padding: EdgeInsets.all(30),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(
@@ -223,107 +225,131 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 10,
                   ),
-                  Column(
-                    children: [
-                      CardResto(
-                        imageUrl: 'assets/warunk_mulya.png',
-                        restoName: "Warunk Mulya Buah Batu",
-                        rate: "4.8",
-                        distance: "0.6",
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => restaurantPage(),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Restoran')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      final docs = snapshot.data!.docs;
+                      if (docs.isEmpty) {
+                        return Center(
+                            child:
+                                Text('Tidak ada data restoran yang ditemukan'));
+                      }
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height - 270,
+                            child: ListView.builder(
+                              itemCount: docs.length > 5 ? 5 : docs.length,
+                              itemBuilder: (context, index) {
+                                final resto = docs[index];
+                                return Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    restaurantPage(
+                                                  resto: resto,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: CardResto(
+                                            imageUrl: resto['imageUrl'],
+                                            restoName: resto['username'],
+                                            rate: "4.8",
+                                            distance: "0.6",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
-                          );
-                        },
-                        child: CardResto(
-                          imageUrl: 'assets/mcd.png',
-                          restoName: "McDonald’s Podomoro",
-                          rate: "4.7",
-                          distance: "1.5",
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CardResto(
-                        imageUrl: 'assets/kfc.png',
-                        restoName: "KFC Bojongsoang",
-                        rate: "4.9",
-                        distance: "0.4",
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Terpopuler minggu ini",
-                        style: blackTextStyle.copyWith(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                      Spacer(),
-                      Container(
-                        alignment: const Alignment(0.7, 0.0),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PopularResto()));
-                          },
-                          child: const Text(
-                            'Lihat semua',
-                            style: TextStyle(color: blueColor, fontSize: 14),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 290,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        cardPopular(
-                          imagePopular: 'assets/warkop_add.jpg',
-                          restoName: 'Warkop ADD',
-                          distance: '1.6 km',
-                          time: '00.00 - 23.59',
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        cardPopular(
-                          imagePopular: 'assets/mcd.png',
-                          restoName: 'McDonald’s Buah Batu',
-                          distance: '2.2 km',
-                          time: '00.00 - 23.59',
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        cardPopular(
-                          imagePopular: 'assets/jardin.jpg',
-                          restoName: 'Jardin Cafe',
-                          distance: '3.4 km',
-                          time: '10.00 - 22.00',
-                        ),
-                      ],
-                    ),
+                          SizedBox(height: 20),
+                          Row(
+                            children: [
+                              Text(
+                                "Terpopuler minggu ini",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Spacer(),
+                              Container(
+                                alignment: const Alignment(0.7, 0.0),
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const PopularResto()));
+                                  },
+                                  child: const Text(
+                                    'Lihat semua',
+                                    style: TextStyle(
+                                        color: blueColor, fontSize: 14),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 290,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                cardPopular(
+                                  imagePopular: 'assets/warkop_add.jpg',
+                                  restoName: 'Warkop ADD',
+                                  distance: '1.6 km',
+                                  time: '00.00 - 23.59',
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                cardPopular(
+                                  imagePopular: 'assets/warkop_add.jpg',
+                                  restoName: 'Warunk Uhuyy',
+                                  distance: '2.2 km',
+                                  time: '00.00 - 23.59',
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                cardPopular(
+                                  imagePopular: 'assets/warkop_add.jpg',
+                                  restoName: 'Jardin Cafe',
+                                  distance: '3.4 km',
+                                  time: '10.00 - 22.00',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),

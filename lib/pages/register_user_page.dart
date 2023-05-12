@@ -1,39 +1,87 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kuliner_go_mobile/components/rounded_google_button.dart';
+import 'package:kuliner_go_mobile/pages/home_bottomnav.dart';
 import 'package:kuliner_go_mobile/pages/login_user_page.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_password_field.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
-class registerUser extends StatefulWidget {
-  const registerUser({super.key});
+class RegisterUser extends StatefulWidget {
+  const RegisterUser({super.key});
 
   @override
-  State<registerUser> createState() => _registerUserState();
+  State<RegisterUser> createState() => _RegisterUserState();
 }
 
-class _registerUserState extends State<registerUser> {
+class _RegisterUserState extends State<RegisterUser> {
+  final _formKey = GlobalKey<FormState>();
   late String email;
   late String password;
   late String username;
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance;
+  final firestore = FirebaseFirestore.instance;
 
-  _signup(String username, String email, String password) async {
+  Future<void> registerAsCustomer(
+      String username, String email, String password) async {
     try {
-      UserCredential result = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User? user = result.user;
+      var bytes = utf8.encode(password);
+      var digest = sha256.convert(bytes);
+      String hashedPassword = digest.toString();
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: hashedPassword,
+      );
+      
+      User? user = userCredential.user;
       user?.updateDisplayName(username);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const LoginUser()));
+      String id = user?.uid ?? '';
+      await firestore.collection('Pelanggan').doc(user?.uid).set(
+        {
+          'id': id,
+          'username': username,
+          'email': email,
+          'password': hashedPassword,
+        },
+      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) => LoginUser()),
+          (route) => false);
     } on FirebaseAuthException catch (error) {
       Fluttertoast.showToast(
           msg: error.message.toString(), gravity: ToastGravity.TOP);
     }
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => homeBottomNav()),
+      (route) => false,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   @override
@@ -42,7 +90,7 @@ class _registerUserState extends State<registerUser> {
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: blueColor,
       body: SafeArea(
         child: ListView(
@@ -55,7 +103,7 @@ class _registerUserState extends State<registerUser> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: screenHeight * 0.14,
+                    height: screenHeight * 0.1,
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Row(
                       children: [
@@ -77,7 +125,7 @@ class _registerUserState extends State<registerUser> {
                     ),
                   ),
                   Container(
-                    height: screenHeight * 0.816,
+                    height: screenHeight * 0.86,
                     child: Container(
                       decoration: const BoxDecoration(
                           color: whiteColor,
@@ -117,81 +165,117 @@ class _registerUserState extends State<registerUser> {
                           ),
                           Column(
                             children: <Widget>[
-                              RoundedInputField(
-                                hintText: "Masukkan nama lengkapmu",
-                                icon: Icons.person_2_rounded,
-                                onChanged: (value) {
-                                  username = value.trim();
-                                },
-                              ),
-                              RoundedInputField(
-                                hintText: "alamat@gmail.com",
-                                icon: Icons.email_rounded,
-                                onChanged: (value) {
-                                  email = value.trim();
-                                },
-                              ),
-                              RoundedPasswordField(
-                                hintText: "Gunakan 6 karakter atau lebih",
-                                onChanged: (value) {
-                                  password = value.trim();
-                                },
+                              Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    RoundedInputField(
+                                      hintText: "Masukkan nama lengkapmu",
+                                      icon: Icons.person_2_rounded,
+                                      onChanged: (value) {
+                                        username = value.trim();
+                                      },
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter a username';
+                                        } else if (value.length < 3) {
+                                          return 'Username must be at least 3 characters long';
+                                        }
+                                        return null; // input is valid
+                                      },
+                                    ),
+                                    RoundedInputField(
+                                      hintText: "alamat@gmail.com",
+                                      icon: Icons.email_rounded,
+                                      onChanged: (value) {
+                                        email = value.trim();
+                                      },
+                                      validator: (value) {
+                                        final emailRegex = RegExp(
+                                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter an email';
+                                        } else if (!emailRegex
+                                            .hasMatch(value)) {
+                                          return 'Please enter a valid email';
+                                        }
+                                        return null; // input is valid
+                                      },
+                                    ),
+                                    RoundedPasswordField(
+                                      hintText: "Gunakan 6 karakter atau lebih",
+                                      onChanged: (value) {
+                                        password = value.trim();
+                                      },
+                                    ),
+                                    RoundedButton(
+                                      text: "Daftar",
+                                      press: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          registerAsCustomer(
+                                              username, email, password);
+                                        }
+                                      },
+                                      height: screenHeight * 0.07,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: new Container(
+                                            margin: EdgeInsets.only(
+                                                left: 10.0, right: 20.0),
+                                            child: Divider(
+                                              color: greyColor,
+                                              height: 36,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          "Daftar dengan",
+                                          style: TextStyle(
+                                            color: greyColor,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: new Container(
+                                            margin: EdgeInsets.only(
+                                                left: 20.0, right: 10.0),
+                                            child: Divider(
+                                              color: greyColor,
+                                              height: 36,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    GoogleButton(
+                                      text: 'Google Account',
+                                      press: () {
+                                        signInWithGoogle();
+                                      },
+                                      height: screenHeight * 0.07,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        const Text("Sudah punya akun?"),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const LoginUser()));
+                                            },
+                                            child: const Text("Masuk disini")),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                          RoundedButton(
-                            text: "Daftar",
-                            press: () {
-                              _signup(username, email, password);
-                            },
-                            height: screenHeight * 0.07,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: new Container(
-                                  margin:
-                                      EdgeInsets.only(left: 10.0, right: 20.0),
-                                  child: Divider(
-                                    color: greyColor,
-                                    height: 36,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "Daftar dengan",
-                                style: TextStyle(
-                                  color: greyColor,
-                                ),
-                              ),
-                              Expanded(
-                                child: new Container(
-                                  margin:
-                                      EdgeInsets.only(left: 20.0, right: 10.0),
-                                  child: Divider(
-                                    color: greyColor,
-                                    height: 36,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          GoogleButton(text: 'Google Account', press: () {}),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const Text("Sudah punya akun?"),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginUser()));
-                                  },
-                                  child: const Text("Masuk disini")),
-                            ],
-                          )
                         ],
                       ),
                     ),

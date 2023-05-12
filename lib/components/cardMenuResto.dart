@@ -4,15 +4,20 @@ import 'package:kuliner_go_mobile/theme.dart';
 class CardMenu extends StatelessWidget {
   final String imageUrl;
   final String menuName;
+  final String desc;
   final String harga;
+
   const CardMenu(
-      {required this.imageUrl, required this.menuName, required this.harga});
+      {required this.imageUrl,
+      required this.menuName,
+      required this.desc,
+      required this.harga});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(imageUrl, width: 90, height: 90),
+        Image.network(imageUrl, width: 80, height: 80),
         SizedBox(
           width: 14,
         ),
@@ -25,7 +30,18 @@ class CardMenu extends StatelessWidget {
                   fontSize: 12, fontWeight: FontWeight.w600),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
+            ),
+            Column(
+              children: [
+                Text(
+                  desc,
+                  overflow: TextOverflow.clip,
+                  style: blackTextStyle.copyWith(
+                      fontSize: 10, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 5),
+              ],
             ),
             Row(
               children: [
@@ -34,24 +50,8 @@ class CardMenu extends StatelessWidget {
                   style: blackTextStyle.copyWith(
                       fontSize: 12, fontWeight: FontWeight.w600),
                 ),
-                Row(
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Edit',
-                        style:
-                            TextStyle(color: Color.fromARGB(255, 2, 189, 98)),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Delete',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  height: 5,
                 ),
               ],
             ),

@@ -17,7 +17,7 @@ class CardResto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(imageUrl),
+        Image.network(imageUrl, width: 140, height: 120),
         SizedBox(
           width: 14,
         ),
@@ -27,7 +27,7 @@ class CardResto extends StatelessWidget {
             Text(
               restoName,
               style: blackTextStyle.copyWith(
-                  fontSize: 16, fontWeight: FontWeight.w600),
+                  fontSize: 14, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               height: 10,
@@ -44,7 +44,7 @@ class CardResto extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Image.asset('assets/location.png'),
+                    Image.asset('assets/locations.png'),
                     Text(distance),
                   ],
                 ),
