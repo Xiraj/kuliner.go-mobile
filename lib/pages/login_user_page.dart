@@ -11,6 +11,8 @@ import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class LoginUser extends StatefulWidget {
   const LoginUser({super.key});
@@ -20,14 +22,18 @@ class LoginUser extends StatefulWidget {
 }
 
 class _LoginUserState extends State<LoginUser> {
+  final _formKey = GlobalKey<FormState>();
   late String email;
   late String password;
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   _signin(String email, String password) async {
     try {
-      //Create Get Firebase User
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      var bytes = utf8.encode(password);
+      var digest = sha256.convert(bytes);
+      String hashedPassword = digest.toString();
+      await auth.signInWithEmailAndPassword(
+          email: email, password: hashedPassword);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (BuildContext context) => homeBottomNav()),
@@ -38,7 +44,6 @@ class _LoginUserState extends State<LoginUser> {
           msg: error.message.toString(), gravity: ToastGravity.TOP);
     }
   }
-  
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
@@ -69,7 +74,7 @@ class _LoginUserState extends State<LoginUser> {
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: blueColor,
       body: SafeArea(
           child: ListView(
@@ -145,100 +150,121 @@ class _LoginUserState extends State<LoginUser> {
                         ),
                         Column(
                           children: <Widget>[
-                            RoundedInputField(
-                              hintText: "alamat@gmail.com",
-                              icon: Icons.email_rounded,
-                              onChanged: (value) {
-                                email = value.trim();
-                              },
-                            ),
-                            RoundedPasswordField(
-                              hintText: "Gunakan 6 karakter atau lebih",
-                              onChanged: (value) {
-                                password = value.trim();
-                              },
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                children: [
+                                  RoundedInputField(
+                                    hintText: "alamat@gmail.com",
+                                    icon: Icons.email_rounded,
+                                    onChanged: (value) {
+                                      email = value.trim();
+                                    },
+                                    validator: (value) {
+                                      final emailRegex = RegExp(
+                                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter an email';
+                                      } else if (!emailRegex.hasMatch(value)) {
+                                        return 'Please enter a valid email';
+                                      }
+                                      return null; // input is valid
+                                    },
+                                  ),
+                                  RoundedPasswordField(
+                                    hintText: "Gunakan 6 karakter atau lebih",
+                                    onChanged: (value) {
+                                      password = value.trim();
+                                    },
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: Container(
+                                        margin: EdgeInsets.only(left: 220.0),
+                                        child: TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ForgotPass()));
+                                          },
+                                          child: const Text(
+                                            'Lupa kata sandi?',
+                                            style: TextStyle(
+                                                color: blueColor, fontSize: 14),
+                                          ),
+                                        ),
+                                      ))
+                                    ],
+                                  ),
+                                  RoundedButton(
+                                    text: "Masuk",
+                                    press: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        _signin(email, password);
+                                      }
+                                    },
+                                    height: screenHeight * 0.07,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: new Container(
+                                          margin: EdgeInsets.only(
+                                              left: 10.0, right: 20.0),
+                                          child: Divider(
+                                            color: greyColor,
+                                            height: 36,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        "Masuk dengan",
+                                        style: TextStyle(
+                                          color: greyColor,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: new Container(
+                                          margin: EdgeInsets.only(
+                                              left: 20.0, right: 10.0),
+                                          child: Divider(
+                                            color: greyColor,
+                                            height: 36,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  GoogleButton(
+                                    text: 'Google Account',
+                                    press: () {
+                                      signInWithGoogle();
+                                    },
+                                    height: screenHeight * 0.07,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      const Text("Tidak punya akun?"),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const RegisterUser()));
+                                          },
+                                          child: const Text("Daftar disini")),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Container(
-                              margin: EdgeInsets.only(left: 220.0),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ForgotPass()));
-                                },
-                                child: const Text(
-                                  'Lupa kata sandi?',
-                                  style:
-                                      TextStyle(color: blueColor, fontSize: 14),
-                                ),
-                              ),
-                            ))
-                          ],
-                        ),
-                        RoundedButton(
-                          text: "Masuk",
-                          press: () {
-                            _signin(email, password);
-                          },
-                          height: screenHeight * 0.07,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: new Container(
-                                margin:
-                                    EdgeInsets.only(left: 10.0, right: 20.0),
-                                child: Divider(
-                                  color: greyColor,
-                                  height: 36,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "Masuk dengan",
-                              style: TextStyle(
-                                color: greyColor,
-                              ),
-                            ),
-                            Expanded(
-                              child: new Container(
-                                margin:
-                                    EdgeInsets.only(left: 20.0, right: 10.0),
-                                child: Divider(
-                                  color: greyColor,
-                                  height: 36,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        GoogleButton(
-                            text: 'Google Account',
-                            press: () {
-                              signInWithGoogle();
-                            }),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            const Text("Tidak punya akun?"),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const registerUser()));
-                                },
-                                child: const Text("Daftar disini")),
-                          ],
-                        )
                       ],
                     ),
                   ),

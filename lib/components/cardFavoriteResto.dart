@@ -64,7 +64,7 @@ class CardFavoriteResto extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Image.asset('assets/location.png'),
+                    Image.asset('assets/locations.png'),
                     Text(distance),
                     SizedBox(
                       width: 10,

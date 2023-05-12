@@ -19,10 +19,22 @@ class RoundedPasswordField extends StatefulWidget {
 
 class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
   bool _obscureText = true;
+
+  // Define a validator function
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password is required';
+    } else if (value.length < 6) {
+      return 'Password must be at least 6 characters';
+    }
+    return null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       ratioWidth: widget.ratioWidth,
-      child: TextField(
+      child: TextFormField(
         onChanged: widget.onChanged,
         obscureText: _obscureText,
         decoration: InputDecoration(
@@ -54,6 +66,9 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
         style: const TextStyle(
           fontSize: 12.0,
         ),
+
+        // Assign the validator function to the validator property
+        validator: _validatePassword,
       ),
     );
   }

@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/buttonProfile.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
+import 'package:kuliner_go_mobile/pages/update_info_resto.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class RestoProfile extends StatefulWidget {
@@ -81,70 +83,125 @@ class _RestoProfileState extends State<RestoProfile> {
                           '$email',
                           style: greyTextStyle,
                         ),
-                        Divider(),
-                        SizedBox(
-                          height: 10,
-                        ),
                         Column(
                           children: [
-                            buttonProfile(
-                              icon: 'assets/ulasan.png',
-                              title: 'Ulasan Saya',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buttonProfile(
-                              icon: 'assets/wallet.png',
-                              title: 'Kartu / Rekening Bank',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buttonProfile(
-                              icon: 'assets/notification.png',
-                              title: 'Notifikasi',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buttonProfile(
-                              icon: 'assets/language.png',
-                              title: 'Pilihan Bahasa',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buttonProfile(
-                              icon: 'assets/rating.png',
-                              title: 'Beri Rating',
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 40,
+                            StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection('Restoran')
+                                  .where('id',
+                                      isEqualTo: FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (snapshot.hasData) {
+                                  var data = snapshot.data!.docs[0];
+                                  return Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      ButtonProfile(
+                                        icon: 'assets/document.png',
+                                        title: 'Detail Restoran',
+                                        children: [
+                                          data['detailRestoran'].isEmpty
+                                              ? Text('Data belum tersedia')
+                                              : Text(
+                                                  '${data['detailRestoran']}')
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      ButtonProfile(
+                                        icon: 'assets/time.png',
+                                        title: 'Jam Buka',
+                                        children: [
+                                          data['jamBuka'].isEmpty
+                                              ? Text('Data belum tersedia')
+                                              : Text('${data['jamBuka']}')
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      ButtonProfile(
+                                        icon: 'assets/dollar_square.png',
+                                        title: 'Kisaran Harga',
+                                        children: [
+                                          data['kisaranHarga'].isEmpty
+                                              ? Text('Data belum tersedia')
+                                              : Text('${data['kisaranHarga']}')
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      ButtonProfile(
+                                        icon: 'assets/location.png',
+                                        title: 'Alamat Restoran',
+                                        children: [
+                                          data['alamatRestoran'].isEmpty
+                                              ? Text('Data belum tersedia')
+                                              : Text(
+                                                  '${data['alamatRestoran']}')
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      ButtonProfile(
+                                        icon: 'assets/facility.png',
+                                        title: 'Fasilitas Restoran',
+                                        children: [
+                                          data['fasilitasRestoran'].isEmpty
+                                              ? Text('Data belum tersedia')
+                                              : Text(
+                                                  '${data['fasilitasRestoran']}')
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      RoundedButton(
+                                        text: 'Edit Informasi Restoran',
+                                        press: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => UpdateInfo(
+                                                id: '${data['id']}',
+                                                email: '${data['email']}',
+                                                username: '${data['username']}',
+                                                detailRestoran:
+                                                    '${data['detailRestoran']}',
+                                                jamBuka: '${data['jamBuka']}',
+                                                alamatRestoran:
+                                                    '${data['alamatRestoran']}',
+                                                fasilitas:
+                                                    '${data['fasilitasRestoran']}',
+                                                kisaranHarga:
+                                                    '${data['kisaranHarga']}',
+                                                imageUrl: '${data['imageUrl']}',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        height: 54,
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
                             ),
                           ],
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 10),
                         ElevatedButton(
                           onPressed: () async {
                             await logout();
@@ -169,9 +226,6 @@ class _RestoProfileState extends State<RestoProfile> {
                               fontSize: 16.0,
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 62,
                         ),
                       ],
                     ),

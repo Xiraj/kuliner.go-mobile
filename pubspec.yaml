@@ -46,7 +46,14 @@ dependencies:
   google_sign_in: ^6.0.2
   flutter_rating_bar: ^4.0.1
   image_picker: ^0.8.7+1
-
+  crypto: ^3.0.2
+  firebase_storage: ^11.1.1
+  firebase_database: ^10.1.1
+  uuid: ^3.0.6
+  badges: ^3.1.1
+  provider: ^6.0.5
+  sqflite: ^2.0.0+3
+  get: 
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -72,7 +79,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-
+    - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

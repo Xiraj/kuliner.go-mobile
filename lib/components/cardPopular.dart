@@ -70,7 +70,7 @@ class cardPopular extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Image.asset('assets/location.png'),
+                          Image.asset('assets/locations.png'),
                           SizedBox(
                             width: 4,
                           ),

@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 
-class buttonProfile extends StatelessWidget {
+class ButtonProfile extends StatelessWidget {
   final String icon;
   final String title;
-  const buttonProfile({required this.icon, required this.title});
+  final List<Widget>? children;
+
+  const ButtonProfile({required this.icon, required this.title, this.children});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Image.asset(
-          icon,
-          height: 24,
-          width: 24,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Text(title),
-        Spacer(),
-        Image.asset('assets/arrow_right.png')
-      ],
+    return ExpansionTile(
+      tilePadding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+      childrenPadding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+      leading: Image.asset(
+        icon,
+        height: 24,
+        width: 24,
+      ),
+      title: Text(title),
+      children: children ?? [],
     );
   }
 }
