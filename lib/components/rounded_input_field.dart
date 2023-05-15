@@ -7,20 +7,28 @@ class RoundedInputField extends StatelessWidget {
   final IconData icon;
   final double ratioWidth;
   final ValueChanged<String> onChanged;
+  final FormFieldValidator<String>? validator;
+  final TextInputType keyboardType;
+  final int maxLines;
   const RoundedInputField({
     Key? key,
     required this.hintText,
     this.ratioWidth = 0.9,
     this.icon = Icons.person,
     required this.onChanged,
+    this.validator,
+    this.keyboardType = TextInputType.text,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       ratioWidth: ratioWidth,
-      child: TextField(
+      child: TextFormField(
         onChanged: onChanged,
+        validator: validator,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
           filled: true,
           fillColor: altColor,
@@ -39,7 +47,8 @@ class RoundedInputField extends StatelessWidget {
         style: const TextStyle(
           fontSize: 12.0,
         ),
-      )
+        maxLines: maxLines,
+      ),
     );
   }
 }

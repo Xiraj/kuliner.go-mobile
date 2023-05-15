@@ -227,7 +227,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                     Row(
                                       children: [
                                         TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        OptionLoginPage()));
+                                          },
                                           child: Text(
                                             'Lewati',
                                             style: TextStyle(
@@ -380,7 +386,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                     Row(
                                       children: [
                                         TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        OptionLoginPage()));
+                                          },
                                           child: Text(
                                             'Lewati',
                                             style: TextStyle(

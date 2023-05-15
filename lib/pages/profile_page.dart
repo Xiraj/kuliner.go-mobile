@@ -92,66 +92,45 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Column(
                           children: [
-                            buttonProfile(
+                            ButtonProfile(
                               icon: 'assets/ulasan.png',
                               title: 'Ulasan Saya',
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            Divider(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buttonProfile(
+                            ButtonProfile(
                               icon: 'assets/wallet.png',
                               title: 'Kartu / Rekening Bank',
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            Divider(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buttonProfile(
+                            ButtonProfile(
                               icon: 'assets/notification.png',
                               title: 'Notifikasi',
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            Divider(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buttonProfile(
+                            ButtonProfile(
                               icon: 'assets/language.png',
                               title: 'Pilihan Bahasa',
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            Divider(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buttonProfile(
+                            ButtonProfile(
                               icon: 'assets/rating.png',
                               title: 'Beri Rating',
                             ),
                             SizedBox(
-                              height: 10,
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 40,
+                              height: 16,
                             ),
                           ],
                         ),
-                        RoundedButton(
-                          text: "Keluar",
-                          press: () async {
+                        ElevatedButton(
+                          onPressed: () async {
                             await logout();
                             Navigator.push(
                                 context,
@@ -159,9 +138,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                     builder: (context) =>
                                         const OptionLoginPage()));
                           },
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(340, 50),
+                            backgroundColor: Colors.deepOrange,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: const Text(
+                            'Keluar',
+                            style: TextStyle(
+                              color: whiteColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.0,
+                            ),
+                          ),
                         ),
                         SizedBox(
-                          height: 62,
+                          height: 78,
                         ),
                       ],
                     ),
