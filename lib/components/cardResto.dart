@@ -17,7 +17,7 @@ class CardResto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.network(imageUrl, width: 140, height: 120),
+        Image.network(imageUrl, width: 120, height: 120),
         SizedBox(
           width: 14,
         ),
@@ -66,9 +66,9 @@ class CardResto extends StatelessWidget {
                 Text(
                   "Buka Sekarang",
                   style: blueTextStyle,
-                )
+                ),
               ],
-            )
+            ),
           ],
         ),
       ],

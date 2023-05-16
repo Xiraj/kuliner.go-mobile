@@ -86,7 +86,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           '$email',
                           style: greyTextStyle,
                         ),
-                        Divider(),
                         SizedBox(
                           height: 10,
                         ),

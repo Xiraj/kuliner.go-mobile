@@ -19,11 +19,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String? gender;
+  List<String> rates = [
+    "4.8",
+    "3.5",
+    "4.2",
+    "4.0",
+    "4.6",
+    "4.1",
+    "4.3",
+    "4.0",
+    "3.2",
+    "3.8"
+  ];
+  List<String> distances = [
+    "0.6",
+    "1.2",
+    "0.9",
+    "0.3",
+    "1.6",
+    "1.0",
+    "1.4",
+    "1.9",
+    "4.0",
+    "2.4"
+  ];
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     final username = user?.displayName ?? "User";
-    // if currentUser is null, use "User" as the default username
     return Scaffold(
       backgroundColor: Colors.blue,
       body: SafeArea(
@@ -248,7 +271,9 @@ class _HomePageState extends State<HomePage> {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       }
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return SizedBox(
+                            height: MediaQuery.of(context).size.height - 380,
+                            child: Center(child: CircularProgressIndicator()));
                       }
                       final docs = snapshot.data!.docs;
                       if (docs.isEmpty) {
@@ -259,11 +284,15 @@ class _HomePageState extends State<HomePage> {
                       return Column(
                         children: [
                           SizedBox(
-                            height: MediaQuery.of(context).size.height - 320,
-                            child: ListView.builder(
-                              itemCount: 4,
+                            height: MediaQuery.of(context).size.height - 460,
+                            child: ListView.separated(
+                              itemCount: 3,
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(height: 16),
                               itemBuilder: (context, index) {
                                 final resto = docs[index];
+                                final rate = rates[index];
+                                final distance = distances[index];
                                 return Column(
                                   children: [
                                     Row(
@@ -285,8 +314,8 @@ class _HomePageState extends State<HomePage> {
                                           child: CardResto(
                                             imageUrl: resto['imageUrl'],
                                             restoName: resto['username'],
-                                            rate: "4.8",
-                                            distance: "0.6",
+                                            rate: rate,
+                                            distance: distance,
                                           ),
                                         ),
                                       ],

@@ -11,6 +11,30 @@ class NearResto extends StatefulWidget {
 }
 
 class _NearRestoState extends State<NearResto> {
+  List<String> rates = [
+    "4.8",
+    "3.5",
+    "4.2",
+    "4.0",
+    "4.6",
+    "4.1",
+    "4.3",
+    "4.0",
+    "3.2",
+    "3.8"
+  ];
+  List<String> distances = [
+    "0.6",
+    "1.2",
+    "0.9",
+    "0.3",
+    "1.6",
+    "1.0",
+    "1.4",
+    "1.9",
+    "4.0",
+    "2.4"
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,10 +66,14 @@ class _NearRestoState extends State<NearResto> {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height - 270,
-                    child: ListView.builder(
+                    child: ListView.separated(
                       itemCount: docs.length,
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 16),
                       itemBuilder: (context, index) {
                         final resto = docs[index];
+                        final rate = rates[index];
+                        final distance = distances[index];
                         return Column(
                           children: [
                             Row(
@@ -54,8 +82,8 @@ class _NearRestoState extends State<NearResto> {
                                 CardResto(
                                   imageUrl: resto['imageUrl'],
                                   restoName: resto['username'],
-                                  rate: "4.8",
-                                  distance: "0.6",
+                                  rate: rate,
+                                  distance: distance,
                                 ),
                               ],
                             ),

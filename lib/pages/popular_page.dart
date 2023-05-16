@@ -42,8 +42,10 @@ class _PopularRestoState extends State<PopularResto> {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height - 270,
-                    child: ListView.builder(
+                    child: ListView.separated(
                       itemCount: docs.length,
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 16),
                       itemBuilder: (context, index) {
                         final resto = docs[index];
                         return Column(
