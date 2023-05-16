@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kuliner_go_mobile/theme.dart';
 import './booking.dart';
 import '../components/ulasan.dart';
 import '../components/custom_app_bar.dart';
@@ -25,14 +26,14 @@ class restaurantPage extends StatelessWidget {
                 Column(
                   children: [
                     Container(
-                      color: Colors.white,
+                      color: whiteColor,
                       margin: const EdgeInsets.only(
                           left: 12.0, top: 15.0, right: 12.0, bottom: 10),
                       child: Column(
                         children: <Widget>[
                           Image.network(
                             resto['imageUrl'],
-                            width: 700,
+                            width: 260,
                             fit: BoxFit.cover,
                           ),
                         ],
@@ -99,7 +100,7 @@ class restaurantPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 20),
                       child: SizedBox(
-                        height: 80,
+                        height: 60,
                         child: Text(
                           '${resto['detailRestoran']}',
                           style: TextStyle(

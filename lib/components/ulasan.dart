@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kuliner_go_mobile/components/cardReview.dart';
 
 // ignore: camel_case_types
 class ulasanPage extends StatefulWidget {
@@ -21,16 +22,28 @@ class _ulasanPageState extends State<ulasanPage> {
           children: <Widget>[
             Column(
               children: [
-                Container(
-                  child: Image.asset('assets/ulasan1.png'),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: CardReview(
+                    imageUrl: 'assets/prof.png',
+                    username: 'Alexander Yupo',
+                    comments:
+                        '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
+                  ),
                 ),
-                Container(
-                  child: Image.asset('assets/ulasan2.png'),
-                )
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: CardReview(
+                    imageUrl: 'assets/prof2.png',
+                    username: 'Charlie Van Houten',
+                    comments:
+                        '“Rasa makanannya enak banget, seperti buatan bunda, cocok buat yang homesick contohnya saya, ehhe”',
+                  ),
+                ),
               ],
-            )
+            ),
           ],
-        ),
+        )
       ],
     );
   }
