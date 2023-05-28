@@ -17,7 +17,7 @@ class _HistoryPageState extends State<HistoryPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Padding(
@@ -30,19 +30,19 @@ class _HistoryPageState extends State<HistoryPage> {
                       style: whiteTextStyle.copyWith(
                           fontSize: 24, fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(30),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(30),
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(35),
                   ),
@@ -51,7 +51,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Image.asset(
@@ -59,24 +59,24 @@ class _HistoryPageState extends State<HistoryPage> {
                       width: 169,
                       height: 245,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
-                    Text(
+                    const Text(
                       'Kamu belum pernah pesan\ntempat di resto manapun',
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Text(
+                    const Text(
                       'Silahkan pesan restoran favoritmu\ndan kembali lagi kesini',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 14),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 190,
                     ),
                   ],

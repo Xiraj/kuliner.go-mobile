@@ -78,7 +78,7 @@ class _FavoritePageState extends State<FavoritePage> {
           children: [
             Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
@@ -91,20 +91,20 @@ class _FavoritePageState extends State<FavoritePage> {
                         style: whiteTextStyle.copyWith(
                             fontSize: 24, fontWeight: FontWeight.w600),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height,
-                  padding: EdgeInsets.all(30),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(30),
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(35),
                     ),
@@ -124,7 +124,7 @@ class _FavoritePageState extends State<FavoritePage> {
                               distance: data[index]["distance"],
                               place: data[index]["place"],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                           ],
@@ -135,7 +135,7 @@ class _FavoritePageState extends State<FavoritePage> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
           ],

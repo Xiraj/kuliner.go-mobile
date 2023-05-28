@@ -17,13 +17,13 @@ class CardReview extends StatelessWidget {
           Row(
             children: [
               Image.asset(imageUrl, width: 70, height: 70),
-              SizedBox(
+              const SizedBox(
                 width: 14,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 14,
                   ),
                   Text(
@@ -44,14 +44,14 @@ class CardReview extends StatelessWidget {
                     onRatingUpdate: (double
                         value) {}, // Set ignoreGestures to true to make the widget non-clickable
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             comments,
             textAlign: TextAlign.justify,

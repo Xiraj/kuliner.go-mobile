@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kuliner_go_mobile/components/buttonProfile.dart';
-import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -21,12 +21,24 @@ class _ProfilePageState extends State<ProfilePage> {
     final email = user?.email;
     FirebaseAuth auth = FirebaseAuth.instance;
     GoogleSignIn googleSignIn = GoogleSignIn();
-    logout() async {
-      // Logout from email authentication
-      await auth.signOut();
+    Future<void> setLoggedIn(
+        bool isLoggedIn, bool isCustomer, bool isRestoran) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isLoggedIn', isLoggedIn);
+      prefs.setBool('isCustomer', isCustomer);
+      prefs.setBool('isRestoran', isRestoran);
+    }
 
-      // Logout from Google Firebase
+    logout() async {
+      await setLoggedIn(false, false, false);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (BuildContext context) => const OptionLoginPage()),
+        (route) => false,
+      );
+      await auth.signOut();
       await googleSignIn.signOut();
+     
     }
 
     return Scaffold(
@@ -38,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Padding(
@@ -51,19 +63,19 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: whiteTextStyle.copyWith(
                               fontSize: 24, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Container(
                     width: double.infinity,
-                    padding: EdgeInsets.all(30),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(30),
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(35),
                       ),
@@ -71,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 60,
                         ),
                         Text(
@@ -79,63 +91,58 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: blackTextStyle.copyWith(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
                         Text(
                           '$email',
                           style: greyTextStyle,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
                           children: [
-                            ButtonProfile(
+                            const ButtonProfile(
                               icon: 'assets/ulasan.png',
                               title: 'Ulasan Saya',
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            ButtonProfile(
+                            const ButtonProfile(
                               icon: 'assets/wallet.png',
                               title: 'Kartu / Rekening Bank',
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            ButtonProfile(
+                            const ButtonProfile(
                               icon: 'assets/notification.png',
                               title: 'Notifikasi',
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            ButtonProfile(
+                            const ButtonProfile(
                               icon: 'assets/language.png',
                               title: 'Pilihan Bahasa',
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            ButtonProfile(
+                            const ButtonProfile(
                               icon: 'assets/rating.png',
                               title: 'Beri Rating',
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
                           ],
                         ),
                         ElevatedButton(
-                          onPressed: () async {
-                            await logout();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const OptionLoginPage()));
+                          onPressed: () {
+                            logout();
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(340, 50),
@@ -153,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 78,
                         ),
                       ],
@@ -163,10 +170,11 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Positioned(
                 top: 60,
-                left: 140,
+                left: 150,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Image.asset('assets/mcd.png'),
+                  child: Image.asset('assets/users_init.png',
+                      width: 100, height: 100),
                 ),
               ),
             ],

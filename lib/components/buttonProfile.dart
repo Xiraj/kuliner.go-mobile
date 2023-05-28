@@ -10,8 +10,8 @@ class ButtonProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      tilePadding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
-      childrenPadding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+      tilePadding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
       leading: Image.asset(
         icon,
         height: 24,

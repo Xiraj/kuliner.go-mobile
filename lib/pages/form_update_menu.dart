@@ -45,7 +45,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Update Menu'),
+        title: const Text('Update Menu'),
       ),
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -55,7 +55,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
                   child: Column(
                     children: [
                       (selectedImagePath == '' && imageUrl != '')
@@ -73,12 +73,12 @@ class _UpdateMenuState extends State<UpdateMenu> {
                                   fit: BoxFit.fill,
                                 )
                               : Container(),
-                      Text(
+                      const Text(
                         'Select Image',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20.0,
                       ),
                       ElevatedButton(
@@ -98,7 +98,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       )
                     ],
@@ -112,7 +112,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                       SizedBox(
                         width: 330,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Nama Menu'),
                           initialValue: menuName,
@@ -127,11 +127,11 @@ class _UpdateMenuState extends State<UpdateMenu> {
                           },
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 330,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Deskripsi Menu'),
                           initialValue: description,
@@ -148,11 +148,11 @@ class _UpdateMenuState extends State<UpdateMenu> {
                           maxLines: 2,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 330,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Harga Menu'),
                           keyboardType: TextInputType.number,
@@ -167,7 +167,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                           },
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       MaterialButton(
                         onPressed: () async {
                           setState(() {});
@@ -175,7 +175,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                               description.isEmpty ||
                               price.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Fill in all fields')));
+                                const SnackBar(content: Text('Fill in all fields')));
                           } else {
                             //reference to document
                             final dbmenu = FirebaseFirestore.instance
@@ -248,7 +248,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                               );
                             }
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Update successful')));
+                                const SnackBar(content: Text('Update successful')));
                           }
                         },
                         shape: RoundedRectangleBorder(
@@ -258,10 +258,10 @@ class _UpdateMenuState extends State<UpdateMenu> {
                         height: 50,
                         color: blueColor,
                         child: showProgressIndicator
-                            ? CircularProgressIndicator(
+                            ? const CircularProgressIndicator(
                                 color: Colors.white,
                               )
-                            : Text(
+                            : const Text(
                                 'Submit',
                                 style: TextStyle(
                                     color: Colors.white,
@@ -293,7 +293,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
               padding: const EdgeInsets.all(5.0),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Select Image From !',
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -310,7 +310,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text("No Image Selected !"),
                             ));
                           }
@@ -326,7 +326,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                                     height: 60,
                                     width: 60,
                                   ),
-                                  Text('Gallery'),
+                                  const Text('Gallery'),
                                 ],
                               ),
                             )),
@@ -341,7 +341,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text("No Image Captured !"),
                             ));
                           }
@@ -357,7 +357,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                                   height: 60,
                                   width: 60,
                                 ),
-                                Text('Camera'),
+                                const Text('Camera'),
                               ],
                             ),
                           ),

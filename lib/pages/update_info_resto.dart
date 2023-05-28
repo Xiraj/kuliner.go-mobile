@@ -8,8 +8,7 @@ import 'package:kuliner_go_mobile/theme.dart';
 
 class UpdateInfo extends StatefulWidget {
   final String id;
-  final String email;
-  final String username;
+  final String tipeRestoran;
   final String detailRestoran;
   final String jamBuka;
   final String kisaranHarga;
@@ -17,17 +16,17 @@ class UpdateInfo extends StatefulWidget {
   final String imageUrl;
   final String fasilitas;
 
-  UpdateInfo(
-      {super.key,
-      required this.id,
-      required this.detailRestoran,
-      required this.kisaranHarga,
-      required this.alamatRestoran,
-      required this.imageUrl,
-      required this.fasilitas,
-      required this.jamBuka,
-      required this.username,
-      required this.email});
+  UpdateInfo({
+    super.key,
+    required this.id,
+    required this.detailRestoran,
+    required this.kisaranHarga,
+    required this.alamatRestoran,
+    required this.imageUrl,
+    required this.fasilitas,
+    required this.jamBuka,
+    required this.tipeRestoran,
+  });
 
   @override
   State<UpdateInfo> createState() => _UpdateInfoState();
@@ -36,8 +35,8 @@ class UpdateInfo extends StatefulWidget {
 class _UpdateInfoState extends State<UpdateInfo> {
   final formKey = GlobalKey<FormState>();
   String selectedImagePath = '';
-  late String email;
-  late String username;
+  late String tipeRestoran;
+
   late String detailRestoran;
   late String jamBuka;
   late String kisaranHarga;
@@ -47,8 +46,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
   bool showProgressIndicator = false;
   @override
   void initState() {
-    email = widget.email;
-    username = widget.username;
+    tipeRestoran = widget.tipeRestoran;
     detailRestoran = widget.detailRestoran;
     jamBuka = widget.jamBuka;
     kisaranHarga = widget.kisaranHarga;
@@ -60,10 +58,9 @@ class _UpdateInfoState extends State<UpdateInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Informasi Restoran'),
+        title: const Text('Edit Informasi Restoran'),
       ),
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -73,13 +70,13 @@ class _UpdateInfoState extends State<UpdateInfo> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
                   child: Column(
                     children: [
                       (selectedImagePath == '' && imageUrl != '')
                           ? Image.network(
                               imageUrl,
-                              height: 180,
+                              height: 100,
                               width: 180,
                               fit: BoxFit.fill,
                             )
@@ -96,12 +93,13 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                   width: 180,
                                   fit: BoxFit.fill,
                                 ),
-                      Text(
+                      const SizedBox(height: 20.0),
+                      const Text(
                         'Select Image',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20.0,
                       ),
                       ElevatedButton(
@@ -114,14 +112,14 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           style: TextStyle(fontSize: 14, color: Colors.white),
                         ),
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(350, 60),
+                          minimumSize: const Size(330, 50),
                           backgroundColor: Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(39),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -133,44 +131,26 @@ class _UpdateInfoState extends State<UpdateInfo> {
                       SizedBox(
                         width: 360,
                         child: TextFormField(
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(), labelText: 'Email'),
-                          initialValue: email,
-                          onChanged: (value) {
-                            email = value.trim();
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Email tidak boleh kosong';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        width: 360,
-                        child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Username'),
-                          initialValue: username,
+                              labelText: 'Tipe Restoran'),
+                          initialValue: tipeRestoran,
                           onChanged: (value) {
-                            username = value.trim();
+                            tipeRestoran = value.trim();
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Username tidak boleh kosong';
+                              return 'Tipe restoran tidak boleh kosong';
                             }
                             return null;
                           },
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 360,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Detail Restoran'),
                           initialValue: detailRestoran,
@@ -187,11 +167,11 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           maxLines: 3,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 360,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Jam Buka'),
                           initialValue: jamBuka,
@@ -208,11 +188,11 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           maxLines: 3,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 360,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Kisaran Harga'),
                           initialValue: kisaranHarga,
@@ -227,11 +207,11 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           },
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 360,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Alamat Restoran'),
                           initialValue: alamatRestoran,
@@ -248,11 +228,11 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           maxLines: 3,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 360,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Fasilitas'),
                           initialValue: fasilitas,
@@ -269,19 +249,18 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           maxLines: 3,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       MaterialButton(
                         onPressed: () async {
                           setState(() {});
-                          if (email.isEmpty ||
-                              username.isEmpty ||
+                          if (tipeRestoran.isEmpty ||
                               detailRestoran.isEmpty ||
                               jamBuka.isEmpty ||
                               kisaranHarga.isEmpty ||
                               alamatRestoran.isEmpty ||
                               fasilitas.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Fill in all fields')));
+                                const SnackBar(content: Text('Fill in all fields')));
                           } else {
                             //reference to document
                             final dbmenu = FirebaseFirestore.instance
@@ -315,6 +294,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                 await snapshot.ref.getDownloadURL();
 
                             final jsonData = {
+                              'tipeRestoran': tipeRestoran,
                               'detailRestoran': detailRestoran,
                               'jamBuka': jamBuka,
                               'alamatRestoran': alamatRestoran,
@@ -329,8 +309,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                               //create document and write data to firebase
                               await dbmenu.set(jsonData).then(
                                 (value) {
-                                  email = '';
-                                  username = '';
+                                  tipeRestoran = '';
                                   detailRestoran = '';
                                   jamBuka = '';
                                   alamatRestoran = '';
@@ -346,8 +325,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                             } else {
                               await dbmenu.update(jsonData).then(
                                 (value) {
-                                  email = '';
-                                  username = '';
+                                  tipeRestoran = '';
                                   detailRestoran = '';
                                   jamBuka = '';
                                   alamatRestoran = '';
@@ -362,20 +340,20 @@ class _UpdateInfoState extends State<UpdateInfo> {
                               );
                             }
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Update successful')));
+                                const SnackBar(content: Text('Update successful')));
                           }
                         },
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
+                          borderRadius: BorderRadius.circular(100),
                         ),
-                        minWidth: 330,
-                        height: 50,
+                        minWidth: 360,
+                        height: 70,
                         color: blueColor,
                         child: showProgressIndicator
-                            ? CircularProgressIndicator(
+                            ? const CircularProgressIndicator(
                                 color: Colors.white,
                               )
-                            : Text(
+                            : const Text(
                                 'Submit',
                                 style: TextStyle(
                                     color: Colors.white,
@@ -383,6 +361,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                     fontWeight: FontWeight.w300),
                               ),
                       ),
+                      const SizedBox(height: 20)
                     ],
                   ),
                 )
@@ -407,7 +386,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
               padding: const EdgeInsets.all(5.0),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Select Image From !',
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -424,7 +403,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text("No Image Selected !"),
                             ));
                           }
@@ -440,7 +419,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                     height: 60,
                                     width: 60,
                                   ),
-                                  Text('Gallery'),
+                                  const Text('Gallery'),
                                 ],
                               ),
                             )),
@@ -455,7 +434,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                             setState(() {});
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                 content: Text("No Image Captured !"),
                               ),
                             );
@@ -472,7 +451,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                   height: 60,
                                   width: 60,
                                 ),
-                                Text('Camera'),
+                                const Text('Camera'),
                               ],
                             ),
                           ),

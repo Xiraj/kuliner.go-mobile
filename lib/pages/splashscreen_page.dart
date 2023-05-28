@@ -2,6 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/pages/onboarding_page.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
+import 'package:kuliner_go_mobile/pages/resto_bottomnav_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'home_bottomnav.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,15 +23,33 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   openSplashScreen() async {
-    //bisa diganti beberapa detik sesuai keinginan
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    bool isCustomer = prefs.getBool('isCustomer') ?? false;
+    bool isRestoran = prefs.getBool('isRestoran') ?? false;
     var durasiSplash = const Duration(seconds: 2);
     return Timer(durasiSplash, () {
-      //pindah ke halaman home
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-        return introduction == 0
-            ? const OnboardingPage(title: 'Introduction')
-            : const OptionLoginPage();
-      }));
+      if (mounted) {
+        if (isLoggedIn) {
+          if (isCustomer) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const homeBottomNav()),
+            );
+          } else if (isRestoran) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const RestoNav()),
+            );
+          }
+        } else {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+            return introduction == 0
+                ? const OnboardingPage(title: 'Introduction')
+                : const OptionLoginPage();
+          }));
+        }
+      }
     });
   }
 

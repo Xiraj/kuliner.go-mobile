@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kuliner_go_mobile/components/cardCategory.dart';
 import 'package:kuliner_go_mobile/components/cardResto.dart';
 import 'package:kuliner_go_mobile/components/cardPopular.dart';
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: ListView(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 14,
             ),
             Padding(
@@ -62,14 +63,14 @@ class _HomePageState extends State<HomePage> {
                 style: whiteTextStyle.copyWith(fontSize: 12),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.location_on_rounded,
                     color: whiteColor,
                     size: 24,
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                     style: whiteTextStyle.copyWith(
                         fontSize: 24, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -106,20 +107,20 @@ class _HomePageState extends State<HomePage> {
                     style: whiteTextStyle.copyWith(
                         fontSize: 14, fontWeight: FontWeight.w400),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Search()
+                  const Search()
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(30),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(30),
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(35),
                 ),
@@ -137,28 +138,28 @@ class _HomePageState extends State<HomePage> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(width: 1, color: greyColor),
+                              side: const BorderSide(width: 1, color: greyColor),
                               borderRadius: BorderRadius.circular(50),
                             ),
                           ),
                           onPressed: () {
                             showModalBottomSheet<void>(
-                              shape: RoundedRectangleBorder(
+                              shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(20))),
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
-                                  child: RadioButton(),
+                                  child: const RadioButton(),
                                 );
                               },
                             );
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.filter_alt_rounded,
                             color: greyColor,
                           ),
-                          label: Text(
+                          label: const Text(
                             "Filter",
                             style: TextStyle(color: greyColor),
                           ),
@@ -169,12 +170,12 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                             border: Border.all(color: greyColor),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(50))),
+                                const BorderRadius.all(Radius.circular(50))),
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Row(
                             children: [
-                              Text("Buka Sekarang"),
+                              const Text("Buka Sekarang"),
                             ],
                           ),
                         ),
@@ -184,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                             border: Border.all(color: greyColor),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(50))),
+                                const BorderRadius.all(Radius.circular(50))),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
@@ -196,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -204,34 +205,34 @@ class _HomePageState extends State<HomePage> {
                     style: blackTextStyle.copyWith(
                         fontSize: 20, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      cardCategory(
+                      const cardCategory(
                           imageCategory: 'assets/aneka_nasi.png',
                           title: 'Aneka Nasi'),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      cardCategory(
+                      const cardCategory(
                           imageCategory: 'assets/minuman.png',
                           title: 'Minuman'),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      cardCategory(
+                      const cardCategory(
                           imageCategory: 'assets/seafood.png', title: 'Seafod'),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      cardCategory(
+                      const cardCategory(
                           imageCategory: 'assets/lainnya.png', title: 'Lainnya')
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Row(
@@ -241,7 +242,7 @@ class _HomePageState extends State<HomePage> {
                         style: blackTextStyle.copyWith(
                             fontSize: 20, fontWeight: FontWeight.w600),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         alignment: const Alignment(0.7, 0.0),
                         child: TextButton(
@@ -259,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   StreamBuilder<QuerySnapshot>(
@@ -272,12 +273,18 @@ class _HomePageState extends State<HomePage> {
                       }
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return SizedBox(
-                            height: MediaQuery.of(context).size.height - 380,
-                            child: Center(child: CircularProgressIndicator()));
+                          height: MediaQuery.of(context).size.height - 380,
+                          child: const Center(
+                            child: SpinKitWave(
+                              color: Colors.blue,
+                              size: 50.0,
+                            ),
+                          ),
+                        );
                       }
                       final docs = snapshot.data!.docs;
                       if (docs.isEmpty) {
-                        return Center(
+                        return const Center(
                             child:
                                 Text('Tidak ada data restoran yang ditemukan'));
                       }
@@ -288,7 +295,7 @@ class _HomePageState extends State<HomePage> {
                             child: ListView.separated(
                               itemCount: 3,
                               separatorBuilder: (context, index) =>
-                                  SizedBox(height: 16),
+                                  const SizedBox(height: 8),
                               itemBuilder: (context, index) {
                                 final resto = docs[index];
                                 final rate = rates[index];
@@ -325,17 +332,17 @@ class _HomePageState extends State<HomePage> {
                               },
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Terpopuler minggu ini",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Container(
                                 alignment: const Alignment(0.7, 0.0),
                                 child: TextButton(
@@ -355,7 +362,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Container(
@@ -363,25 +370,25 @@ class _HomePageState extends State<HomePage> {
                             child: ListView(
                               scrollDirection: Axis.horizontal,
                               children: [
-                                cardPopular(
+                                const cardPopular(
                                   imagePopular: 'assets/warkop_add.jpg',
                                   restoName: 'Warkop ADD',
                                   distance: '1.6 km',
                                   time: '00.00 - 23.59',
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
-                                cardPopular(
+                                const cardPopular(
                                   imagePopular: 'assets/warkop_add.jpg',
                                   restoName: 'Warunk Uhuyy',
                                   distance: '2.2 km',
                                   time: '00.00 - 23.59',
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
-                                cardPopular(
+                                const cardPopular(
                                   imagePopular: 'assets/warkop_add.jpg',
                                   restoName: 'Jardin Cafe',
                                   distance: '3.4 km',
@@ -438,7 +445,7 @@ class _RadioButtonState extends State<RadioButton> {
               ),
             ),
             RadioListTile(
-              title: Text('Popularitas'),
+              title: const Text('Popularitas'),
               value: 'Option 1',
               groupValue: selectedOption,
               onChanged: (value) {
@@ -448,7 +455,7 @@ class _RadioButtonState extends State<RadioButton> {
               },
             ),
             RadioListTile(
-              title: Text('Jarak terdekat'),
+              title: const Text('Jarak terdekat'),
               value: 'Option 2',
               groupValue: selectedOption,
               onChanged: (value) {
@@ -458,7 +465,7 @@ class _RadioButtonState extends State<RadioButton> {
               },
             ),
             RadioListTile(
-              title: Text('Harga termurah'),
+              title: const Text('Harga termurah'),
               value: 'Option 3',
               groupValue: selectedOption,
               onChanged: (value) {
@@ -468,7 +475,7 @@ class _RadioButtonState extends State<RadioButton> {
               },
             ),
             RadioListTile(
-              title: Text('Ulasan terbanyak'),
+              title: const Text('Ulasan terbanyak'),
               value: 'Option 4',
               groupValue: selectedOption,
               onChanged: (value) {
@@ -478,7 +485,7 @@ class _RadioButtonState extends State<RadioButton> {
               },
             ),
             RadioListTile(
-              title: Text('Rating'),
+              title: const Text('Rating'),
               value: 'Option 5',
               groupValue: selectedOption,
               onChanged: (value) {
@@ -498,7 +505,7 @@ class _RadioButtonState extends State<RadioButton> {
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: checkbox1,
-              title: Text('Dibawah Rp75.000'),
+              title: const Text('Dibawah Rp75.000'),
               onChanged: (bool? value) {
                 setState(() {
                   checkbox1 = value!;
@@ -508,7 +515,7 @@ class _RadioButtonState extends State<RadioButton> {
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: checkbox2,
-              title: Text('Rp200.000 - Rp325.000'),
+              title: const Text('Rp200.000 - Rp325.000'),
               onChanged: (bool? value) {
                 setState(() {
                   checkbox2 = value!;
@@ -518,7 +525,7 @@ class _RadioButtonState extends State<RadioButton> {
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: checkbox3,
-              title: Text('Rp325.000 - Rp450.000'),
+              title: const Text('Rp325.000 - Rp450.000'),
               onChanged: (bool? value) {
                 setState(() {
                   checkbox3 = value!;
@@ -528,7 +535,7 @@ class _RadioButtonState extends State<RadioButton> {
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: checkbox4,
-              title: Text('di atas Rp450.000'),
+              title: const Text('di atas Rp450.000'),
               onChanged: (bool? value) {
                 setState(() {
                   checkbox4 = value!;
@@ -546,7 +553,7 @@ class _RadioButtonState extends State<RadioButton> {
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: checkKafe,
-              title: Text('Kafe'),
+              title: const Text('Kafe'),
               onChanged: (bool? value) {
                 setState(() {
                   checkKafe = value!;
@@ -556,7 +563,7 @@ class _RadioButtonState extends State<RadioButton> {
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: checkKakiLima,
-              title: Text('Kaki lima'),
+              title: const Text('Kaki lima'),
               onChanged: (bool? value) {
                 setState(() {
                   checkKakiLima = value!;
@@ -566,7 +573,7 @@ class _RadioButtonState extends State<RadioButton> {
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: checkBarLounge,
-              title: Text('Bar & Lounge'),
+              title: const Text('Bar & Lounge'),
               onChanged: (bool? value) {
                 setState(() {
                   checkBarLounge = value!;
@@ -576,7 +583,7 @@ class _RadioButtonState extends State<RadioButton> {
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: checkKedai,
-              title: Text('Kedai'),
+              title: const Text('Kedai'),
               onChanged: (bool? value) {
                 setState(() {
                   checkKedai = value!;
@@ -586,7 +593,7 @@ class _RadioButtonState extends State<RadioButton> {
             CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: checkFoodCourt,
-              title: Text('Food Court'),
+              title: const Text('Food Court'),
               onChanged: (bool? value) {
                 setState(() {
                   checkFoodCourt = value!;
@@ -602,7 +609,7 @@ class _RadioButtonState extends State<RadioButton> {
                     width: 166,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0XFFFAFAFA),
+                        backgroundColor: const Color(0XFFFAFAFA),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40),
                         ),
@@ -615,7 +622,7 @@ class _RadioButtonState extends State<RadioButton> {
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Container(
@@ -623,7 +630,7 @@ class _RadioButtonState extends State<RadioButton> {
                     width: 166,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0XFF0190FF),
+                        backgroundColor: const Color(0XFF0190FF),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40),
                         ),

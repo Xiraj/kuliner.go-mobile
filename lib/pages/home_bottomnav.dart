@@ -28,19 +28,19 @@ class _homeBottomNavState extends State<homeBottomNav> {
     setState(() {
       _selectedIndex = index;
       pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.ease);
+          duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
     });
   }
 
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         icon: Icon(Icons.home_filled),
         label: 'Beranda',
       ),
-      BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorit'),
-      BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Riwayat'),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorit'),
+      const BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Riwayat'),
+      const BottomNavigationBarItem(
           icon: Icon(Icons.person_2_rounded), label: 'Profil'),
     ];
   }
@@ -49,16 +49,16 @@ class _homeBottomNavState extends State<homeBottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: (index) {
           pageChanged(index);
         },
         children: <Widget>[
-          HomePage(),
-          FavoritePage(),
-          HistoryPage(),
-          ProfilePage()
+          const HomePage(),
+          const FavoritePage(),
+          const HistoryPage(),
+          const ProfilePage()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

@@ -18,7 +18,7 @@ class CardMenu extends StatelessWidget {
     return Row(
       children: [
         Image.network(imageUrl, width: 80, height: 80),
-        SizedBox(
+        const SizedBox(
           width: 14,
         ),
         Column(
@@ -29,7 +29,7 @@ class CardMenu extends StatelessWidget {
               style: blackTextStyle.copyWith(
                   fontSize: 12, fontWeight: FontWeight.w600),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Column(
@@ -40,7 +40,7 @@ class CardMenu extends StatelessWidget {
                   style: blackTextStyle.copyWith(
                       fontSize: 10, fontWeight: FontWeight.w600),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
               ],
             ),
             Row(
@@ -50,7 +50,7 @@ class CardMenu extends StatelessWidget {
                   style: blackTextStyle.copyWith(
                       fontSize: 12, fontWeight: FontWeight.w600),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
               ],

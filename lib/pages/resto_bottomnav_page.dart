@@ -28,36 +28,38 @@ class _RestoNavState extends State<RestoNav> {
     setState(() {
       _selectedIndex = index;
       pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.ease);
+          duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
     });
   }
 
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         icon: Icon(Icons.menu_book),
         label: 'Menu',
       ),
-      BottomNavigationBarItem(icon: Icon(Icons.book_rounded), label: 'Booking'),
-      BottomNavigationBarItem(icon: Icon(Icons.reviews_rounded), label: 'Review'),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(icon: Icon(Icons.book_rounded), label: 'Booking'),
+      const BottomNavigationBarItem(
+          icon: Icon(Icons.reviews_rounded), label: 'Review'),
+      const BottomNavigationBarItem(
           icon: Icon(Icons.person_2_rounded), label: 'Profil'),
     ];
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: (index) {
           pageChanged(index);
         },
         children: <Widget>[
-          RestoMenu(),
-          RestoBookingList(),
-          RestoReviewList(),
-          RestoProfile()
+          const RestoMenu(),
+          const RestoBookingList(),
+          const RestoReviewList(),
+          const RestoProfile()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

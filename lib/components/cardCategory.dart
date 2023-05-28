@@ -15,7 +15,7 @@ class cardCategory extends StatelessWidget {
             Container(
               width: 70,
               height: 70,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xffFAFAFA),
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
@@ -23,7 +23,7 @@ class cardCategory extends StatelessWidget {
               ),
               child: Image.asset(imageCategory),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(title)
