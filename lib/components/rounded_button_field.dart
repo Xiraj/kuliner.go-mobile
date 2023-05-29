@@ -30,9 +30,6 @@ class RoundedButton extends StatelessWidget {
     );
   }
 
-  //Used:ElevatedButton as FlatButton is deprecated.
-  //Here we have to apply customizations to Button by inheriting the styleFrom
-
   Widget newElevatedButton() {
     return ElevatedButton(
       onPressed: press,

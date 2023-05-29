@@ -33,7 +33,7 @@ class restaurantPage extends StatelessWidget {
                         children: <Widget>[
                           Image.network(
                             resto['imageUrl'],
-                            width: 260,
+                            width: 700,
                             fit: BoxFit.cover,
                           ),
                         ],
@@ -44,14 +44,14 @@ class restaurantPage extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                           padding:
-                              EdgeInsets.only(left: 20, bottom: 20, top: 12),
+                              const EdgeInsets.only(left: 20, bottom: 20, top: 12),
                           child: Text(
                             '${resto['username']}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding:
                               EdgeInsets.only(left: 12, bottom: 20, top: 12),
                           child: Icon(
@@ -59,7 +59,7 @@ class restaurantPage extends StatelessWidget {
                             color: Colors.blue,
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(left: 40, bottom: 8),
                           child: Text(
                             'Buka Sekarang',
@@ -73,15 +73,21 @@ class restaurantPage extends StatelessWidget {
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const <Widget>[
+                      children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(right: 210, bottom: 20),
-                          child: Text(
-                            'American Fast Food',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400),
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Align(
+                            alignment: AlignmentDirectional.topStart,
+                            child: Text(
+                              '${resto['tipeRestoran']}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
                           ),
-                        )
+                        ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                     Column(
@@ -98,12 +104,12 @@ class restaurantPage extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 20),
                       child: SizedBox(
                         height: 60,
                         child: Text(
                           '${resto['detailRestoran']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w300,
                           ),
@@ -113,18 +119,18 @@ class restaurantPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         ExpansionTile(
-                          title: Text('Jam Buka'),
-                          childrenPadding: EdgeInsets.only(left: 12),
-                          leading: Icon(Icons.access_time),
+                          title: const Text('Jam Buka'),
+                          childrenPadding: const EdgeInsets.only(left: 12),
+                          leading: const Icon(Icons.access_time),
                           children: <Widget>[
                             Column(
                               children: [
                                 Container(
                                   width: 520,
-                                  padding: EdgeInsets.only(left: 40, right: 30),
+                                  padding: const EdgeInsets.only(left: 40, right: 30),
                                   child: Text(
                                     '${resto['jamBuka']}',
-                                    style: TextStyle(fontSize: 14),
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 )
                               ],
@@ -136,20 +142,20 @@ class restaurantPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         ExpansionTile(
-                          title: Text('Kisaran Harga'),
-                          childrenPadding: EdgeInsets.only(left: 12),
-                          leading: Icon(Icons.attach_money_outlined),
+                          title: const Text('Kisaran Harga'),
+                          childrenPadding: const EdgeInsets.only(left: 12),
+                          leading: const Icon(Icons.attach_money_outlined),
                           children: <Widget>[
                             Container(
                               child: ListTile(
-                                leading: Padding(
+                                leading: const Padding(
                                   padding: EdgeInsets.only(top: 5),
                                   child: Image(
                                       image: AssetImage('assets/dollar.png')),
                                 ),
                                 title: Text(
                                   '\t | ${resto['kisaranHarga']}',
-                                  style: TextStyle(fontSize: 14),
+                                  style: const TextStyle(fontSize: 14),
                                 ),
                               ),
                             ),
@@ -160,8 +166,8 @@ class restaurantPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         ExpansionTile(
-                          title: Text('Daftar Menu'),
-                          leading: Icon(Icons.restaurant_menu_sharp),
+                          title: const Text('Daftar Menu'),
+                          leading: const Icon(Icons.restaurant_menu_sharp),
                           children: <Widget>[
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -169,19 +175,19 @@ class restaurantPage extends StatelessWidget {
                                 Container(
                                   width: 100,
                                   height: 100,
-                                  padding: EdgeInsets.only(left: 12),
+                                  padding: const EdgeInsets.only(left: 12),
                                   child: Image.asset('assets/menu1.png'),
                                 ),
                                 Container(
                                   width: 100,
                                   height: 100,
-                                  padding: EdgeInsets.only(left: 12),
+                                  padding: const EdgeInsets.only(left: 12),
                                   child: Image.asset('assets/menu2.png'),
                                 ),
                                 Container(
                                   width: 100,
                                   height: 100,
-                                  padding: EdgeInsets.only(left: 12),
+                                  padding: const EdgeInsets.only(left: 12),
                                   child: Image.asset('assets/menu3.png'),
                                 )
                               ],
@@ -193,29 +199,29 @@ class restaurantPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         ExpansionTile(
-                          title: Text('Alamat Restoran'),
-                          childrenPadding: EdgeInsets.only(left: 12),
-                          leading: Icon(Icons.location_on),
+                          title: const Text('Alamat Restoran'),
+                          childrenPadding: const EdgeInsets.only(left: 12),
+                          leading: const Icon(Icons.location_on),
                           children: <Widget>[
                             Center(
                               child: Image.asset('assets/map.png'),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
                             Column(
                               children: [
                                 Container(
                                   width: 520,
-                                  padding: EdgeInsets.only(left: 40, right: 30),
+                                  padding: const EdgeInsets.only(left: 40, right: 30),
                                   child: Text(
                                     '${resto['alamatRestoran']}',
-                                    style: TextStyle(fontSize: 14),
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
                           ],
@@ -225,18 +231,18 @@ class restaurantPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         ExpansionTile(
-                          title: Text('Fasilitas Restoran'),
-                          leading: Icon(Icons.more_horiz_sharp),
+                          title: const Text('Fasilitas Restoran'),
+                          leading: const Icon(Icons.more_horiz_sharp),
                           children: <Widget>[
                             Container(
                               width: 520,
-                              padding: EdgeInsets.only(left: 40, right: 30),
+                              padding: const EdgeInsets.only(left: 40, right: 30),
                               child: Text(
                                 '${resto['fasilitasRestoran']}',
-                                style: TextStyle(fontSize: 14),
+                                style: const TextStyle(fontSize: 14),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             )
                           ],
@@ -264,14 +270,14 @@ class restaurantPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    ulasanPage(),
-                    SizedBox(height: 12),
+                    const ulasanPage(),
+                    const SizedBox(height: 12),
                     Center(
                       child: Container(
                         width: 300,
                         decoration: BoxDecoration(
                             color: Colors.blue,
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            borderRadius: const BorderRadius.all(Radius.circular(50)),
                             border: Border.all(
                               width: 0,
                             )),
@@ -284,15 +290,17 @@ class restaurantPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const bookingPage()));
+                                    builder: (context) => bookingPage(
+                                          resto: resto,
+                                        )));
                           },
-                          child: Text('Pesan Tempat'),
+                          child: const Text('Pesan Tempat'),
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 16)
+                const SizedBox(height: 16)
               ],
             ),
           ],

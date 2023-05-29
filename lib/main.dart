@@ -21,14 +21,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => CartProvider(),
-      child: Builder(builder: (BuildContext context) {
-        return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: GoogleFonts.poppins().fontFamily,
-            ),
-            home: const SplashScreen());
-      }),
+      child: Builder(
+        builder: (BuildContext context) {
+          return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                fontFamily: GoogleFonts.poppins().fontFamily,
+              ),
+              home: const SplashScreen());
+        },
+      ),
     );
   }
 }

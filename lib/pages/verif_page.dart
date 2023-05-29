@@ -135,7 +135,7 @@ class _VerifPageState extends State<VerifPage> {
                           },
                           height: screenHeight * 0.07,
                         ),
-                        Text(
+                        const Text(
                           'Kode OTP akan terkirim ke akun email-mu',
                           style: TextStyle(
                             color: greyColor,

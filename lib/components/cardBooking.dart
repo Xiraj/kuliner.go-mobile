@@ -21,7 +21,7 @@ class CardBooking extends StatelessWidget {
     return Row(
       children: [
         Image.asset(imageUrl),
-        SizedBox(
+        const SizedBox(
           width: 14,
         ),
         Column(
@@ -32,34 +32,34 @@ class CardBooking extends StatelessWidget {
               style: blackTextStyle.copyWith(
                   fontSize: 16, fontWeight: FontWeight.w600),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
               children: [
                 Text(username),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 4,
                 ),
                 Text(date),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 4,
                 ),
                 Text(

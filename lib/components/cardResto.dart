@@ -17,8 +17,8 @@ class CardResto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.network(imageUrl, width: 120, height: 120),
-        SizedBox(
+        Image.network(imageUrl, width: 140, height: 120),
+        const SizedBox(
           width: 14,
         ),
         Column(
@@ -29,17 +29,17 @@ class CardResto extends StatelessWidget {
               style: blackTextStyle.copyWith(
                   fontSize: 14, fontWeight: FontWeight.w600),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.star,
                   color: Colors.yellow,
                 ),
                 Text(rate),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Row(
@@ -48,19 +48,19 @@ class CardResto extends StatelessWidget {
                     Text(distance),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Image.asset('assets/price.png')
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
                 Image.asset('assets/time_circle.png'),
-                SizedBox(
+                const SizedBox(
                   width: 4,
                 ),
                 Text(

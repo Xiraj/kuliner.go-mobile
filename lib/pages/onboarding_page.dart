@@ -37,7 +37,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         child: Stack(
           children: <Widget>[
             PageView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: controller,
               onPageChanged: (int page) {
                 setState(() {
@@ -52,7 +52,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 20),
                             child: Column(
                               children: <Widget>[
@@ -76,9 +76,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        OptionLoginPage()));
+                                                        const OptionLoginPage()));
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             'Lewati',
                                             style: TextStyle(
                                                 color: greyColor,
@@ -94,7 +94,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40.0,
                           ),
                           Column(
@@ -114,7 +114,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   )
                                 ],
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
@@ -128,10 +128,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20.0,
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
@@ -142,11 +142,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 40.0,
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0, vertical: 20.0),
                                 child: Column(
                                   children: <Widget>[
@@ -161,7 +161,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                             DotsIndicator(
                                               dotsCount: 3,
                                               position: currentPage.toDouble(),
-                                              decorator: DotsDecorator(
+                                              decorator: const DotsDecorator(
                                                 color: greyColor,
                                                 activeColor: blackColor,
                                               ),
@@ -173,12 +173,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                             ElevatedButton(
                                                 onPressed: () {
                                                   controller.nextPage(
-                                                      duration: Duration(
+                                                      duration: const Duration(
                                                           milliseconds: 500),
                                                       curve: Curves.ease);
                                                 },
                                                 style: ElevatedButton.styleFrom(
-                                                    minimumSize: Size(167, 66),
+                                                    minimumSize: const Size(167, 66),
                                                     backgroundColor: blueColor,
                                                     shape:
                                                         RoundedRectangleBorder(
@@ -186,7 +186,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                                 BorderRadius
                                                                     .circular(
                                                                         30))),
-                                                child: Text('Selanjutnya')),
+                                                child: const Text('Selanjutnya')),
                                           ],
                                         ),
                                       ],
@@ -208,7 +208,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 20),
                             child: Column(
                               children: <Widget>[
@@ -232,9 +232,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        OptionLoginPage()));
+                                                        const OptionLoginPage()));
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             'Lewati',
                                             style: TextStyle(
                                                 color: greyColor,
@@ -250,7 +250,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40.0,
                           ),
                           Column(
@@ -270,10 +270,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 60.0,
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
@@ -287,10 +287,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20.0,
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
@@ -301,11 +301,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 40.0,
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0, vertical: 20.0),
                                 child: Column(
                                   children: <Widget>[
@@ -320,7 +320,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                             DotsIndicator(
                                               dotsCount: 3,
                                               position: currentPage.toDouble(),
-                                              decorator: DotsDecorator(
+                                              decorator: const DotsDecorator(
                                                 color: greyColor,
                                                 activeColor: blackColor,
                                               ),
@@ -332,12 +332,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                             ElevatedButton(
                                                 onPressed: () {
                                                   controller.nextPage(
-                                                      duration: Duration(
+                                                      duration: const Duration(
                                                           milliseconds: 500),
                                                       curve: Curves.ease);
                                                 },
                                                 style: ElevatedButton.styleFrom(
-                                                    minimumSize: Size(167, 66),
+                                                    minimumSize: const Size(167, 66),
                                                     backgroundColor: blueColor,
                                                     shape:
                                                         RoundedRectangleBorder(
@@ -345,7 +345,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                                 BorderRadius
                                                                     .circular(
                                                                         30))),
-                                                child: Text('Selanjutnya')),
+                                                child: const Text('Selanjutnya')),
                                           ],
                                         ),
                                       ],
@@ -367,7 +367,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 20),
                             child: Column(
                               children: <Widget>[
@@ -391,9 +391,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        OptionLoginPage()));
+                                                        const OptionLoginPage()));
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             'Lewati',
                                             style: TextStyle(
                                                 color: greyColor,
@@ -409,7 +409,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40.0,
                           ),
                           Column(
@@ -429,10 +429,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 60.0,
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
@@ -446,10 +446,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20.0,
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
@@ -460,11 +460,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 40.0,
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0, vertical: 20.0),
                                 child: Column(
                                   children: <Widget>[
@@ -479,7 +479,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                             DotsIndicator(
                                               dotsCount: 3,
                                               position: currentPage.toDouble(),
-                                              decorator: DotsDecorator(
+                                              decorator: const DotsDecorator(
                                                 color: greyColor,
                                                 activeColor: blackColor,
                                               ),
@@ -494,16 +494,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            OptionLoginPage()));
+                                                            const OptionLoginPage()));
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                  minimumSize: Size(167, 66),
+                                                  minimumSize: const Size(167, 66),
                                                   backgroundColor: blueColor,
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               30))),
-                                              child: Text('Mari Jelajahi!'),
+                                              child: const Text('Mari Jelajahi!'),
                                             ),
                                           ],
                                         ),

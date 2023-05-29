@@ -110,7 +110,7 @@ class _ForgotPassState extends State<ForgotPass> {
                           },
                           height: screenHeight * 0.07,
                         ),
-                        Text(
+                        const Text(
                           'Kamu akan menerima pesan di email-mu',
                           style: TextStyle(
                             color: greyColor,

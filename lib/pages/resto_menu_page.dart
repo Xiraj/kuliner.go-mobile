@@ -20,7 +20,7 @@ class RestoMenu extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 14,
             ),
             Padding(
@@ -30,14 +30,14 @@ class RestoMenu extends StatelessWidget {
                 style: whiteTextStyle.copyWith(fontSize: 12),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.location_on_rounded,
                     color: whiteColor,
                     size: 24,
@@ -53,7 +53,7 @@ class RestoMenu extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 14,
             ),
             Padding(
@@ -66,7 +66,7 @@ class RestoMenu extends StatelessWidget {
                     style: whiteTextStyle.copyWith(
                         fontSize: 24, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -74,20 +74,20 @@ class RestoMenu extends StatelessWidget {
                     style: whiteTextStyle.copyWith(
                         fontSize: 14, fontWeight: FontWeight.w400),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height - 160,
-              padding: EdgeInsets.all(30),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(30),
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(35),
                 ),
@@ -105,7 +105,7 @@ class RestoMenu extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   StreamBuilder<QuerySnapshot>(
@@ -119,11 +119,11 @@ class RestoMenu extends StatelessWidget {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       }
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                       final docs = snapshot.data!.docs;
                       if (docs.isEmpty) {
-                        return Center(
+                        return const Center(
                             child: Text('Tidak ada data menu yang ditemukan'));
                       }
                       return SizedBox(
@@ -166,13 +166,13 @@ class RestoMenu extends StatelessWidget {
                                               ),
                                             );
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.edit,
                                             color: Colors.blue,
                                             size: 21,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         GestureDetector(
@@ -180,21 +180,21 @@ class RestoMenu extends StatelessWidget {
                                             final confirmed = await showDialog(
                                               context: context,
                                               builder: (context) => AlertDialog(
-                                                title: Text('Hapus Menu'),
-                                                content: Text(
+                                                title: const Text('Hapus Menu'),
+                                                content: const Text(
                                                     'Apakah Anda yakin ingin menghapus menu ini?'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.of(context)
                                                             .pop(false),
-                                                    child: Text('Batal'),
+                                                    child: const Text('Batal'),
                                                   ),
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.of(context)
                                                             .pop(true),
-                                                    child: Text('Hapus'),
+                                                    child: const Text('Hapus'),
                                                   ),
                                                 ],
                                               ),
@@ -228,7 +228,7 @@ class RestoMenu extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20.0, // atur jarak antara setiap item
                                 ),
                               ],
@@ -249,8 +249,8 @@ class RestoMenu extends StatelessWidget {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const FormAddMenu()));
         },
-        label: Text('Tambah Menu'),
-        icon: Icon(Icons.add_rounded),
+        label: const Text('Tambah Menu'),
+        icon: const Icon(Icons.add_rounded),
         backgroundColor: blueColor,
       ),
     );

@@ -20,7 +20,7 @@ class CardFavoriteResto extends StatelessWidget {
     return Row(
       children: [
         Image.asset(imageUrl),
-        SizedBox(
+        const SizedBox(
           width: 14,
         ),
         Column(
@@ -31,33 +31,33 @@ class CardFavoriteResto extends StatelessWidget {
               style: blackTextStyle.copyWith(
                   fontSize: 16, fontWeight: FontWeight.w600),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.star,
                   color: Colors.yellow,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Text(rate),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Image.asset('assets/price.png'),
-                SizedBox(
+                const SizedBox(
                   width: 60,
                 ),
-                Icon(
+                const Icon(
                   Icons.favorite,
                   color: Colors.red,
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -66,7 +66,7 @@ class CardFavoriteResto extends StatelessWidget {
                   children: [
                     Image.asset('assets/locations.png'),
                     Text(distance),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(place),

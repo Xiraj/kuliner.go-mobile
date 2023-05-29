@@ -34,11 +34,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
           .child('${DateTime.now().toIso8601String()}.jpg');
       final uploadTask = ref.putFile(File(selectedImagePath));
       final snapshot = await uploadTask.whenComplete(() => null);
-
-      // Dapatkan URL download gambar yang diupload
       final downloadUrl = await snapshot.ref.getDownloadURL();
-
-      // Simpan data menu ke Firebase Firestore
       final newMenuDoc =
           await FirebaseFirestore.instance.collection('Menu').add({
         'namaMenu': name,
@@ -64,7 +60,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tambah Menu'),
+        title: const Text('Tambah Menu'),
       ),
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -74,7 +70,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
                   child: Column(
                     children: [
                       selectedImagePath == ''
@@ -90,12 +86,12 @@ class _FormAddMenuState extends State<FormAddMenu> {
                               width: 180,
                               fit: BoxFit.fill,
                             ),
-                      Text(
+                      const Text(
                         'Select Image',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20.0,
                       ),
                       ElevatedButton(
@@ -127,7 +123,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
                       SizedBox(
                         width: 330,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Nama Menu'),
                           onChanged: (value) {
@@ -141,11 +137,11 @@ class _FormAddMenuState extends State<FormAddMenu> {
                           },
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 330,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Deskripsi Menu'),
                           onChanged: (value) {
@@ -161,11 +157,11 @@ class _FormAddMenuState extends State<FormAddMenu> {
                           maxLines: 2,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 330,
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Harga Menu'),
                           onChanged: (value) {
@@ -180,7 +176,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
                           },
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       RoundedButton(
                         text: 'Tambah',
                         press: () {
@@ -212,7 +208,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
               padding: const EdgeInsets.all(5.0),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Select Image From !',
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -229,7 +225,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text("No Image Selected !"),
                             ));
                           }
@@ -245,7 +241,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
                                     height: 60,
                                     width: 60,
                                   ),
-                                  Text('Gallery'),
+                                  const Text('Gallery'),
                                 ],
                               ),
                             )),
@@ -260,7 +256,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text("No Image Captured !"),
                             ));
                           }
@@ -276,7 +272,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
                                     height: 60,
                                     width: 60,
                                   ),
-                                  Text('Camera'),
+                                  const Text('Camera'),
                                 ],
                               ),
                             )),

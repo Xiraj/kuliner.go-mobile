@@ -17,7 +17,7 @@ class _RestoBookingListState extends State<RestoBookingList> {
       body: SafeArea(
         child: ListView(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 14,
             ),
             Padding(
@@ -27,14 +27,14 @@ class _RestoBookingListState extends State<RestoBookingList> {
                 style: whiteTextStyle.copyWith(fontSize: 12),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.location_on_rounded,
                     color: whiteColor,
                     size: 24,
@@ -50,7 +50,7 @@ class _RestoBookingListState extends State<RestoBookingList> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 14,
             ),
             Padding(
@@ -63,7 +63,7 @@ class _RestoBookingListState extends State<RestoBookingList> {
                     style: whiteTextStyle.copyWith(
                         fontSize: 24, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -71,19 +71,19 @@ class _RestoBookingListState extends State<RestoBookingList> {
                     style: whiteTextStyle.copyWith(
                         fontSize: 14, fontWeight: FontWeight.w400),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(30),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(30),
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(35),
                 ),
@@ -101,12 +101,12 @@ class _RestoBookingListState extends State<RestoBookingList> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Column(
                     children: [
-                      CardBooking(
+                      const CardBooking(
                         imageUrl: 'assets/mcd.png',
                         bookingCode: '#BOOK12495813735',
                         username: 'Jeremia Carlo',
@@ -114,10 +114,10 @@ class _RestoBookingListState extends State<RestoBookingList> {
                         status: 'Pending',
                         textColor: greyColor,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      CardBooking(
+                      const CardBooking(
                         imageUrl: 'assets/mcd.png',
                         bookingCode: '#BOOK21351516575',
                         username: 'Jeremia Carlo',
@@ -125,10 +125,10 @@ class _RestoBookingListState extends State<RestoBookingList> {
                         status: 'Success',
                         textColor: Colors.greenAccent,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      CardBooking(
+                      const CardBooking(
                         imageUrl: 'assets/mcd.png',
                         bookingCode: '#BOOK21351516575',
                         username: 'Jeremia Carlo',
@@ -136,10 +136,10 @@ class _RestoBookingListState extends State<RestoBookingList> {
                         status: 'Cancel',
                         textColor: Colors.red,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      CardBooking(
+                      const CardBooking(
                         imageUrl: 'assets/mcd.png',
                         bookingCode: '#BOOK21351516575',
                         username: 'Jeremia Carlo',

@@ -55,11 +55,11 @@ class _NearRestoState extends State<NearResto> {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
               final docs = snapshot.data!.docs;
               if (docs.isEmpty) {
-                return Center(
+                return const Center(
                     child: Text('Tidak ada data restoran yang ditemukan'));
               }
               return Column(
@@ -69,7 +69,7 @@ class _NearRestoState extends State<NearResto> {
                     child: ListView.separated(
                       itemCount: docs.length,
                       separatorBuilder: (context, index) =>
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                       itemBuilder: (context, index) {
                         final resto = docs[index];
                         final rate = rates[index];

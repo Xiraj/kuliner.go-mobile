@@ -1,21 +1,137 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kuliner_go_mobile/pages/formAdd.dart';
-import 'package:kuliner_go_mobile/pages/formDateTime.dart';
+import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
+import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
 import 'package:kuliner_go_mobile/pages/menu_resto.dart';
-import './formBooking.dart';
+import 'package:kuliner_go_mobile/theme.dart';
+
 import 'home_bottomnav.dart';
 
-// ignore: camel_case_types
 class bookingPage extends StatefulWidget {
-  const bookingPage({super.key});
+  final DocumentSnapshot resto;
+  const bookingPage({super.key, required this.resto});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _bookingPageState createState() => _bookingPageState();
+  State<bookingPage> createState() => _bookingPageState();
 }
 
-// ignore: camel_case_types
 class _bookingPageState extends State<bookingPage> {
+  final formKey = GlobalKey<FormState>();
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  late String name;
+  late String phone;
+  late String email;
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
+  int counter = 0;
+
+  void increment() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  void decrement() {
+    if (counter > 0) {
+      setState(() {
+        counter--;
+      });
+    }
+  }
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    }
+  }
+
+  Future<void> selectTime(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (pickedTime != null) {
+      setState(() {
+        selectedTime = pickedTime;
+      });
+    }
+  }
+
+  Future<void> saveBookingData() async {
+    try {
+      final User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        print('User not logged in.');
+        return;
+      }
+
+      final DocumentReference bookingRef =
+          FirebaseFirestore.instance.collection('Booking').doc();
+
+      final String formattedTime =
+          selectedTime != null ? selectedTime!.format(context) : '';
+
+      final DateTime? selectedDateOnly = selectedDate != null
+          ? DateTime(selectedDate!.year, selectedDate!.month, selectedDate!.day)
+          : null;
+
+      final Map<String, dynamic> bookingData = {
+        'restoId': widget.resto.id,
+        'userId': currentUser.uid,
+        'name': name,
+        'phone': phone,
+        'email': email,
+        'selectedDate': selectedDateOnly != null
+            ? selectedDateOnly.toIso8601String().split('T')[0]
+            : null,
+        'selectedTime': formattedTime,
+        'people': counter,
+      };
+
+      await bookingRef.set(bookingData);
+
+      setState(() {
+        name = '';
+        phone = '';
+        email = '';
+        selectedDate = null;
+        selectedTime = null;
+        counter = 0;
+      });
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Success'),
+            content: const Text('Pesan Tempat Berhasil!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) {
+      print('Failed to save booking data: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,25 +141,25 @@ class _bookingPageState extends State<bookingPage> {
             Row(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 24, left: 8),
+                  padding: const EdgeInsets.only(top: 24, left: 8),
                   child: TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => homeBottomNav(),
+                          builder: (context) => const homeBottomNav(),
                         ),
                       );
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_back_ios,
                       color: Colors.black,
                     ),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 24, left: 64),
-                  child: Text(
+                  padding: const EdgeInsets.only(top: 24, left: 64),
+                  child: const Text(
                     'Pesan Tempat',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
@@ -58,181 +174,325 @@ class _bookingPageState extends State<bookingPage> {
                     Container(
                       width: 100,
                       height: 100,
-                      margin: EdgeInsets.only(left: 25, top: 30),
-                      child: Image(
-                        image: AssetImage('assets/McDonalds_Logo.jpeg'),
+                      margin: const EdgeInsets.only(left: 25, top: 30),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          widget.resto['imageUrl'],
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20, top: 18),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(right: 99, top: 14),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'McDonalds',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(left: 5),
-                                  child: Icon(
-                                    Icons.verified,
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ],
+                    const SizedBox(
+                      width: 14,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 4,
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(right: 134, top: 14),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
-                                      ),
-                                    ),
-                                    Container(
-                                        child: Text(
-                                      '4.7 \t | \t',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400),
-                                    )),
-                                    Container(
-                                      child: Image(
-                                          image:
-                                              AssetImage('assets/dollar.png')),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(right: 55, top: 14),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: Colors.grey,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 5),
-                                  child: Text(
-                                    '1.5 Km',
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    '| Podomoro Park',
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                )
-                              ],
+                            Text(
+                              '${widget.resto['username']}',
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w700),
                             ),
-                          )
-                        ],
-                      ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            const Icon(
+                              Icons.verified,
+                              color: Colors.blue,
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.star,
+                              color: Colors.yellow,
+                            ),
+                            const Text(
+                              '4.7 \t | \t',
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w400),
+                            ),
+                            const Image(image: AssetImage('assets/dollar.png')),
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                            const Text(
+                              '1.5 Km ',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            Text(
+                              '| ${widget.resto['alamatRestoran']}',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        )
+                      ],
                     )
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 215, top: 16),
-                  child: Text(
+                  padding: const EdgeInsets.only(right: 215, top: 16),
+                  child: const Text(
                     'Data Pemesan',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 30, top: 8),
+                  padding: const EdgeInsets.only(left: 30, top: 8),
                   width: 600,
-                  child: Text(
+                  child: const Text(
                     "Pastikan nomor telepon dan email sudah benar",
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 2),
-                  child: formBookingPage(),
+                  margin: const EdgeInsets.only(left: 2),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Form(
+                          key: formKey,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(top: 12, right: 20),
+                                child: RoundedInputField(
+                                  hintText: "Masukkan nama lengkapmu",
+                                  icon: Icons.person_2_rounded,
+                                  onChanged: (value) {
+                                    name = value.trim();
+                                  },
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(top: 12, right: 20),
+                                child: RoundedInputField(
+                                  hintText: "Masukkan nomor telepon",
+                                  icon: Icons.call,
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (value) {
+                                    phone = value.trim();
+                                  },
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(top: 12, right: 20),
+                                child: RoundedInputField(
+                                  hintText: "Masukkan alamat email",
+                                  icon: Icons.email_rounded,
+                                  onChanged: (value) {
+                                    email = value.trim();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 155, top: 16),
-                  child: Text(
+                  padding: const EdgeInsets.only(right: 155, top: 16),
+                  child: const Text(
                     "Pilih Tanggal dan Jam",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 30, top: 8),
+                  padding: const EdgeInsets.only(left: 30, top: 8),
                   width: 600,
-                  child: Text(
+                  child: const Text(
                     "Tentuin kapan kamu mau pesan tempatnya",
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 2),
-                  child: formDateTimePage(),
+                  margin: const EdgeInsets.only(left: 2),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 12, right: 20),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  selectDate(context);
+                                },
+                                child: InputDecorator(
+                                  decoration: const InputDecoration(
+                                    filled: true,
+                                    fillColor: altColor,
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const SizedBox(width: 12),
+                                      const Icon(Icons.calendar_month_rounded),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          selectedDate != null
+                                              ? selectedDate
+                                                  .toString()
+                                                  .split(" ")[0]
+                                              : "Tanggal",
+                                          style: const TextStyle(
+                                              fontSize: 12.0, color: greyColor),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  selectTime(context);
+                                },
+                                child: InputDecorator(
+                                  decoration: const InputDecoration(
+                                    filled: true,
+                                    fillColor: altColor,
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const SizedBox(width: 20),
+                                      const Icon(Icons.av_timer_rounded),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          selectedTime != null
+                                              ? selectedTime!.format(context)
+                                              : "Jam",
+                                          style: const TextStyle(
+                                              fontSize: 12.0, color: greyColor),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 220, top: 16),
-                  child: Text(
+                  padding: const EdgeInsets.only(right: 220, top: 16),
+                  child: const Text(
                     "Jumlah Orang",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 30, top: 8),
+                  padding: const EdgeInsets.only(left: 30, top: 8),
                   width: 600,
-                  child: Text(
+                  child: const Text(
                     "Ada berapa banyak orang yang mau ikut makan?",
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                 ),
-                SizedBox(height: 28),
+                const SizedBox(height: 28),
                 Container(
-                  margin: EdgeInsets.only(left: 2),
-                  child: formAddPage(),
-                ),
-                SizedBox(height: 98),
-                Center(
-                  child: Container(
-                    width: 354,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        border: Border.all(
-                          width: 0,
-                        )),
-                    child: TextButton(
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MenuPage(),
+                    margin: const EdgeInsets.only(left: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 110,
+                          width: 350,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          padding: const EdgeInsets.only(
+                            top: 15,
+                            bottom: 5,
                           ),
-                        );
-                      },
-                      child: Text('Pilih menu'),
-                    ),
-                  ),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[250],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(left: 5, top: 40),
+                                child: IconButton(
+                                  icon: const Icon(Icons.remove),
+                                  onPressed: decrement,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(left: 110, bottom: 15),
+                                child: Column(
+                                  children: [
+                                    Image.asset('assets/user.png'),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    Text(
+                                      counter.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xff0190ff),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(left: 100, top: 40),
+                                child: IconButton(
+                                  icon: const Icon(Icons.add),
+                                  onPressed: increment,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    )),
+                const SizedBox(height: 20),
+                RoundedButton(
+                  text: 'Pesan Tempat',
+                  press: () {
+                    saveBookingData();
+                    formKey.currentState?.reset();
+                    setState(() {
+                      name = '';
+                      phone = '';
+                      email = '';
+                    });
+                  },
+                  height: 60,
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 30),
               ],
             ),
           ],

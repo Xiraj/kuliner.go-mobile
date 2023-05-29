@@ -19,7 +19,7 @@ class cardPopular extends StatelessWidget {
       child: Container(
         height: 290,
         width: 250,
-        color: Color(0xffF6F7F8),
+        color: const Color(0xffF6F7F8),
         child: Column(
           children: [
             Stack(
@@ -35,7 +35,7 @@ class cardPopular extends StatelessWidget {
                   child: Container(
                     height: 30,
                     width: 50,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: blueColor,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(20),
@@ -50,7 +50,7 @@ class cardPopular extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 11,
             ),
             Padding(
@@ -65,13 +65,13 @@ class cardPopular extends StatelessWidget {
                         restoName,
                         style: blackTextStyle.copyWith(fontSize: 16),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
                         children: [
                           Image.asset('assets/locations.png'),
-                          SizedBox(
+                          const SizedBox(
                             width: 4,
                           ),
                           Text(
@@ -80,13 +80,13 @@ class cardPopular extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
                         children: [
                           Image.asset('assets/time_circle.png'),
-                          SizedBox(
+                          const SizedBox(
                             width: 4,
                           ),
                           Text(

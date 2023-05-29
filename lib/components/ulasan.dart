@@ -17,13 +17,13 @@ class _ulasanPageState extends State<ulasanPage> {
     return Column(
       children: <Widget>[
         ExpansionTile(
-          title: Text('Ulasan'),
-          leading: Icon(Icons.chat_outlined),
+          title: const Text('Ulasan'),
+          leading: const Icon(Icons.chat_outlined),
           children: <Widget>[
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
+                const Padding(
+                  padding: EdgeInsets.all(20),
                   child: CardReview(
                     imageUrl: 'assets/prof.png',
                     username: 'Alexander Yupo',
@@ -31,8 +31,8 @@ class _ulasanPageState extends State<ulasanPage> {
                         '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
+                const Padding(
+                  padding: EdgeInsets.all(20),
                   child: CardReview(
                     imageUrl: 'assets/prof2.png',
                     username: 'Charlie Van Houten',

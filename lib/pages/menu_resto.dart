@@ -39,7 +39,7 @@ class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
-    var badge = badges.Badge();
+    var badge = const badges.Badge();
     var harga;
 
     return Scaffold(
@@ -49,27 +49,22 @@ class _MenuPageState extends State<MenuPage> {
             Row(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 24, left: 8),
+                  padding: const EdgeInsets.only(top: 24, left: 8),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => bookingPage(),
-                        ),
-                      );
+                      
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_back_ios,
                       color: Colors.black,
                     ),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 24, left: 88),
+                  padding: const EdgeInsets.only(top: 24, left: 88),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         'Pilih Menu',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600),
@@ -78,19 +73,19 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 92, top: 24),
+                  padding: const EdgeInsets.only(left: 92, top: 24),
                   child: badges.Badge(
                     badgeContent: Consumer<CartProvider>(
                       builder: (context, value, child) {
                         return Text(
                           value.getCounter().toString(),
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         );
                       },
                     ),
                     child: InkWell(
                       onTap: () {},
-                      child: Icon(
+                      child: const Icon(
                         Icons.shopping_cart,
                         color: Color(0xff0190ff),
                       ),
@@ -101,7 +96,7 @@ class _MenuPageState extends State<MenuPage> {
             ),
             Column(
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(right: 200, top: 30),
                   child: Text(
                     'Rekomendasi',
@@ -111,13 +106,13 @@ class _MenuPageState extends State<MenuPage> {
                 for (int i = 1; i <= 5; i++)
                   Container(
                     width: 400,
-                    padding: EdgeInsets.only(left: 20, top: 20),
+                    padding: const EdgeInsets.only(left: 20, top: 20),
                     child: Row(
                       children: [
                         Image(image: AssetImage('assets/images/$i.png')),
                         Container(
                           width: 263.4,
-                          padding: EdgeInsets.only(left: 20, bottom: 24),
+                          padding: const EdgeInsets.only(left: 20, bottom: 24),
                           child: Column(
                             children: [
                               Container(
@@ -125,10 +120,10 @@ class _MenuPageState extends State<MenuPage> {
                                 height: 20,
                                 child: Text(
                                   nama_menu[i].toString(),
-                                  style: TextStyle(fontSize: 13),
+                                  style: const TextStyle(fontSize: 13),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               Container(
@@ -136,13 +131,13 @@ class _MenuPageState extends State<MenuPage> {
                                 height: 20,
                                 child: Text(
                                   "Rp" + harga_menu[i].toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(right: 125, top: 12),
+                                padding: const EdgeInsets.only(right: 125, top: 12),
                                 child: ElevatedButton(
                                   onPressed: () {
                                     dbHelper?.insert(
@@ -163,12 +158,12 @@ class _MenuPageState extends State<MenuPage> {
                                       }),
                                     );
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'Tambahkan',
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                             ],
@@ -177,9 +172,9 @@ class _MenuPageState extends State<MenuPage> {
                       ],
                     ),
                   ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Container(
-                  child: Padding(
+                  child: const Padding(
                     padding: EdgeInsets.only(right: 200, top: 30),
                     child: Text(
                       'Aneka Ayam',
@@ -193,13 +188,13 @@ class _MenuPageState extends State<MenuPage> {
                     for (int i = 3; i <= 5; i++)
                       Container(
                         width: 400,
-                        padding: EdgeInsets.only(left: 20, top: 20),
+                        padding: const EdgeInsets.only(left: 20, top: 20),
                         child: Row(
                           children: [
                             Image(image: AssetImage('assets/images/$i.png')),
                             Container(
                               width: 263.4,
-                              padding: EdgeInsets.only(left: 20, bottom: 24),
+                              padding: const EdgeInsets.only(left: 20, bottom: 24),
                               child: Column(
                                 children: [
                                   Container(
@@ -207,10 +202,10 @@ class _MenuPageState extends State<MenuPage> {
                                     height: 20,
                                     child: Text(
                                       nama_menu[i].toString(),
-                                      style: TextStyle(fontSize: 13),
+                                      style: const TextStyle(fontSize: 13),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15,
                                   ),
                                   Container(
@@ -218,14 +213,14 @@ class _MenuPageState extends State<MenuPage> {
                                     height: 20,
                                     child: Text(
                                       "Rp" + harga_menu[i].toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                   Padding(
                                     padding:
-                                        EdgeInsets.only(right: 125, top: 12),
+                                        const EdgeInsets.only(right: 125, top: 12),
                                     child: ElevatedButton(
                                       onPressed: () {
                                         dbHelper?.insert(
@@ -246,12 +241,12 @@ class _MenuPageState extends State<MenuPage> {
                                           }),
                                         );
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Tambahkan',
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15,
                                   ),
                                 ],
@@ -262,7 +257,7 @@ class _MenuPageState extends State<MenuPage> {
                       ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
               ],
             ),
           ],
@@ -278,7 +273,7 @@ class _MenuPageState extends State<MenuPage> {
           );
         },
         tooltip: 'Increment',
-        child: Icon(Icons.shopping_cart),
+        child: const Icon(Icons.shopping_cart),
       ),
     );
   }
