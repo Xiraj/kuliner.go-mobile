@@ -4,13 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
 import 'package:kuliner_go_mobile/pages/menu_resto.dart';
+import 'package:kuliner_go_mobile/pages/restaurant_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 import 'home_bottomnav.dart';
 
 class bookingPage extends StatefulWidget {
   final DocumentSnapshot resto;
-  const bookingPage({super.key, required this.resto});
+  final String email;
+  final String username;
+  const bookingPage(
+      {super.key,
+      required this.resto,
+      required this.email,
+      required this.username});
 
   @override
   State<bookingPage> createState() => _bookingPageState();
@@ -18,6 +25,7 @@ class bookingPage extends StatefulWidget {
 
 class _bookingPageState extends State<bookingPage> {
   final formKey = GlobalKey<FormState>();
+
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   late String name;
   late String phone;
@@ -41,10 +49,12 @@ class _bookingPageState extends State<bookingPage> {
   }
 
   Future<void> selectDate(BuildContext context) async {
+    final DateTime currentDate = DateTime.now();
+    FocusScope.of(context).unfocus();
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
+      initialDate: currentDate,
+      firstDate: currentDate,
       lastDate: DateTime(2100),
     );
 
@@ -56,6 +66,7 @@ class _bookingPageState extends State<bookingPage> {
   }
 
   Future<void> selectTime(BuildContext context) async {
+    FocusScope.of(context).unfocus();
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
@@ -89,9 +100,9 @@ class _bookingPageState extends State<bookingPage> {
       final Map<String, dynamic> bookingData = {
         'restoId': widget.resto.id,
         'userId': currentUser.uid,
-        'name': name,
+        'name': currentUser.displayName,
         'phone': phone,
-        'email': email,
+        'email': currentUser.email,
         'selectedDate': selectedDateOnly != null
             ? selectedDateOnly.toIso8601String().split('T')[0]
             : null,
@@ -134,6 +145,7 @@ class _bookingPageState extends State<bookingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final User? currentUser = FirebaseAuth.instance.currentUser;
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -147,7 +159,8 @@ class _bookingPageState extends State<bookingPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const homeBottomNav(),
+                          builder: (context) =>
+                              restaurantPage(resto: widget.resto),
                         ),
                       );
                     },
@@ -271,17 +284,20 @@ class _bookingPageState extends State<bookingPage> {
                           child: Column(
                             children: [
                               Container(
-                                padding: const EdgeInsets.only(top: 12, right: 20),
+                                padding:
+                                    const EdgeInsets.only(top: 12, right: 20),
                                 child: RoundedInputField(
                                   hintText: "Masukkan nama lengkapmu",
                                   icon: Icons.person_2_rounded,
                                   onChanged: (value) {
                                     name = value.trim();
                                   },
+                                  initialValue: currentUser?.displayName,
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.only(top: 12, right: 20),
+                                padding:
+                                    const EdgeInsets.only(top: 12, right: 20),
                                 child: RoundedInputField(
                                   hintText: "Masukkan nomor telepon",
                                   icon: Icons.call,
@@ -292,13 +308,15 @@ class _bookingPageState extends State<bookingPage> {
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.only(top: 12, right: 20),
+                                padding:
+                                    const EdgeInsets.only(top: 12, right: 20),
                                 child: RoundedInputField(
                                   hintText: "Masukkan alamat email",
                                   icon: Icons.email_rounded,
                                   onChanged: (value) {
                                     email = value.trim();
                                   },
+                                  initialValue: currentUser?.email,
                                 ),
                               ),
                             ],
@@ -441,14 +459,16 @@ class _bookingPageState extends State<bookingPage> {
                           child: Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.only(left: 5, top: 40),
+                                padding:
+                                    const EdgeInsets.only(left: 5, top: 40),
                                 child: IconButton(
                                   icon: const Icon(Icons.remove),
                                   onPressed: decrement,
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.only(left: 110, bottom: 15),
+                                padding: const EdgeInsets.only(
+                                    left: 110, bottom: 15),
                                 child: Column(
                                   children: [
                                     Image.asset('assets/user.png'),
@@ -467,7 +487,8 @@ class _bookingPageState extends State<bookingPage> {
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.only(left: 100, top: 40),
+                                padding:
+                                    const EdgeInsets.only(left: 100, top: 40),
                                 child: IconButton(
                                   icon: const Icon(Icons.add),
                                   onPressed: increment,

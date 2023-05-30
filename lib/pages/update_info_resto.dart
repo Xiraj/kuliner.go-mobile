@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +12,7 @@ class UpdateInfo extends StatefulWidget {
   final String jamBuka;
   final String kisaranHarga;
   final String alamatRestoran;
+  final String urlRestoran;
   final String imageUrl;
   final String fasilitas;
 
@@ -26,6 +26,7 @@ class UpdateInfo extends StatefulWidget {
     required this.fasilitas,
     required this.jamBuka,
     required this.tipeRestoran,
+    required this.urlRestoran,
   });
 
   @override
@@ -36,11 +37,11 @@ class _UpdateInfoState extends State<UpdateInfo> {
   final formKey = GlobalKey<FormState>();
   String selectedImagePath = '';
   late String tipeRestoran;
-
   late String detailRestoran;
   late String jamBuka;
-  late String kisaranHarga;
+  String kisaranHarga = '';
   late String alamatRestoran;
+  late String urlRestoran;
   late String fasilitas;
   late String imageUrl;
   bool showProgressIndicator = false;
@@ -51,6 +52,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
     jamBuka = widget.jamBuka;
     kisaranHarga = widget.kisaranHarga;
     alamatRestoran = widget.alamatRestoran;
+    urlRestoran = widget.urlRestoran;
     fasilitas = widget.fasilitas;
     imageUrl = widget.imageUrl;
     super.initState();
@@ -70,7 +72,8 @@ class _UpdateInfoState extends State<UpdateInfo> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
                   child: Column(
                     children: [
                       (selectedImagePath == '' && imageUrl != '')
@@ -107,16 +110,16 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           selectImage();
                           setState(() {});
                         },
-                        child: const Text(
-                          'Select',
-                          style: TextStyle(fontSize: 14, color: Colors.white),
-                        ),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(330, 50),
                           backgroundColor: Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(39),
                           ),
+                        ),
+                        child: const Text(
+                          'Select',
+                          style: TextStyle(fontSize: 14, color: Colors.white),
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -180,7 +183,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Detail Restoran tidak boleh kosong';
+                              return 'Jam Buka tidak boleh kosong';
                             }
                             return null;
                           },
@@ -191,20 +194,56 @@ class _UpdateInfoState extends State<UpdateInfo> {
                       const SizedBox(height: 20),
                       SizedBox(
                         width: 360,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Kisaran Harga'),
-                          initialValue: kisaranHarga,
-                          onChanged: (value) {
-                            kisaranHarga = value.trim();
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Kisaran Harga tidak boleh kosong';
-                            }
-                            return null;
-                          },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Kisaran Harga',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Column(
+                              children: [
+                                RadioListTile<String>(
+                                  title: const Text('Rp 5.000 - 50.000'),
+                                  value: 'Rp 5.000 - 50.000',
+                                  groupValue: kisaranHarga,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      kisaranHarga = value!;
+                                    });
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  title: const Text('Rp 50.000 - 100.000'),
+                                  value: 'Rp 50.000 - 100.000',
+                                  groupValue: kisaranHarga,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      kisaranHarga = value!;
+                                    });
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  title: const Text('Lebih dari Rp 100.000'),
+                                  value: 'Lebih dari Rp 100.000',
+                                  groupValue: kisaranHarga,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      kisaranHarga = value!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                            if (kisaranHarga.isEmpty)
+                              const Text(
+                                'Pilih satu pilihan',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -233,6 +272,27 @@ class _UpdateInfoState extends State<UpdateInfo> {
                         width: 360,
                         child: TextFormField(
                           decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'URL Restoran',
+                          ),
+                          initialValue: urlRestoran,
+                          onChanged: (value) {
+                            urlRestoran = value.trim();
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'URL Restoran tidak boleh kosong';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.url,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: 360,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Fasilitas'),
                           initialValue: fasilitas,
@@ -241,7 +301,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Alamat Restoran tidak boleh kosong';
+                              return 'Fasilitas Restoran tidak boleh kosong';
                             }
                             return null;
                           },
@@ -257,10 +317,12 @@ class _UpdateInfoState extends State<UpdateInfo> {
                               detailRestoran.isEmpty ||
                               jamBuka.isEmpty ||
                               kisaranHarga.isEmpty ||
+                              urlRestoran.isEmpty ||
                               alamatRestoran.isEmpty ||
                               fasilitas.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Fill in all fields')));
+                                const SnackBar(
+                                    content: Text('Fill in all fields')));
                           } else {
                             //reference to document
                             final dbmenu = FirebaseFirestore.instance
@@ -298,6 +360,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                               'detailRestoran': detailRestoran,
                               'jamBuka': jamBuka,
                               'alamatRestoran': alamatRestoran,
+                              'urlRestoran': urlRestoran,
                               'kisaranHarga': kisaranHarga,
                               'fasilitasRestoran': fasilitas,
                               'imageUrl': newImageUrl,
@@ -306,13 +369,13 @@ class _UpdateInfoState extends State<UpdateInfo> {
 
                             showProgressIndicator = true;
                             if (widget.id.isEmpty) {
-                              //create document and write data to firebase
                               await dbmenu.set(jsonData).then(
                                 (value) {
                                   tipeRestoran = '';
                                   detailRestoran = '';
                                   jamBuka = '';
                                   alamatRestoran = '';
+                                  urlRestoran = '';
                                   kisaranHarga = '';
                                   fasilitas = '';
                                   imageUrl = '';
@@ -329,6 +392,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                   detailRestoran = '';
                                   jamBuka = '';
                                   alamatRestoran = '';
+                                  urlRestoran = '';
                                   kisaranHarga = '';
                                   fasilitas = '';
                                   imageUrl = '';
@@ -340,7 +404,8 @@ class _UpdateInfoState extends State<UpdateInfo> {
                               );
                             }
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Update successful')));
+                                const SnackBar(
+                                    content: Text('Update successful')));
                           }
                         },
                         shape: RoundedRectangleBorder(
@@ -403,7 +468,8 @@ class _UpdateInfoState extends State<UpdateInfo> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text("No Image Selected !"),
                             ));
                           }

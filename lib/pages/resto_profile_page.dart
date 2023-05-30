@@ -7,6 +7,7 @@ import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
 import 'package:kuliner_go_mobile/pages/update_info_resto.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RestoProfile extends StatefulWidget {
   const RestoProfile({super.key});
@@ -36,7 +37,8 @@ class _RestoProfileState extends State<RestoProfile> {
       await auth.signOut();
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (BuildContext context) => const OptionLoginPage()),
+        MaterialPageRoute(
+            builder: (BuildContext context) => const OptionLoginPage()),
         (route) => false,
       );
     }
@@ -177,7 +179,28 @@ class _RestoProfileState extends State<RestoProfile> {
                                                     ? const Text(
                                                         'Data belum tersedia')
                                                     : Text(
-                                                        '${data['alamatRestoran']}')
+                                                        '${data['alamatRestoran']}',
+                                                      ),
+                                                if (data['urlRestoran']
+                                                    .isNotEmpty)
+                                                  GestureDetector(
+                                                    onTap: () async {
+                                                      final url =
+                                                          data['urlRestoran'];
+                                                      await launchUrl(url);
+                                                    },
+                                                    child: SelectableText(
+                                                      '${data['urlRestoran']}',
+                                                      enableInteractiveSelection:
+                                                          true,
+                                                      style: const TextStyle(
+                                                        color: Colors.blue,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                      ),
+                                                    ),
+                                                  ),
                                               ],
                                             ),
                                             const SizedBox(
@@ -221,6 +244,8 @@ class _RestoProfileState extends State<RestoProfile> {
                                                           '${data['kisaranHarga']}',
                                                       imageUrl:
                                                           '${data['imageUrl']}',
+                                                      urlRestoran:
+                                                          '${data['urlRestoran']}',
                                                     ),
                                                   ),
                                                 );
@@ -268,7 +293,7 @@ class _RestoProfileState extends State<RestoProfile> {
                 ),
                 Positioned(
                   top: 60,
-                  left: 130,
+                  left: 148,
                   child: StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('Restoran')
@@ -281,17 +306,15 @@ class _RestoProfileState extends State<RestoProfile> {
                         var data = snapshot.data!.docs[0];
                         String imageUrl = data['imageUrl'];
                         if (imageUrl.isNotEmpty) {
-                          return Image.network(
-                            imageUrl,
-                            width: 140,
-                            height: 100,
+                          return CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(imageUrl),
                           );
                         }
                       }
-                      return Image.asset(
-                        'assets/users_init.png',
-                        width: 130,
-                        height: 100,
+                      return const CircleAvatar(
+                        radius: 50,
+                        backgroundImage: AssetImage('assets/users_init.png'),
                       );
                     },
                   ),

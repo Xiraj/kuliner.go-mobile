@@ -44,15 +44,12 @@ class _LoginUserState extends State<LoginUser> {
         isLoading = true;
       });
 
-      var bytes = utf8.encode(password);
-      var digest = sha256.convert(bytes);
-      String hashedPassword = digest.toString();
-      await auth.signInWithEmailAndPassword(
-          email: email, password: hashedPassword);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
       await setLoggedIn(true, true, false);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (BuildContext context) => const homeBottomNav()),
+        MaterialPageRoute(
+            builder: (BuildContext context) => const homeBottomNav()),
         (route) => false,
       );
     } on FirebaseAuthException catch (error) {
@@ -86,7 +83,8 @@ class _LoginUserState extends State<LoginUser> {
       await setLoggedIn(true, true, false);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (BuildContext context) => const homeBottomNav()),
+        MaterialPageRoute(
+            builder: (BuildContext context) => const homeBottomNav()),
         (route) => false,
       );
 
@@ -105,17 +103,18 @@ class _LoginUserState extends State<LoginUser> {
   }
 
   checkLoggedInStatus() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-  if (isLoggedIn) {
-    // User is logged in, navigate to the home page
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => const homeBottomNav()),
-      (route) => false,
-    );
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    if (isLoggedIn) {
+      // User is logged in, navigate to the home page
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => const homeBottomNav()),
+        (route) => false,
+      );
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -275,9 +274,10 @@ class _LoginUserState extends State<LoginUser> {
                                               children: <Widget>[
                                                 Expanded(
                                                   child: new Container(
-                                                    margin: const EdgeInsets.only(
-                                                        left: 10.0,
-                                                        right: 20.0),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            left: 10.0,
+                                                            right: 20.0),
                                                     child: const Divider(
                                                       color: greyColor,
                                                       height: 36,
@@ -292,9 +292,10 @@ class _LoginUserState extends State<LoginUser> {
                                                 ),
                                                 Expanded(
                                                   child: Container(
-                                                    margin: const EdgeInsets.only(
-                                                        left: 20.0,
-                                                        right: 10.0),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            left: 20.0,
+                                                            right: 10.0),
                                                     child: const Divider(
                                                       color: greyColor,
                                                       height: 36,

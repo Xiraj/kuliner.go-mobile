@@ -138,7 +138,8 @@ class _HomePageState extends State<HomePage> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                              side: const BorderSide(width: 1, color: greyColor),
+                              side:
+                                  const BorderSide(width: 1, color: greyColor),
                               borderRadius: BorderRadius.circular(50),
                             ),
                           ),
@@ -293,13 +294,21 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height - 460,
                             child: ListView.separated(
-                              itemCount: 3,
+                              itemCount: docs.length > 3 ? 3 : docs.length,
                               separatorBuilder: (context, index) =>
                                   const SizedBox(height: 8),
                               itemBuilder: (context, index) {
                                 final resto = docs[index];
                                 final rate = rates[index];
                                 final distance = distances[index];
+
+                                if (resto['imageUrl'].isEmpty ||
+                                    resto['username'].isEmpty ||
+                                    rate.isEmpty ||
+                                    distance.isEmpty) {
+                                  return const SizedBox.shrink();
+                                }
+
                                 return Column(
                                   children: [
                                     Row(
