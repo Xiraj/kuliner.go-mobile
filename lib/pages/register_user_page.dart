@@ -12,8 +12,6 @@ import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_password_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
 
 class RegisterUser extends StatefulWidget {
   const RegisterUser({super.key});
@@ -37,12 +35,10 @@ class _RegisterUserState extends State<RegisterUser> {
       setState(() {
         isLoading = true;
       });
-      var bytes = utf8.encode(password);
-      var digest = sha256.convert(bytes);
-      String hashedPassword = digest.toString();
+      
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
-        password: hashedPassword,
+        password: password,
       );
 
       User? user = userCredential.user;
@@ -53,7 +49,7 @@ class _RegisterUserState extends State<RegisterUser> {
           'id': id,
           'username': username,
           'email': email,
-          'password': hashedPassword,
+         
         },
       );
       Navigator.pushAndRemoveUntil(

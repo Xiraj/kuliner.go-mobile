@@ -11,8 +11,6 @@ import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_password_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
 
 class LoginResto extends StatefulWidget {
   const LoginResto({super.key});
@@ -42,11 +40,9 @@ class _LoginRestoState extends State<LoginResto> {
         isLoading = true;
       });
 
-      var bytes = utf8.encode(password);
-      var digest = sha256.convert(bytes);
-      String hashedPassword = digest.toString();
+     
       await auth.signInWithEmailAndPassword(
-          email: email, password: hashedPassword);
+          email: email, password: password);
       await setLoggedIn(true, false, true);
       Navigator.pushAndRemoveUntil(
         context,

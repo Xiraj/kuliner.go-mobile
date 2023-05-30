@@ -9,8 +9,6 @@ import 'package:kuliner_go_mobile/theme.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_password_field.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -34,14 +32,11 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         isLoading = true;
       });
-      var bytes = utf8.encode(password);
-      var digest = sha256.convert(bytes);
-      String hashedPassword = digest.toString();
+
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
-        password: hashedPassword,
+        password: password,
       );
-
       User? user = userCredential.user;
       user?.updateDisplayName(username);
       String id = user?.uid ?? '';
@@ -50,17 +45,17 @@ class _RegisterPageState extends State<RegisterPage> {
           'id': id,
           'username': username,
           'email': email,
-          'password': hashedPassword,
           'imageUrl': '',
           'tipeRestoran': '',
           'detailRestoran': '',
           'jamBuka': '',
           'alamatRestoran': '',
+          'urlRestoran': '',
           'kisaranHarga': '',
           'fasilitasRestoran': '',
         },
       );
-      
+
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (BuildContext context) => LoginResto()),

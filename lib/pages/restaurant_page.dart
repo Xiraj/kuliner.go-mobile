@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kuliner_go_mobile/components/cardReview.dart';
+import 'package:kuliner_go_mobile/pages/review_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 import './booking.dart';
-import '../components/ulasan.dart';
 import '../components/custom_app_bar.dart';
 
 class restaurantPage extends StatelessWidget {
@@ -43,8 +45,8 @@ class restaurantPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                          padding:
-                              const EdgeInsets.only(left: 20, bottom: 20, top: 12),
+                          padding: const EdgeInsets.only(
+                              left: 20, bottom: 20, top: 12),
                           child: Text(
                             '${resto['username']}',
                             style: const TextStyle(
@@ -127,7 +129,8 @@ class restaurantPage extends StatelessWidget {
                               children: [
                                 Container(
                                   width: 520,
-                                  padding: const EdgeInsets.only(left: 40, right: 30),
+                                  padding: const EdgeInsets.only(
+                                      left: 40, right: 30),
                                   child: Text(
                                     '${resto['jamBuka']}',
                                     style: const TextStyle(fontSize: 14),
@@ -146,17 +149,15 @@ class restaurantPage extends StatelessWidget {
                           childrenPadding: const EdgeInsets.only(left: 12),
                           leading: const Icon(Icons.attach_money_outlined),
                           children: <Widget>[
-                            Container(
-                              child: ListTile(
-                                leading: const Padding(
-                                  padding: EdgeInsets.only(top: 5),
-                                  child: Image(
-                                      image: AssetImage('assets/dollar.png')),
-                                ),
-                                title: Text(
-                                  '\t | ${resto['kisaranHarga']}',
-                                  style: const TextStyle(fontSize: 14),
-                                ),
+                            ListTile(
+                              leading: const Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Image(
+                                    image: AssetImage('assets/dollar.png')),
+                              ),
+                              title: Text(
+                                '\t | ${resto['kisaranHarga']}',
+                                style: const TextStyle(fontSize: 14),
                               ),
                             ),
                           ],
@@ -203,9 +204,6 @@ class restaurantPage extends StatelessWidget {
                           childrenPadding: const EdgeInsets.only(left: 12),
                           leading: const Icon(Icons.location_on),
                           children: <Widget>[
-                            Center(
-                              child: Image.asset('assets/map.png'),
-                            ),
                             const SizedBox(
                               height: 16,
                             ),
@@ -213,12 +211,32 @@ class restaurantPage extends StatelessWidget {
                               children: [
                                 Container(
                                   width: 520,
-                                  padding: const EdgeInsets.only(left: 40, right: 30),
+                                  padding: const EdgeInsets.only(
+                                      left: 40, right: 30),
                                   child: Text(
                                     '${resto['alamatRestoran']}',
                                     style: const TextStyle(fontSize: 14),
                                   ),
-                                )
+                                ),
+                                Container(
+                                  width: 520,
+                                  padding: const EdgeInsets.only(
+                                      left: 40, right: 30),
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      final url = resto['urlRestoran'];
+                                      await launchUrl(url);
+                                    },
+                                    child: SelectableText(
+                                      '${resto['urlRestoran']}',
+                                      enableInteractiveSelection: true,
+                                      style: const TextStyle(
+                                        color: Colors.blue,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             const SizedBox(
@@ -236,7 +254,8 @@ class restaurantPage extends StatelessWidget {
                           children: <Widget>[
                             Container(
                               width: 520,
-                              padding: const EdgeInsets.only(left: 40, right: 30),
+                              padding:
+                                  const EdgeInsets.only(left: 40, right: 30),
                               child: Text(
                                 '${resto['fasilitasRestoran']}',
                                 style: const TextStyle(fontSize: 14),
@@ -270,14 +289,62 @@ class restaurantPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const ulasanPage(),
+                    Column(
+                      children: <Widget>[
+                        ExpansionTile(
+                          title: Row(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  const Icon(Icons.chat_outlined),
+                                  const SizedBox(width: 8),
+                                  const Text('Ulasan'),
+                                ],
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => reviewPage(
+                                              resto: resto,
+                                            )),
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          children: <Widget>[
+                            Column(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: CardReview(
+                                    imageUrl: 'assets/prof.png',
+                                    username: 'Alexander Yupo',
+                                    comments:
+                                        '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 12),
                     Center(
                       child: Container(
                         width: 300,
                         decoration: BoxDecoration(
                             color: Colors.blue,
-                            borderRadius: const BorderRadius.all(Radius.circular(50)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(50)),
                             border: Border.all(
                               width: 0,
                             )),
@@ -288,11 +355,15 @@ class restaurantPage extends StatelessWidget {
                           ),
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => bookingPage(
-                                          resto: resto,
-                                        )));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => bookingPage(
+                                  resto: resto,
+                                  email: '',
+                                  username: '',
+                                ),
+                              ),
+                            );
                           },
                           child: const Text('Pesan Tempat'),
                         ),
