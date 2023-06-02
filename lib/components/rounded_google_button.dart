@@ -29,9 +29,6 @@ class GoogleButton extends StatelessWidget {
     );
   }
 
-  //Used:ElevatedButton as FlatButton is deprecated.
-  //Here we have to apply customizations to Button by inheriting the styleFrom
-
   Widget newElevatedButton() {
     return ElevatedButton(
       onPressed: press,
@@ -42,7 +39,6 @@ class GoogleButton extends StatelessWidget {
             side: BorderSide(color: textColor)),
         padding: const EdgeInsets.symmetric(
           horizontal: 40,
-          // vertical: 20,
         ),
         textStyle: GoogleFonts.poppins(
           color: color,

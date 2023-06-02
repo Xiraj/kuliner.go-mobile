@@ -13,9 +13,6 @@ import 'package:kuliner_go_mobile/components/rounded_password_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
-
 class LoginUser extends StatefulWidget {
   const LoginUser({super.key});
 
@@ -97,7 +94,6 @@ class _LoginUserState extends State<LoginUser> {
       setState(() {
         isLoading = false;
       });
-      print(error);
       return null;
     }
   }
@@ -106,7 +102,6 @@ class _LoginUserState extends State<LoginUser> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
     if (isLoggedIn) {
-      // User is logged in, navigate to the home page
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

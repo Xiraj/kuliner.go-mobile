@@ -142,7 +142,8 @@ class RestoMenu extends StatelessWidget {
                                       imageUrl: menu['imageUrl'],
                                       desc: menu['deskripsi'],
                                       menuName: menu['namaMenu'],
-                                      harga: 'Rp. ${menu['harga']}',
+                                      quantity: menu['quantity'],
+                                      harga: menu['harga'],
                                     ),
                                     Row(
                                       children: [
@@ -160,6 +161,8 @@ class RestoMenu extends StatelessWidget {
                                                       .docs[index]['namaMenu'],
                                                   price: snapshot.data!
                                                       .docs[index]['harga'],
+                                                  quantity: snapshot.data!
+                                                      .docs[index]['quantity'],
                                                   menuId: snapshot.data!
                                                       .docs[index]['menuid'],
                                                 ),
@@ -209,12 +212,24 @@ class RestoMenu extends StatelessWidget {
                                               final imageFileName =
                                                   snapshot.data!.docs[index]
                                                       ['image_filename'];
-                                              await FirebaseStorage.instance
-                                                  .ref()
-                                                  .child(
-                                                      'menu_images/$imageFileName')
-                                                  .delete();
-                                              // Delete the menu item document from Firestore
+
+                                              try {
+                                                // Construct the reference to the file in Firebase Storage
+                                                final storageRef =
+                                                    FirebaseStorage.instance
+                                                        .ref()
+                                                        .child('menu_images')
+                                                        .child(imageFileName);
+
+                                                // Delete the image file from Firebase Storage
+                                                await storageRef.delete();
+                                              } catch (error) {
+                                                // Handle any errors that occur during image deletion
+                                                print(
+                                                    'Error deleting image: $error');
+                                              }
+
+                                              // Delete the menu document from Firestore
                                               await docData.delete();
                                             }
                                           },

@@ -19,42 +19,64 @@ class _FormAddMenuState extends State<FormAddMenu> {
   String selectedImagePath = '';
   late String name;
   late String desc;
-  late String price;
-  Future<void> saveMenu() async {
-    if (!formKey.currentState!.validate()) {
-      return;
-    }
-    formKey.currentState!.save();
+  late int price;
+  int quantity = 0;
 
-    try {
-      // Upload gambar ke Firebase Storage
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child('menu_images')
-          .child('${DateTime.now().toIso8601String()}.jpg');
-      final uploadTask = ref.putFile(File(selectedImagePath));
-      final snapshot = await uploadTask.whenComplete(() => null);
-      final downloadUrl = await snapshot.ref.getDownloadURL();
-      final newMenuDoc =
-          await FirebaseFirestore.instance.collection('Menu').add({
-        'namaMenu': name,
-        'deskripsi': desc,
-        'harga': price,
-        'imageUrl': downloadUrl,
-        'image_filename': snapshot.ref.name,
-        'restaurantId': FirebaseAuth.instance.currentUser!.uid,
-      });
-
-      final menuId = newMenuDoc.id;
-      await FirebaseFirestore.instance.collection('Menu').doc(menuId).update({
-        'menuid': menuId,
-      });
-
-      Navigator.of(context).pop();
-    } catch (error) {
-      print(error);
-    }
+  void incrementQuantity() {
+    setState(() {
+      quantity++;
+    });
   }
+
+  void decrementQuantity() {
+    setState(() {
+      if (quantity > 0) {
+        quantity--;
+      }
+    });
+  }
+
+  Future<void> tambahMenu() async {
+  try {
+    final newMenuDoc =
+        await FirebaseFirestore.instance.collection('Menu').add({
+      'namaMenu': name,
+      'deskripsi': desc,
+      'harga': price,
+      'quantity': quantity,
+      'restaurantId': FirebaseAuth.instance.currentUser!.uid,
+      'imageUrl': '',
+      'image_filename': '',
+    });
+
+    final String menuId = newMenuDoc.id;
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('menu_images')
+        .child('$menuId.jpg');
+    final uploadTask = ref.putFile(File(selectedImagePath));
+    final snapshot = await uploadTask.whenComplete(() => null);
+    final imageUrl = await snapshot.ref.getDownloadURL();
+
+    await FirebaseFirestore.instance.collection('Menu').doc(menuId).update({
+      'menuid': menuId,
+      'imageUrl': imageUrl,
+      'image_filename': '$menuId.jpg',
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Data menu berhasil ditambahkan')),
+    );
+    Navigator.pop(context);
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Terjadi kesalahan: $error')),
+    );
+  }
+}
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +92,8 @@ class _FormAddMenuState extends State<FormAddMenu> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
                   child: Column(
                     children: [
                       selectedImagePath == ''
@@ -86,29 +109,23 @@ class _FormAddMenuState extends State<FormAddMenu> {
                               width: 180,
                               fit: BoxFit.fill,
                             ),
-                      const Text(
-                        'Select Image',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20.0),
-                      ),
                       const SizedBox(
                         height: 20.0,
                       ),
                       ElevatedButton(
                         onPressed: () async {
                           selectImage();
-                          setState(() {});
                         },
-                        child: const Text(
-                          'Select',
-                          style: TextStyle(fontSize: 14, color: Colors.white),
-                        ),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(350, 60),
                           backgroundColor: Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(39),
                           ),
+                        ),
+                        child: Text(
+                          'Select Image',
+                          style: whiteTextStyle,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -158,6 +175,39 @@ class _FormAddMenuState extends State<FormAddMenu> {
                         ),
                       ),
                       const SizedBox(height: 20),
+                      const Text(
+                        'Quantity',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(
+                        width: 330,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              onPressed: decrementQuantity,
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(8),
+                              ),
+                              child: const Icon(Icons.remove),
+                            ),
+                            Text(
+                              quantity.toString(),
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            ElevatedButton(
+                              onPressed: incrementQuantity,
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(8),
+                              ),
+                              child: const Icon(Icons.add),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
                       SizedBox(
                         width: 330,
                         child: TextFormField(
@@ -165,7 +215,7 @@ class _FormAddMenuState extends State<FormAddMenu> {
                               border: OutlineInputBorder(),
                               labelText: 'Harga Menu'),
                           onChanged: (value) {
-                            price = value.trim();
+                            price = int.parse(value.trim());
                           },
                           keyboardType: TextInputType.number,
                           validator: (value) {
@@ -179,10 +229,17 @@ class _FormAddMenuState extends State<FormAddMenu> {
                       const SizedBox(height: 20),
                       RoundedButton(
                         text: 'Tambah',
-                        press: () {
-                          saveMenu();
+                        press: () async {
+                          if (formKey.currentState!.validate()) {
+                            await tambahMenu();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Isi field yang kosong')),
+                            );
+                          }
                         },
-                        height: 70,
+                        height: 60,
                       ),
                     ],
                   ),
@@ -225,7 +282,8 @@ class _FormAddMenuState extends State<FormAddMenu> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text("No Image Selected !"),
                             ));
                           }
@@ -256,7 +314,8 @@ class _FormAddMenuState extends State<FormAddMenu> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text("No Image Captured !"),
                             ));
                           }

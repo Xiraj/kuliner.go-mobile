@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class CardResto extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final String restoName;
   final String rate;
   final String distance;
@@ -17,7 +17,9 @@ class CardResto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.network(imageUrl, width: 140, height: 120),
+        imageUrl != null && imageUrl!.isNotEmpty
+            ? Image.network(imageUrl!, width: 140, height: 120)
+            : Image.asset("assets/emptyresto.png", width: 140, height: 120),
         const SizedBox(
           width: 14,
         ),

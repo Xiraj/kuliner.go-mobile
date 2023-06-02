@@ -33,11 +33,19 @@ class restaurantPage extends StatelessWidget {
                           left: 12.0, top: 15.0, right: 12.0, bottom: 10),
                       child: Column(
                         children: <Widget>[
-                          Image.network(
-                            resto['imageUrl'],
-                            width: 700,
-                            fit: BoxFit.cover,
-                          ),
+                          if (resto['imageUrl'] != null &&
+                              resto['imageUrl'].isNotEmpty)
+                            Image.network(
+                              resto['imageUrl'],
+                              width: 700,
+                              fit: BoxFit.cover,
+                            )
+                          else
+                            Image.asset(
+                              'assets/emptyresto.png',
+                              width: 700,
+                              fit: BoxFit.cover,
+                            ),
                         ],
                       ),
                     ),
@@ -122,22 +130,36 @@ class restaurantPage extends StatelessWidget {
                       children: <Widget>[
                         ExpansionTile(
                           title: const Text('Jam Buka'),
-                          childrenPadding: const EdgeInsets.only(left: 12),
+                          childrenPadding: const EdgeInsets.all(20),
                           leading: const Icon(Icons.access_time),
                           children: <Widget>[
-                            Column(
-                              children: [
-                                Container(
-                                  width: 520,
-                                  padding: const EdgeInsets.only(
-                                      left: 40, right: 30),
-                                  child: Text(
-                                    '${resto['jamBuka']}',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                )
-                              ],
-                            )
+                            ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: resto['hariBuka'].length,
+                              separatorBuilder: (context, index) =>
+                                  const Divider(),
+                              itemBuilder: (context, index) {
+                                String day = resto['hariBuka'][index];
+                                String openingTime = resto['jamBuka'];
+                                String closingTime = resto['jamTutup'];
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        day,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      '$openingTime - $closingTime',
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ],
@@ -170,29 +192,40 @@ class restaurantPage extends StatelessWidget {
                           title: const Text('Daftar Menu'),
                           leading: const Icon(Icons.restaurant_menu_sharp),
                           children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  padding: const EdgeInsets.only(left: 12),
-                                  child: Image.asset('assets/menu1.png'),
-                                ),
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  padding: const EdgeInsets.only(left: 12),
-                                  child: Image.asset('assets/menu2.png'),
-                                ),
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  padding: const EdgeInsets.only(left: 12),
-                                  child: Image.asset('assets/menu3.png'),
-                                )
-                              ],
-                            )
+                            StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('Menu')
+                                  .where('restaurantId', isEqualTo: resto.id)
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Center(
+                                      child: Text('Error: ${snapshot.error}'));
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+                                final querySnapshot = snapshot.data;
+                                if (querySnapshot!.size == 0) {
+                                  return const Center(
+                                      child: Text(
+                                          'Tidak ada data menu yang ditemukan'));
+                                }
+                                return Row(
+                                  children: querySnapshot.docs.map((doc) {
+                                    final menuImageUrl = doc.get('imageUrl');
+                                    return Container(
+                                      width: 70,
+                                      height: 70,
+                                      padding: const EdgeInsets.only(left: 12),
+                                      child: Image.network(menuImageUrl),
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ],
@@ -222,9 +255,9 @@ class restaurantPage extends StatelessWidget {
                                   width: 520,
                                   padding: const EdgeInsets.only(
                                       left: 40, right: 30),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      final url = resto['urlRestoran'];
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      final url = Uri.parse(resto['urlRestoran']);
                                       await launchUrl(url);
                                     },
                                     child: SelectableText(
@@ -307,12 +340,13 @@ class restaurantPage extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => reviewPage(
-                                              resto: resto,
-                                            )),
+                                      builder: (context) => reviewPage(
+                                        resto: resto,
+                                      ),
+                                    ),
                                   );
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.add,
                                   color: Colors.black,
                                 ),

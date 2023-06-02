@@ -5,19 +5,21 @@ class CardMenu extends StatelessWidget {
   final String imageUrl;
   final String menuName;
   final String desc;
-  final String harga;
+  final int harga;
+  final int quantity;
 
   const CardMenu(
       {required this.imageUrl,
       required this.menuName,
       required this.desc,
-      required this.harga});
+      required this.harga,
+      required this.quantity});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.network(imageUrl, width: 80, height: 80),
+        Image.network(imageUrl, width: 100, height: 100),
         const SizedBox(
           width: 14,
         ),
@@ -38,7 +40,7 @@ class CardMenu extends StatelessWidget {
                   desc,
                   overflow: TextOverflow.clip,
                   style: blackTextStyle.copyWith(
-                      fontSize: 10, fontWeight: FontWeight.w600),
+                      fontSize: 12, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 5),
               ],
@@ -46,7 +48,19 @@ class CardMenu extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  harga,
+                  'Rp $harga',
+                  style: blackTextStyle.copyWith(
+                      fontSize: 12, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  'Quantity: $quantity',
                   style: blackTextStyle.copyWith(
                       fontSize: 12, fontWeight: FontWeight.w600),
                 ),

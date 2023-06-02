@@ -302,13 +302,6 @@ class _HomePageState extends State<HomePage> {
                                 final rate = rates[index];
                                 final distance = distances[index];
 
-                                if (resto['imageUrl'].isEmpty ||
-                                    resto['username'].isEmpty ||
-                                    rate.isEmpty ||
-                                    distance.isEmpty) {
-                                  return const SizedBox.shrink();
-                                }
-
                                 return Column(
                                   children: [
                                     Row(

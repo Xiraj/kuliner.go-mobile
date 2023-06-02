@@ -7,8 +7,6 @@ import 'package:kuliner_go_mobile/pages/menu_resto.dart';
 import 'package:kuliner_go_mobile/pages/restaurant_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
-import 'home_bottomnav.dart';
-
 class bookingPage extends StatefulWidget {
   final DocumentSnapshot resto;
   final String email;
