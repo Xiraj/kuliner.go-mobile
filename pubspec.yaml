@@ -55,7 +55,6 @@ dependencies:
   flutter_spinkit: ^5.2.0
   url_launcher: ^6.1.11
   day_picker: ^2.2.0
-  weekday_selector: ^1.1.0
   get: 
 dev_dependencies:
   flutter_test:

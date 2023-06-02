@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 import 'package:day_picker/day_picker.dart';
-import 'package:weekday_selector/weekday_selector.dart';
 
 class UpdateInfo extends StatefulWidget {
   final String id;
