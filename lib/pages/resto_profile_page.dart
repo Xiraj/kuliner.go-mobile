@@ -148,10 +148,50 @@ class _RestoProfileState extends State<RestoProfile> {
                                               icon: 'assets/time.png',
                                               title: 'Jam Buka',
                                               children: [
-                                                data['jamBuka'].isEmpty
-                                                    ? const Text(
-                                                        'Data belum tersedia')
-                                                    : Text('${data['jamBuka']}')
+                                                if (data['hariBuka'].isEmpty ||
+                                                    data['jamBuka'].isEmpty ||
+                                                    data['jamTutup'].isEmpty)
+                                                  const Text(
+                                                      'Data belum tersedia')
+                                                else
+                                                  ListView.separated(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
+                                                    itemCount:
+                                                        data['hariBuka'].length,
+                                                    separatorBuilder:
+                                                        (context, index) =>
+                                                            const Divider(),
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      String day =
+                                                          data['hariBuka']
+                                                              [index];
+                                                      String openingTime =
+                                                          data['jamBuka'];
+                                                      String closingTime =
+                                                          data['jamTutup'];
+                                                      return Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text(
+                                                              day,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                            ),
+                                                          ),
+                                                          const Spacer(),
+                                                          Text(
+                                                            '$openingTime - $closingTime',
+                                                            textAlign:
+                                                                TextAlign.right,
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  ),
                                               ],
                                             ),
                                             const SizedBox(
@@ -183,10 +223,10 @@ class _RestoProfileState extends State<RestoProfile> {
                                                       ),
                                                 if (data['urlRestoran']
                                                     .isNotEmpty)
-                                                  GestureDetector(
-                                                    onTap: () async {
-                                                      final url =
-                                                          data['urlRestoran'];
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      final url = Uri.parse(
+                                                          data['urlRestoran']);
                                                       await launchUrl(url);
                                                     },
                                                     child: SelectableText(
@@ -234,8 +274,13 @@ class _RestoProfileState extends State<RestoProfile> {
                                                           '${data['tipeRestoran']}',
                                                       detailRestoran:
                                                           '${data['detailRestoran']}',
+                                                      hariBuka:
+                                                          '${data['hariBuka']}'
+                                                              .split(', '),
                                                       jamBuka:
                                                           '${data['jamBuka']}',
+                                                      jamTutup:
+                                                          '${data['jamTutup']}',
                                                       alamatRestoran:
                                                           '${data['alamatRestoran']}',
                                                       fasilitas:

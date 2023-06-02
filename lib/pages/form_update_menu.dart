@@ -3,13 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class UpdateMenu extends StatefulWidget {
   final String menuId;
   final String menuName;
   final String description;
-  final String price;
+  final int price;
+  final int quantity;
   final String imageUrl;
 
   UpdateMenu({
@@ -18,6 +20,7 @@ class UpdateMenu extends StatefulWidget {
     required this.description,
     required this.price,
     required this.imageUrl,
+    required this.quantity,
   });
 
   @override
@@ -29,16 +32,73 @@ class _UpdateMenuState extends State<UpdateMenu> {
   String selectedImagePath = '';
   late String menuName;
   late String description;
-  late String price;
+  late int price;
   late String imageUrl;
-  bool showProgressIndicator = false;
+  late int quantity;
+
+  void incrementQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrementQuantity() {
+    setState(() {
+      if (quantity > 0) {
+        quantity--;
+      }
+    });
+  }
+
   @override
   void initState() {
     menuName = widget.menuName;
     description = widget.description;
     price = widget.price;
     imageUrl = widget.imageUrl;
+    quantity = widget.quantity;
     super.initState();
+  }
+
+  Future<void> updateMenu() async {
+    try {
+      final docRef =
+          FirebaseFirestore.instance.collection('Menu').doc(widget.menuId);
+      if (selectedImagePath != '') {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('menu_images')
+            .child('${widget.menuId}.jpg');
+        final uploadTask = ref.putFile(File(selectedImagePath));
+        final snapshot = await uploadTask.whenComplete(() => null);
+        final imageUrl = await snapshot.ref.getDownloadURL();
+
+        await docRef.update({
+          'namaMenu': menuName,
+          'deskripsi': description,
+          'harga': price,
+          'quantity': quantity,
+          'imageUrl': imageUrl,
+          'image_filename': snapshot.ref.name,
+        });
+      } else {
+        await docRef.update({
+          'namaMenu': menuName,
+          'deskripsi': description,
+          'harga': price,
+          'quantity': quantity,
+        });
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Data menu berhasil diperbarui')),
+      );
+      Navigator.pop(context);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Terjadi kesalahan: $error')),
+      );
+    }
   }
 
   @override
@@ -55,7 +115,8 @@ class _UpdateMenuState extends State<UpdateMenu> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
                   child: Column(
                     children: [
                       (selectedImagePath == '' && imageUrl != '')
@@ -73,29 +134,23 @@ class _UpdateMenuState extends State<UpdateMenu> {
                                   fit: BoxFit.fill,
                                 )
                               : Container(),
-                      const Text(
-                        'Select Image',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20.0),
-                      ),
                       const SizedBox(
                         height: 20.0,
                       ),
                       ElevatedButton(
                         onPressed: () async {
                           selectImage();
-                          setState(() {});
                         },
-                        child: const Text(
-                          'Select',
-                          style: TextStyle(fontSize: 14, color: Colors.white),
-                        ),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(350, 60),
                           backgroundColor: Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(39),
                           ),
+                        ),
+                        child: Text(
+                          'Select Image',
+                          style: whiteTextStyle,
                         ),
                       ),
                       const SizedBox(
@@ -149,126 +204,75 @@ class _UpdateMenuState extends State<UpdateMenu> {
                         ),
                       ),
                       const SizedBox(height: 20),
+                      const Text(
+                        'Quantity',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(
+                        width: 330,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              onPressed: decrementQuantity,
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(8),
+                              ),
+                              child: const Icon(Icons.remove),
+                            ),
+                            Text(
+                              quantity.toString(),
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            ElevatedButton(
+                              onPressed: incrementQuantity,
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(8),
+                              ),
+                              child: const Icon(Icons.add),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 25),
                       SizedBox(
                         width: 330,
                         child: TextFormField(
+                          initialValue: price.toString(),
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Harga Menu'),
-                          keyboardType: TextInputType.number,
-                          initialValue: price.toString(),
                           onChanged: (value) {
-                            price = value.trim();
+                            price = int.parse(value.trim());
                           },
+                          keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Harga tidak boleh kosong';
                             }
+                            return null;
                           },
                         ),
                       ),
                       const SizedBox(height: 20),
-                      MaterialButton(
-                        onPressed: () async {
-                          setState(() {});
-                          if (menuName.isEmpty ||
-                              description.isEmpty ||
-                              price.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Fill in all fields')));
-                          } else {
-                            //reference to document
-                            final dbmenu = FirebaseFirestore.instance
-                                .collection('Menu')
-                                .doc(widget.menuId.isNotEmpty
-                                    ? widget.menuId
-                                    : null);
-                            String docID = '';
+                      RoundedButton(
+                        text: 'Submit',
+                        press: () async {
+                          if (formKey.currentState!.validate()) {
                             if (widget.menuId.isNotEmpty) {
-                              docID = widget.menuId;
+                              await updateMenu();
                             } else {
-                              docID = dbmenu.id;
-                            }
-                            final ref = FirebaseStorage.instance
-                                .ref()
-                                .child('menu_images')
-                                .child(docID);
-                            if (widget.menuId.isNotEmpty) {
-                              final oldImageUrl = await dbmenu
-                                  .get()
-                                  .then((doc) => doc.data()!['imageUrl']);
-                              final oldFile = File(oldImageUrl);
-                              if (oldFile.existsSync()) {
-                                await oldFile.delete();
-                              }
-                            }
-
-                            final uploadTask =
-                                ref.putFile(File(selectedImagePath));
-                            final snapshot =
-                                await uploadTask.whenComplete(() => null);
-                            final newImageUrl =
-                                await snapshot.ref.getDownloadURL();
-
-                            final jsonData = {
-                              'namaMenu': menuName,
-                              'deskripsi': description,
-                              'harga': price,
-                              'imageUrl': newImageUrl,
-                              'menuid': docID
-                            };
-
-                            showProgressIndicator = true;
-                            if (widget.menuId.isEmpty) {
-                              //create document and write data to firebase
-                              await dbmenu.set(jsonData).then(
-                                (value) {
-                                  menuName = '';
-                                  description = '';
-                                  price = '';
-                                  imageUrl = '';
-                                  showProgressIndicator = false;
-                                  setState(() {
-                                    Navigator.pop(context);
-                                  });
-                                },
-                              );
-                            } else {
-                              await dbmenu.update(jsonData).then(
-                                (value) {
-                                  menuName = '';
-                                  description = '';
-                                  price = '';
-                                  imageUrl = '';
-                                  showProgressIndicator = false;
-                                  setState(() {
-                                    Navigator.pop(context);
-                                  });
-                                },
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Isi field yang kosong')),
                               );
                             }
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Update successful')));
                           }
                         },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        minWidth: 330,
-                        height: 50,
-                        color: blueColor,
-                        child: showProgressIndicator
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : const Text(
-                                'Submit',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300),
-                              ),
-                      ),
+                        height: 60,
+                      )
                     ],
                   ),
                 ),
@@ -310,7 +314,8 @@ class _UpdateMenuState extends State<UpdateMenu> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text("No Image Selected !"),
                             ));
                           }
@@ -341,7 +346,8 @@ class _UpdateMenuState extends State<UpdateMenu> {
                             Navigator.pop(context);
                             setState(() {});
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text("No Image Captured !"),
                             ));
                           }

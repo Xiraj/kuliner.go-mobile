@@ -4,12 +4,16 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kuliner_go_mobile/theme.dart';
+import 'package:day_picker/day_picker.dart';
+import 'package:weekday_selector/weekday_selector.dart';
 
 class UpdateInfo extends StatefulWidget {
   final String id;
   final String tipeRestoran;
   final String detailRestoran;
+  final List<String> hariBuka;
   final String jamBuka;
+  final String jamTutup;
   final String kisaranHarga;
   final String alamatRestoran;
   final String urlRestoran;
@@ -27,6 +31,8 @@ class UpdateInfo extends StatefulWidget {
     required this.jamBuka,
     required this.tipeRestoran,
     required this.urlRestoran,
+    required this.hariBuka,
+    required this.jamTutup,
   });
 
   @override
@@ -36,9 +42,13 @@ class UpdateInfo extends StatefulWidget {
 class _UpdateInfoState extends State<UpdateInfo> {
   final formKey = GlobalKey<FormState>();
   String selectedImagePath = '';
-  late String tipeRestoran;
+  String? tipeRestoran;
+  late List<String> hariBuka;
+  late String jamTutup;
   late String detailRestoran;
-  late String jamBuka;
+  String jamBuka = '';
+  TimeOfDay? selectedTimeTutup;
+  TimeOfDay? selectedTimeBuka;
   String kisaranHarga = '';
   late String alamatRestoran;
   late String urlRestoran;
@@ -50,6 +60,8 @@ class _UpdateInfoState extends State<UpdateInfo> {
     tipeRestoran = widget.tipeRestoran;
     detailRestoran = widget.detailRestoran;
     jamBuka = widget.jamBuka;
+    hariBuka = widget.hariBuka;
+    jamTutup = widget.jamTutup;
     kisaranHarga = widget.kisaranHarga;
     alamatRestoran = widget.alamatRestoran;
     urlRestoran = widget.urlRestoran;
@@ -58,8 +70,162 @@ class _UpdateInfoState extends State<UpdateInfo> {
     super.initState();
   }
 
+  void selectTime(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (pickedTime != null) {
+      setState(() {
+        selectedTimeBuka = pickedTime;
+      });
+    }
+  }
+
+  Future<void> selectTimeClose(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (pickedTime != null) {
+      setState(() {
+        selectedTimeTutup = pickedTime;
+      });
+    }
+  }
+
+  Future<void> tambahRestoran() async {
+    try {
+      final String jamBuka =
+          selectedTimeBuka != null ? selectedTimeBuka!.format(context) : '';
+      final String jamTutup =
+          selectedTimeBuka != null ? selectedTimeTutup!.format(context) : '';
+      final newMenuDoc =
+          await FirebaseFirestore.instance.collection('Restoran').add({
+        'tipeRestoran': tipeRestoran,
+        'detailRestoran': detailRestoran,
+        'hariBuka': hariBuka,
+        'jamBuka': jamBuka,
+        'jamTutup': jamTutup,
+        'kisaranHarga': kisaranHarga,
+        'alamatRestoran': alamatRestoran,
+        'urlRestoran': urlRestoran,
+        'fasilitasRestoran': fasilitas,
+        'imageUrl': '',
+      });
+      final String id = newMenuDoc.id;
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('restoran_images')
+          .child('$id.jpg');
+      final uploadTask = ref.putFile(File(selectedImagePath));
+      final snapshot = await uploadTask.whenComplete(() => null);
+      final imageUrl = await snapshot.ref.getDownloadURL();
+      await FirebaseFirestore.instance.collection('Restoran').doc(id).update({
+        'id': id,
+        'imageUrl': imageUrl,
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Data restoran berhasil ditambahkan')),
+      );
+      Navigator.pop(context);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Terjadi kesalahan: $error')),
+      );
+    }
+  }
+
+  Future<void> updateRestoran() async {
+    try {
+      final String jamBuka =
+          selectedTimeBuka != null ? selectedTimeBuka!.format(context) : '';
+      final String jamTutup =
+          selectedTimeTutup != null ? selectedTimeTutup!.format(context) : '';
+      final docRef =
+          FirebaseFirestore.instance.collection('Restoran').doc(widget.id);
+
+      Map<String, dynamic> dataToUpdate = {
+        'tipeRestoran': tipeRestoran,
+        'detailRestoran': detailRestoran,
+        'kisaranHarga': kisaranHarga,
+        'alamatRestoran': alamatRestoran,
+        'urlRestoran': urlRestoran,
+        'fasilitasRestoran': fasilitas,
+      };
+
+      if (selectedImagePath != '') {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('restoran_images')
+            .child('${widget.id}.jpg');
+        final uploadTask = ref.putFile(File(selectedImagePath));
+        final snapshot = await uploadTask.whenComplete(() => null);
+        final imageUrl = await snapshot.ref.getDownloadURL();
+
+        dataToUpdate['imageUrl'] = imageUrl;
+      }
+
+      if (jamBuka.isNotEmpty) {
+        dataToUpdate['jamBuka'] = jamBuka;
+      }
+
+      if (jamTutup.isNotEmpty) {
+        dataToUpdate['jamTutup'] = jamTutup;
+      }
+
+      if (hariBuka.isNotEmpty) {
+        dataToUpdate['hariBuka'] = hariBuka;
+      }
+
+      await docRef.update(dataToUpdate);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Data restoran berhasil diperbarui')),
+      );
+
+      Navigator.pop(context);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Terjadi kesalahan: $error')),
+      );
+    }
+  }
+
+  String? validateTime(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Waktu tidak boleh kosong';
+    }
+    return null;
+  }
+
+  final List<DayInWeek> days = [
+    DayInWeek("S", dayKey: "Senin"),
+    DayInWeek("S", dayKey: "Selasa"),
+    DayInWeek("R", dayKey: "Rabu"),
+    DayInWeek("K", dayKey: "Kamis"),
+    DayInWeek("J", dayKey: "Jumat"),
+    DayInWeek("S", dayKey: "Sabtu"),
+    DayInWeek("M", dayKey: "Minggu"),
+  ];
+
+  List<String> tipeItems = [
+    'Pilih tipe restoran',
+    'Kafe',
+    'Kaki lima',
+    'Bar & Lounge',
+    'Kedai',
+    'Food Court'
+  ];
+
   @override
   Widget build(BuildContext context) {
+    if (tipeRestoran == null || !tipeItems.contains(tipeRestoran)) {
+      tipeRestoran = tipeItems[0];
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Informasi Restoran'),
@@ -97,18 +263,9 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                   fit: BoxFit.fill,
                                 ),
                       const SizedBox(height: 20.0),
-                      const Text(
-                        'Select Image',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20.0),
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
                       ElevatedButton(
                         onPressed: () async {
                           selectImage();
-                          setState(() {});
                         },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(330, 50),
@@ -117,9 +274,9 @@ class _UpdateInfoState extends State<UpdateInfo> {
                             borderRadius: BorderRadius.circular(39),
                           ),
                         ),
-                        child: const Text(
-                          'Select',
-                          style: TextStyle(fontSize: 14, color: Colors.white),
+                        child: Text(
+                          'Select Image',
+                          style: whiteTextStyle,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -133,16 +290,27 @@ class _UpdateInfoState extends State<UpdateInfo> {
                     children: [
                       SizedBox(
                         width: 360,
-                        child: TextFormField(
+                        child: DropdownButtonFormField<String>(
                           decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Tipe Restoran'),
-                          initialValue: tipeRestoran,
+                            border: OutlineInputBorder(),
+                            labelText: 'Tipe Restoran',
+                          ),
+                          value: tipeRestoran,
                           onChanged: (value) {
-                            tipeRestoran = value.trim();
+                            setState(() {
+                              tipeRestoran = value;
+                            });
                           },
+                          items: tipeItems.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value == 'Pilih tipe restoran') {
                               return 'Tipe restoran tidak boleh kosong';
                             }
                             return null;
@@ -170,28 +338,107 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           maxLines: 3,
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 30),
+                      const Text(
+                        'Jam Buka Restoran',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
                       SizedBox(
                         width: 360,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Jam Buka'),
-                          initialValue: jamBuka,
-                          onChanged: (value) {
-                            jamBuka = value.trim();
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Jam Buka tidak boleh kosong';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SelectWeekDays(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            days: days,
+                            border: true,
+                            selectedDayTextColor: Colors.blue,
+                            unSelectedDayTextColor: Colors.grey,
+                            backgroundColor: Colors.transparent,
+                            daysBorderColor: Colors.grey,
+                            onSelect: (value) {
+                              widget.hariBuka;
+                              setState(
+                                () {
+                                  hariBuka = value;
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ),
                       const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                selectTime(context);
+                              },
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  labelText: 'Jam Buka',
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  errorText: validateTime(
+                                      selectedTimeBuka != null
+                                          ? selectedTimeBuka!.format(context)
+                                          : widget.jamBuka),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        selectedTimeBuka != null
+                                            ? selectedTimeBuka!.format(context)
+                                            : widget.jamBuka,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                selectTimeClose(context);
+                              },
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  labelText: 'Jam Tutup',
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  errorText: validateTime(
+                                      selectedTimeTutup != null
+                                          ? selectedTimeTutup!.format(context)
+                                          : widget.jamTutup),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        selectedTimeTutup != null
+                                            ? selectedTimeTutup!.format(context)
+                                            : widget.jamTutup,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                        ],
+                      ),
+                      const SizedBox(height: 30),
                       SizedBox(
                         width: 360,
                         child: Column(
@@ -207,8 +454,8 @@ class _UpdateInfoState extends State<UpdateInfo> {
                             Column(
                               children: [
                                 RadioListTile<String>(
-                                  title: const Text('Rp 5.000 - 50.000'),
-                                  value: 'Rp 5.000 - 50.000',
+                                  title: const Text('Dibawah Rp75.000'),
+                                  value: 'Dibawah Rp75.000',
                                   groupValue: kisaranHarga,
                                   onChanged: (value) {
                                     setState(() {
@@ -217,8 +464,8 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                   },
                                 ),
                                 RadioListTile<String>(
-                                  title: const Text('Rp 50.000 - 100.000'),
-                                  value: 'Rp 50.000 - 100.000',
+                                  title: const Text('Rp200.000 - Rp325.000'),
+                                  value: 'Rp200.000 - Rp325.000',
                                   groupValue: kisaranHarga,
                                   onChanged: (value) {
                                     setState(() {
@@ -227,8 +474,18 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                   },
                                 ),
                                 RadioListTile<String>(
-                                  title: const Text('Lebih dari Rp 100.000'),
-                                  value: 'Lebih dari Rp 100.000',
+                                  title: const Text('Rp325.000 - Rp450.000'),
+                                  value: 'Rp325.000 - Rp450.000',
+                                  groupValue: kisaranHarga,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      kisaranHarga = value!;
+                                    });
+                                  },
+                                ),
+                                RadioListTile<String>(
+                                  title: const Text('Diatas Rp450.000'),
+                                  value: 'Diatas Rp450.000',
                                   groupValue: kisaranHarga,
                                   onChanged: (value) {
                                     setState(() {
@@ -310,121 +567,27 @@ class _UpdateInfoState extends State<UpdateInfo> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      MaterialButton(
+                      ElevatedButton(
                         onPressed: () async {
-                          setState(() {});
-                          if (tipeRestoran.isEmpty ||
-                              detailRestoran.isEmpty ||
-                              jamBuka.isEmpty ||
-                              kisaranHarga.isEmpty ||
-                              urlRestoran.isEmpty ||
-                              alamatRestoran.isEmpty ||
-                              fasilitas.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Fill in all fields')));
-                          } else {
-                            //reference to document
-                            final dbmenu = FirebaseFirestore.instance
-                                .collection('Restoran')
-                                .doc(widget.id.isNotEmpty ? widget.id : null);
-                            String docID = '';
+                          if (formKey.currentState!.validate()) {
                             if (widget.id.isNotEmpty) {
-                              docID = widget.id;
+                              await updateRestoran();
                             } else {
-                              docID = dbmenu.id;
+                              await tambahRestoran();
                             }
-                            final ref = FirebaseStorage.instance
-                                .ref()
-                                .child('restoran_images')
-                                .child(docID);
-                            if (widget.id.isNotEmpty) {
-                              final oldImageUrl = await dbmenu
-                                  .get()
-                                  .then((doc) => doc.data()!['imageUrl']);
-                              final oldFile = File(oldImageUrl);
-                              if (oldFile.existsSync()) {
-                                await oldFile.delete();
-                              }
-                            }
-
-                            final uploadTask =
-                                ref.putFile(File(selectedImagePath));
-                            final snapshot =
-                                await uploadTask.whenComplete(() => null);
-                            final newImageUrl =
-                                await snapshot.ref.getDownloadURL();
-
-                            final jsonData = {
-                              'tipeRestoran': tipeRestoran,
-                              'detailRestoran': detailRestoran,
-                              'jamBuka': jamBuka,
-                              'alamatRestoran': alamatRestoran,
-                              'urlRestoran': urlRestoran,
-                              'kisaranHarga': kisaranHarga,
-                              'fasilitasRestoran': fasilitas,
-                              'imageUrl': newImageUrl,
-                              'id': docID
-                            };
-
-                            showProgressIndicator = true;
-                            if (widget.id.isEmpty) {
-                              await dbmenu.set(jsonData).then(
-                                (value) {
-                                  tipeRestoran = '';
-                                  detailRestoran = '';
-                                  jamBuka = '';
-                                  alamatRestoran = '';
-                                  urlRestoran = '';
-                                  kisaranHarga = '';
-                                  fasilitas = '';
-                                  imageUrl = '';
-                                  showProgressIndicator = false;
-                                  setState(() {
-                                    Navigator.pop(context);
-                                  });
-                                },
-                              );
-                            } else {
-                              await dbmenu.update(jsonData).then(
-                                (value) {
-                                  tipeRestoran = '';
-                                  detailRestoran = '';
-                                  jamBuka = '';
-                                  alamatRestoran = '';
-                                  urlRestoran = '';
-                                  kisaranHarga = '';
-                                  fasilitas = '';
-                                  imageUrl = '';
-                                  showProgressIndicator = false;
-                                  setState(() {
-                                    Navigator.pop(context);
-                                  });
-                                },
-                              );
-                            }
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Update successful')));
                           }
                         },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(330, 50),
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(39),
+                          ),
                         ),
-                        minWidth: 360,
-                        height: 70,
-                        color: blueColor,
-                        child: showProgressIndicator
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : const Text(
-                                'Submit',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300),
-                              ),
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(fontSize: 14, color: Colors.white),
+                        ),
                       ),
                       const SizedBox(height: 20)
                     ],
