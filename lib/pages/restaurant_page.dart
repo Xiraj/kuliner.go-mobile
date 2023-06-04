@@ -288,22 +288,28 @@ class restaurantPage extends StatelessWidget {
                                     style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
-                                Container(
-                                  width: 520,
-                                  padding: const EdgeInsets.only(
-                                      left: 40, right: 30),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      final url =
-                                          Uri.parse(resto['urlRestoran']);
-                                      await launchUrl(url);
-                                    },
-                                    child: Text(
-                                      '${resto['urlRestoran']}',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.blue,
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: Container(
+                                    width: 300,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(50)),
+                                    ),
+                                    child: TextButton(
+                                      style: ButtonStyle(
+                                        foregroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.white),
                                       ),
+                                      onPressed: () async {
+                                        final url =
+                                            Uri.parse(resto['urlRestoran']);
+                                        await launchUrl(url);
+                                      },
+                                      child: const Text('Alamat Restaurant'),
                                     ),
                                   ),
                                 ),
@@ -485,8 +491,14 @@ class restaurantPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
+        onPressed: () async {
+          Uri phone = Uri.parse('tel:+1234556789');
+          if (await launchUrl(phone)) {
+            print("Dialer Opened");
+          } else {
+            print("Dailer is not opened");
+          }
+        },
         child: const Icon(Icons.call),
       ),
     );

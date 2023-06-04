@@ -223,19 +223,36 @@ class _RestoProfileState extends State<RestoProfile> {
                                                       ),
                                                 if (data['urlRestoran']
                                                     .isNotEmpty)
-                                                  GestureDetector(
-                                                    onTap: () async {
-                                                      final url = Uri.parse(
-                                                          data['urlRestoran']);
-                                                      await launchUrl(url);
-                                                    },
-                                                    child: Text(
-                                                      '${data['urlRestoran']}',
-                                                      style: const TextStyle(
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 20),
+                                                    child: Container(
+                                                      width: 300,
+                                                      decoration: BoxDecoration(
                                                         color: Colors.blue,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                    .all(
+                                                                Radius.circular(
+                                                                    50)),
+                                                      ),
+                                                      child: TextButton(
+                                                        style: ButtonStyle(
+                                                          foregroundColor:
+                                                              MaterialStateProperty
+                                                                  .all<Color>(
+                                                                      Colors
+                                                                          .white),
+                                                        ),
+                                                        onPressed: () async {
+                                                          final url = Uri.parse(
+                                                              data[
+                                                                  'urlRestoran']);
+                                                          await launchUrl(url);
+                                                        },
+                                                        child: const Text(
+                                                            'Alamat Restaurant'),
                                                       ),
                                                     ),
                                                   ),

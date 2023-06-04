@@ -78,51 +78,57 @@ class _SearchState extends State<Search> {
             ),
           ),
           if (searchResults.isNotEmpty)
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: whiteColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: ListView.separated(
-                itemCount: searchResults.length,
-                separatorBuilder: (context, index) =>
-                    const Divider(),
-                itemBuilder: (context, index) {
-                  final restaurantData =
-                      searchResults[index].data() as Map<String, dynamic>;
-                  final name = restaurantData['username'] as String;
-                  final location = restaurantData['alamatRestoran'] as String;
-                  final image = restaurantData['imageUrl'];
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: whiteColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ListView.separated(
+                  itemCount: searchResults.length,
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemBuilder: (context, index) {
+                    final restaurantData =
+                        searchResults[index].data() as Map<String, dynamic>;
+                    final name = restaurantData['username'] as String;
+                    final location = restaurantData['alamatRestoran'] as String;
+                    final image = restaurantData['imageUrl'];
 
-                  return Column(
-                    children: [
-                      ListTile(
-                        title: Text(name),
-                        subtitle: Text(location),
-                        leading: Image.network(image),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => restaurantPage(
-                                resto: searchResults[index],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      const Divider(),
-                    ],
-                  );
-                },
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: ListTile(
+                            title: Text(name),
+                            subtitle: Text(location),
+                            leading: Image.network(image),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => restaurantPage(
+                                    resto: searchResults[index],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        const Divider(),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
         ],
