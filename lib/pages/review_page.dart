@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class reviewPage extends StatefulWidget {
   final DocumentSnapshot resto;
@@ -13,6 +14,67 @@ class reviewPage extends StatefulWidget {
 }
 
 class _reviewPageState extends State<reviewPage> {
+  late String commentText = '';
+  late double rate = 0;
+  late TextEditingController commentController = TextEditingController();
+  Future<void> submitReview() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      String? userId = user?.uid;
+      String? username = user?.displayName;
+
+      await FirebaseFirestore.instance.collection('Review').add({
+        'restoId': widget.resto.id,
+        'userId': userId,
+        'username': username,
+        'commentText': commentText,
+        'rate': rate,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      FocusScope.of(context).unfocus();
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Success'),
+            content: const Text('Review submitted successfully!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    rate = 0;
+                    commentController.text = '';
+                  });
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Failed to submit review.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,7 +174,7 @@ class _reviewPageState extends State<reviewPage> {
                 ),
                 const SizedBox(height: 30.0),
                 RatingBar.builder(
-                  initialRating: 0,
+                  initialRating: rate,
                   minRating: 1,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
@@ -122,7 +184,11 @@ class _reviewPageState extends State<reviewPage> {
                     Icons.star,
                     color: Colors.amber,
                   ),
-                  onRatingUpdate: (rating) {},
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      rate = rating;
+                    });
+                  },
                   unratedColor: const Color.fromARGB(255, 219, 216, 216),
                 ),
                 const SizedBox(height: 50.0),
@@ -153,6 +219,16 @@ class _reviewPageState extends State<reviewPage> {
                       ),
                       border: OutlineInputBorder(borderSide: BorderSide.none),
                     ),
+                    controller: commentController,
+                    onChanged: (value) {
+                      commentText = value.trim();
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Ulasan tidak boleh kosong';
+                      }
+                      return null;
+                    },
                     maxLines: 5,
                   ),
                 ),
@@ -163,7 +239,9 @@ class _reviewPageState extends State<reviewPage> {
                 const SizedBox(height: 80.0),
                 RoundedButton(
                   text: 'Submit',
-                  press: () {},
+                  press: () {
+                    submitReview();
+                  },
                   height: 70,
                 ),
               ],

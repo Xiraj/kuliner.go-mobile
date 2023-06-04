@@ -19,7 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? gender;
   List<String> rates = [
     "4.8",
     "3.5",
@@ -110,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Search()
+                  Search()
                 ],
               ),
             ),
