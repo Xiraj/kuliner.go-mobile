@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kuliner_go_mobile/components/cardResto.dart';
 import 'package:kuliner_go_mobile/components/cardReview.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
@@ -8,6 +9,28 @@ class RestoReviewList extends StatefulWidget {
 
   @override
   State<RestoReviewList> createState() => _RestoReviewListState();
+}
+
+String getTimeAgo(dynamic timestamp) {
+  DateTime currentTime = DateTime.now();
+  DateTime uploadTime = (timestamp as Timestamp).toDate();
+
+  Duration difference = currentTime.difference(uploadTime);
+
+  if (difference.inMinutes < 1) {
+    return 'Just now';
+  } else if (difference.inHours < 1) {
+    int minutes = difference.inMinutes;
+    return '$minutes minute${minutes > 1 ? 's' : ''} ago';
+  } else if (difference.inDays < 1) {
+    int hours = difference.inHours;
+    return '$hours hour${hours > 1 ? 's' : ''} ago';
+  } else if (difference.inDays < 7) {
+    int days = difference.inDays;
+    return '$days day${days > 1 ? 's' : ''} ago';
+  } else {
+    return uploadTime.toString();
+  }
 }
 
 class _RestoReviewListState extends State<RestoReviewList> {
@@ -83,7 +106,8 @@ class _RestoReviewListState extends State<RestoReviewList> {
             ),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(30),
+              height: MediaQuery.of(context).size.height,
+              padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(35),
@@ -93,6 +117,7 @@ class _RestoReviewListState extends State<RestoReviewList> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Text(
@@ -107,50 +132,49 @@ class _RestoReviewListState extends State<RestoReviewList> {
                   ),
                   Column(
                     children: [
-                      const CardReview(
-                        imageUrl: 'assets/prof.png',
-                        username: 'Alexander Yupo',
-                        comments:
-                            '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const CardReview(
-                        imageUrl: 'assets/prof2.png',
-                        username: 'Charlie Van Houten',
-                        comments:
-                            '“Rasa makanannya enak banget, seperti buatan bunda, cocok buat yang homesick contohnya saya, ehhe”',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const CardReview(
-                        imageUrl: 'assets/prof3.png',
-                        username: 'Mamang Garox',
-                        comments:
-                            '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const CardReview(
-                        imageUrl: 'assets/prof4.png',
-                        username: 'Bolehhhh',
-                        comments:
-                            '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const CardReview(
-                        imageUrl: 'assets/prof5.png',
-                        username: 'Jeremia Carlo :)',
-                        comments:
-                            '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
-                      ),
-                      const SizedBox(
-                        height: 20,
+                      const SizedBox(height: 10),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('Review')
+                            .where('restoId',
+                                isEqualTo:
+                                    FirebaseAuth.instance.currentUser!.uid)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+
+                          if (snapshot.data!.docs.isEmpty) {
+                            return const Text(
+                                'Belum ada pelanggan yang review restoran mu');
+                          }
+
+                          return Column(
+                            children: snapshot.data!.docs
+                                .map((DocumentSnapshot document) {
+                              Map<String, dynamic> reviewData =
+                                  document.data() as Map<String, dynamic>;
+                              double rating = reviewData['rate'] ?? 0.0;
+                              dynamic timestamp = reviewData['timestamp'];
+                              return Padding(
+                                padding: const EdgeInsets.all(2),
+                                child: CardReview(
+                                  imageUrl: 'assets/users_init.png',
+                                  username: reviewData['username'],
+                                  rating: rating,
+                                  timeUpload: timestamp,
+                                  comments: '"${reviewData['commentText']}"',
+                                ),
+                              );
+                            }).toList(),
+                          );
+                        },
                       ),
                     ],
                   ),

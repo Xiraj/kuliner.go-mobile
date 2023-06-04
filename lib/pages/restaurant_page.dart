@@ -58,7 +58,9 @@ class restaurantPage extends StatelessWidget {
                           child: Text(
                             '${resto['username']}',
                             style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                         const Padding(
@@ -69,14 +71,20 @@ class restaurantPage extends StatelessWidget {
                             color: Colors.blue,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 40, bottom: 8),
-                          child: Text(
-                            'Buka Sekarang',
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.blue),
+                        const Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 40, bottom: 8),
+                              child: Text(
+                                'Buka Sekarang',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -213,16 +221,45 @@ class restaurantPage extends StatelessWidget {
                                       child: Text(
                                           'Tidak ada data menu yang ditemukan'));
                                 }
-                                return Row(
-                                  children: querySnapshot.docs.map((doc) {
-                                    final menuImageUrl = doc.get('imageUrl');
-                                    return Container(
-                                      width: 70,
-                                      height: 70,
-                                      padding: const EdgeInsets.only(left: 12),
-                                      child: Image.network(menuImageUrl),
-                                    );
-                                  }).toList(),
+
+                                final documents = querySnapshot.docs;
+                                final menuImages = documents
+                                    .take(5)
+                                    .map((doc) => doc.get('imageUrl'))
+                                    .toList();
+                                final remainingImagesCount =
+                                    documents.length - 5;
+                                return Column(
+                                  children: [
+                                    Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children:
+                                            menuImages.map((menuImageUrl) {
+                                          return Container(
+                                            width: 70,
+                                            height: 70,
+                                            padding:
+                                                const EdgeInsets.only(left: 12),
+                                            child: Image.network(menuImageUrl),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                    if (remainingImagesCount > 0)
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        child: Text(
+                                          '+$remainingImagesCount Menu lainnya',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 );
                               },
                             ),
@@ -255,17 +292,17 @@ class restaurantPage extends StatelessWidget {
                                   width: 520,
                                   padding: const EdgeInsets.only(
                                       left: 40, right: 30),
-                                  child: TextButton(
-                                    onPressed: () async {
-                                      final url = Uri.parse(resto['urlRestoran']);
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      final url =
+                                          Uri.parse(resto['urlRestoran']);
                                       await launchUrl(url);
                                     },
-                                    child: SelectableText(
+                                    child: Text(
                                       '${resto['urlRestoran']}',
-                                      enableInteractiveSelection: true,
                                       style: const TextStyle(
+                                        fontSize: 16,
                                         color: Colors.blue,
-                                        decoration: TextDecoration.underline,
                                       ),
                                     ),
                                   ),
@@ -356,14 +393,50 @@ class restaurantPage extends StatelessWidget {
                           children: <Widget>[
                             Column(
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: CardReview(
-                                    imageUrl: 'assets/prof.png',
-                                    username: 'Alexander Yupo',
-                                    comments:
-                                        '“Penjual sangat ramah bintang 5, makanannya juga enak, harganya sangat cocok untuk kantong kita, cocok buat makan sama ayang, mantap pol!!”',
-                                  ),
+                                StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('Review')
+                                      .where('restoId', isEqualTo: resto.id)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    }
+
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const CircularProgressIndicator();
+                                    }
+
+                                    if (snapshot.data!.docs.isEmpty) {
+                                      return const Text(
+                                          'Belum ada yang review restoran ini');
+                                    }
+
+                                    return Column(
+                                      children: snapshot.data!.docs
+                                          .map((DocumentSnapshot document) {
+                                        Map<String, dynamic> reviewData =
+                                            document.data()
+                                                as Map<String, dynamic>;
+                                        double rating =
+                                            reviewData['rate'] ?? 0.0;
+                                        dynamic timestamp =
+                                            reviewData['timestamp'];
+                                        return Padding(
+                                          padding: const EdgeInsets.all(20),
+                                          child: CardReview(
+                                            imageUrl: 'assets/users_init.png',
+                                            username: reviewData['username'],
+                                            rating: rating,
+                                            timeUpload: timestamp,
+                                            comments:
+                                                '"${reviewData['commentText']}"',
+                                          ),
+                                        );
+                                      }).toList(),
+                                    );
+                                  },
                                 ),
                               ],
                             ),

@@ -223,16 +223,14 @@ class _RestoProfileState extends State<RestoProfile> {
                                                       ),
                                                 if (data['urlRestoran']
                                                     .isNotEmpty)
-                                                  TextButton(
-                                                    onPressed: () async {
+                                                  GestureDetector(
+                                                    onTap: () async {
                                                       final url = Uri.parse(
                                                           data['urlRestoran']);
                                                       await launchUrl(url);
                                                     },
-                                                    child: SelectableText(
+                                                    child: Text(
                                                       '${data['urlRestoran']}',
-                                                      enableInteractiveSelection:
-                                                          true,
                                                       style: const TextStyle(
                                                         color: Colors.blue,
                                                         decoration:
