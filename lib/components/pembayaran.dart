@@ -16,42 +16,38 @@ class _pembayaranPageState extends State<pembayaranPage> {
     return Column(
       children: <Widget>[
         ExpansionTile(
-          title: Text('Debit Card'),
-          childrenPadding: EdgeInsets.only(left: 12),
-          leading: Icon(
+          title: const Text('Debit Card'),
+          childrenPadding: const EdgeInsets.only(left: 12),
+          leading: const Icon(
             Icons.wallet_outlined,
           ),
           children: <Widget>[
-            Container(
-              child: ListTile(
-                leading: Padding(
-                    padding: EdgeInsets.only(bottom: 12),
-                    child: Image.asset('assets/Mandiri.png')),
-                title: Text(
-                  'Mandiri',
-                  style: TextStyle(fontSize: 14),
-                ),
+            ListTile(
+              leading: Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Image.asset('assets/Mandiri.png')),
+              title: const Text(
+                'Mandiri',
+                style: TextStyle(fontSize: 14),
               ),
             ),
           ],
         ),
-        ExpansionTile(
+        const ExpansionTile(
           title: Text('Bayar di tempat'),
           childrenPadding: EdgeInsets.only(left: 12),
           leading: Icon(
             Icons.payments_outlined,
           ),
           children: <Widget>[
-            Container(
-              child: ListTile(
-                leading: Padding(
-                  padding: EdgeInsets.only(bottom: 12),
-                  child: Icon(Icons.person_pin_rounded),
-                ),
-                title: Text(
-                  'Pastikan kamu membawa uang cash dengan harga yang tertera.',
-                  style: TextStyle(fontSize: 14),
-                ),
+            ListTile(
+              leading: Padding(
+                padding: EdgeInsets.only(bottom: 12),
+                child: Icon(Icons.person_pin_rounded),
+              ),
+              title: Text(
+                'Pastikan kamu membawa uang cash dengan harga yang tertera.',
+                style: TextStyle(fontSize: 14),
               ),
             ),
           ],

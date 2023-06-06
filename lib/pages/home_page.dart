@@ -6,6 +6,7 @@ import 'package:kuliner_go_mobile/components/cardCategory.dart';
 import 'package:kuliner_go_mobile/components/cardResto.dart';
 import 'package:kuliner_go_mobile/components/cardPopular.dart';
 import 'package:kuliner_go_mobile/components/search.dart';
+import 'package:kuliner_go_mobile/pages/aneka_nasi_page.dart';
 import 'package:kuliner_go_mobile/pages/near_resto_page.dart';
 import 'package:kuliner_go_mobile/pages/popular_page.dart';
 import 'package:kuliner_go_mobile/pages/restaurant_page.dart';
@@ -20,28 +21,28 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<String> rates = [
-    "4.8",
     "4.6",
+    "3.5",
     "4.2",
+    "4.8",
     "4.0",
-    "4.6",
     "4.1",
     "4.3",
     "4.0",
     "3.2",
-    "3.8",
+    "3.8"
   ];
   List<String> distances = [
     "0.6",
-    "1.2",
     "0.9",
+    "1.2",
     "0.3",
     "1.6",
     "1.0",
     "1.4",
     "1.9",
     "4.0",
-    "2.4",
+    "2.4"
   ];
   @override
   Widget build(BuildContext context) {
@@ -181,9 +182,11 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         width: 80,
                         decoration: BoxDecoration(
-                            border: Border.all(color: greyColor),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(50))),
+                          border: Border.all(color: greyColor),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(50),
+                          ),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
@@ -208,25 +211,35 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      cardCategory(
-                          imageCategory: 'assets/aneka_nasi.png',
-                          title: 'Aneka Nasi'),
-                      SizedBox(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AnekaNasiPage(),
+                            ),
+                          );
+                        },
+                        child: const cardCategory(
+                            imageCategory: 'assets/aneka_nasi.png',
+                            title: 'Aneka Nasi'),
+                      ),
+                      const SizedBox(
                         width: 10,
                       ),
-                      cardCategory(
+                      const cardCategory(
                           imageCategory: 'assets/minuman.png',
                           title: 'Minuman'),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      cardCategory(
+                      const cardCategory(
                           imageCategory: 'assets/seafood.png', title: 'Seafod'),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      cardCategory(
+                      const cardCategory(
                           imageCategory: 'assets/lainnya.png', title: 'Lainnya')
                     ],
                   ),

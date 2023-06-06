@@ -60,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (BuildContext context) => LoginResto()),
+          MaterialPageRoute(builder: (BuildContext context) => const LoginResto()),
           (route) => false);
       Fluttertoast.showToast(
           msg: "Registration successful!",
@@ -126,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ],
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             height: screenHeight * 0.86,
                             child: Container(
                               decoration: const BoxDecoration(

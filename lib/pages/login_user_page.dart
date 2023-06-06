@@ -157,7 +157,7 @@ class _LoginUserState extends State<LoginUser> {
                               ],
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             height: screenHeight * 0.86,
                             child: Container(
                               decoration: const BoxDecoration(
@@ -268,7 +268,7 @@ class _LoginUserState extends State<LoginUser> {
                                             Row(
                                               children: <Widget>[
                                                 Expanded(
-                                                  child: new Container(
+                                                  child: Container(
                                                     margin:
                                                         const EdgeInsets.only(
                                                             left: 10.0,

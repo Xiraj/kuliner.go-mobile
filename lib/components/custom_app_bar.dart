@@ -28,14 +28,14 @@ class CustomAppBar extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => homeBottomNav(),
+                      builder: (context) => const homeBottomNav(),
                     ),
                   );
                 },
                 child: _buildIcon(leftIcon)),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 190),
+            padding: const EdgeInsets.only(left: 190),
             child: Row(
               children: [
                 _buildIcon(midIcon),

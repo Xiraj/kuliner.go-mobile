@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kuliner_go_mobile/components/buttonProfile.dart';
+// import 'package:kuliner_go_mobile/components/buttonProfile.dart';
 import 'package:kuliner_go_mobile/pages/optionLogin_page.dart';
+import 'package:kuliner_go_mobile/pages/payment.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,12 +34,12 @@ class _ProfilePageState extends State<ProfilePage> {
       await setLoggedIn(false, false, false);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (BuildContext context) => const OptionLoginPage()),
+        MaterialPageRoute(
+            builder: (BuildContext context) => const OptionLoginPage()),
         (route) => false,
       );
       await auth.signOut();
       await googleSignIn.signOut();
-     
     }
 
     return Scaffold(
@@ -87,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           height: 60,
                         ),
                         Text(
-                          '$username',
+                          username,
                           style: blackTextStyle.copyWith(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
@@ -103,37 +104,288 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Column(
                           children: [
-                            const ButtonProfile(
-                              icon: 'assets/ulasan.png',
-                              title: 'Ulasan Saya',
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PaymentPage(),
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  ExpansionTile(
+                                    title: const Text('Ulasan Saya'),
+                                    tilePadding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0, vertical: 1.0),
+                                    childrenPadding:
+                                        const EdgeInsets.only(left: 12),
+                                    leading: const Icon(Icons.chat_outlined),
+                                    children: <Widget>[
+                                      Column(
+                                        children: [
+                                          Container(
+                                            width: 520,
+                                            padding: const EdgeInsets.only(
+                                                left: 40, right: 30),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 150,
+                                                  height: 70,
+                                                  padding: const EdgeInsets.only(
+                                                    right: 60,
+                                                  ),
+                                                  child: Image.asset(
+                                                      'assets/Mandiri.png'),
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(top: 16),
+                                                  child: const Text('| \t Mandiri'),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            const ButtonProfile(
-                              icon: 'assets/wallet.png',
-                              title: 'Kartu / Rekening Bank',
+                            // PAYMENT
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PaymentPage(),
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  ExpansionTile(
+                                    title: const Text('Kartu / Rekening Bank'),
+                                    tilePadding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0, vertical: 1.0),
+                                    childrenPadding:
+                                        const EdgeInsets.only(left: 12),
+                                    leading: const Icon(Icons.wallet_rounded),
+                                    children: <Widget>[
+                                      Column(
+                                        children: [
+                                          Container(
+                                            width: 520,
+                                            padding: const EdgeInsets.only(
+                                                left: 40, right: 30),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 150,
+                                                  height: 70,
+                                                  padding: const EdgeInsets.only(
+                                                    right: 60,
+                                                  ),
+                                                  child: Image.asset(
+                                                      'assets/Mandiri.png'),
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(top: 16),
+                                                  child: const Text('| \t Mandiri'),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            //  InkWell(
+                            //   onTap: () {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => const PaymentPage(),
+                            //       ),
+                            //     );
+                            //   },
+                            //   child: const ButtonProfile(
+                            //     icon: 'assets/wallet.png',
+                            //     title: 'Kartu / Rekening Bank',
+                            //   ),
+                            // ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PaymentPage(),
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  ExpansionTile(
+                                    title: const Text('Notifikasi'),
+                                    tilePadding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0, vertical: 1.0),
+                                    childrenPadding:
+                                        const EdgeInsets.only(left: 12),
+                                    leading: const Icon(Icons.notifications),
+                                    children: <Widget>[
+                                      Column(
+                                        children: [
+                                          Container(
+                                            width: 520,
+                                            padding: const EdgeInsets.only(
+                                                left: 40, right: 30),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 150,
+                                                  height: 70,
+                                                  padding: const EdgeInsets.only(
+                                                    right: 60,
+                                                  ),
+                                                  child: Image.asset(
+                                                      'assets/Mandiri.png'),
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(top: 16),
+                                                  child: const Text('| \t Mandiri'),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            const ButtonProfile(
-                              icon: 'assets/notification.png',
-                              title: 'Notifikasi',
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PaymentPage(),
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  ExpansionTile(
+                                    title: const Text('Pilihan Bahasa'),
+                                    tilePadding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0, vertical: 1.0),
+                                    childrenPadding:
+                                        const EdgeInsets.only(left: 12),
+                                    leading:
+                                        const Icon(Icons.g_translate_rounded),
+                                    children: <Widget>[
+                                      Column(
+                                        children: [
+                                          Container(
+                                            width: 520,
+                                            padding: const EdgeInsets.only(
+                                                left: 40, right: 30),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 150,
+                                                  height: 70,
+                                                  padding: const EdgeInsets.only(
+                                                    right: 60,
+                                                  ),
+                                                  child: Image.asset(
+                                                      'assets/Mandiri.png'),
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(top: 16),
+                                                  child: const Text('| \t Mandiri'),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            const ButtonProfile(
-                              icon: 'assets/language.png',
-                              title: 'Pilihan Bahasa',
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const ButtonProfile(
-                              icon: 'assets/rating.png',
-                              title: 'Beri Rating',
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PaymentPage(),
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  ExpansionTile(
+                                    title: const Text('Beri Rating'),
+                                    tilePadding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0, vertical: 1.0),
+                                    childrenPadding:
+                                        const EdgeInsets.only(left: 12),
+                                    leading: const Icon(Icons.star),
+                                    children: <Widget>[
+                                      Column(
+                                        children: [
+                                          Container(
+                                            width: 520,
+                                            padding: const EdgeInsets.only(
+                                                left: 40, right: 30),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 150,
+                                                  height: 70,
+                                                  padding: const EdgeInsets.only(
+                                                    right: 60,
+                                                  ),
+                                                  child: Image.asset(
+                                                      'assets/Mandiri.png'),
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(top: 16),
+                                                  child: const Text('| \t Mandiri'),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(
                               height: 16,

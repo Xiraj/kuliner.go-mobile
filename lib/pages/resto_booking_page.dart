@@ -105,8 +105,8 @@ class _RestoBookingListState extends State<RestoBookingList> {
                     height: 10,
                   ),
                   Column(
-                    children: [
-                      const CardBooking(
+                    children: const [
+                      CardBooking(
                         imageUrl: 'assets/mcd.png',
                         bookingCode: '#BOOK12495813735',
                         username: 'Jeremia Carlo',
@@ -114,10 +114,10 @@ class _RestoBookingListState extends State<RestoBookingList> {
                         status: 'Pending',
                         textColor: greyColor,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
-                      const CardBooking(
+                      CardBooking(
                         imageUrl: 'assets/mcd.png',
                         bookingCode: '#BOOK21351516575',
                         username: 'Jeremia Carlo',
@@ -125,10 +125,10 @@ class _RestoBookingListState extends State<RestoBookingList> {
                         status: 'Success',
                         textColor: Colors.greenAccent,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
-                      const CardBooking(
+                      CardBooking(
                         imageUrl: 'assets/mcd.png',
                         bookingCode: '#BOOK21351516575',
                         username: 'Jeremia Carlo',
@@ -136,10 +136,10 @@ class _RestoBookingListState extends State<RestoBookingList> {
                         status: 'Cancel',
                         textColor: Colors.red,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
-                      const CardBooking(
+                      CardBooking(
                         imageUrl: 'assets/mcd.png',
                         bookingCode: '#BOOK21351516575',
                         username: 'Jeremia Carlo',
