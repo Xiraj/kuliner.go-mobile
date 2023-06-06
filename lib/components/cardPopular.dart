@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class cardPopular extends StatelessWidget {
-  final String imagePopular;
+  final String? imagePopular;
   final String restoName;
   final String distance;
   final String time;
@@ -24,12 +24,11 @@ class cardPopular extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Image.asset(
-                  imagePopular,
-                  width: 250,
-                  height: 185,
-                  fit: BoxFit.cover,
-                ),
+                imagePopular != null && imagePopular!.isNotEmpty
+            ? Image.network(imagePopular!, width: 250,
+                  height: 185,fit: BoxFit.cover,)
+            : Image.asset("assets/emptyresto.png", width: 250,
+                  height: 185,fit: BoxFit.cover,),
                 Align(
                   alignment: Alignment.topRight,
                   child: Container(
