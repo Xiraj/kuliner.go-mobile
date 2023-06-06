@@ -229,13 +229,13 @@ class _RestoProfileState extends State<RestoProfile> {
                                                         vertical: 20),
                                                     child: Container(
                                                       width: 300,
-                                                      decoration: BoxDecoration(
+                                                      decoration:
+                                                          const BoxDecoration(
                                                         color: Colors.blue,
                                                         borderRadius:
-                                                            const BorderRadius
-                                                                    .all(
-                                                                Radius.circular(
-                                                                    50)),
+                                                            BorderRadius.all(
+                                                          Radius.circular(50),
+                                                        ),
                                                       ),
                                                       child: TextButton(
                                                         style: ButtonStyle(

@@ -67,13 +67,15 @@ class _SearchState extends State<Search> {
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Image.asset('assets/search.png'),
               ),
-              suffixIcon: IconButton(
-                icon: const Icon(
-                  Icons.clear,
-                  color: Colors.black,
-                ),
-                onPressed: clearSearch,
-              ),
+              suffixIcon: searchController.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(
+                        Icons.clear,
+                        color: Colors.black,
+                      ),
+                      onPressed: clearSearch,
+                    )
+                  : null,
               iconColor: blackColor,
             ),
           ),

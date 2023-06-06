@@ -293,9 +293,9 @@ class restaurantPage extends StatelessWidget {
                                       const EdgeInsets.symmetric(vertical: 20),
                                   child: Container(
                                     width: 300,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color: Colors.blue,
-                                      borderRadius: const BorderRadius.all(
+                                      borderRadius: BorderRadius.all(
                                           Radius.circular(50)),
                                     ),
                                     child: TextButton(
@@ -371,10 +371,10 @@ class restaurantPage extends StatelessWidget {
                           title: Row(
                             children: <Widget>[
                               Row(
-                                children: <Widget>[
-                                  const Icon(Icons.chat_outlined),
-                                  const SizedBox(width: 8),
-                                  const Text('Ulasan'),
+                                children: const <Widget>[
+                                  Icon(Icons.chat_outlined),
+                                  SizedBox(width: 8),
+                                  Text('Ulasan'),
                                 ],
                               ),
                               const Spacer(),

@@ -21,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<String> rates = [
     "4.8",
-    "3.5",
+    "4.6",
     "4.2",
     "4.0",
     "4.6",
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     "4.3",
     "4.0",
     "3.2",
-    "3.8"
+    "3.8",
   ];
   List<String> distances = [
     "0.6",
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     "1.4",
     "1.9",
     "4.0",
-    "2.4"
+    "2.4",
   ];
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Search()
+                  const Search()
                 ],
               ),
             ),
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 100,
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
@@ -149,9 +149,7 @@ class _HomePageState extends State<HomePage> {
                                       top: Radius.circular(20))),
                               context: context,
                               builder: (BuildContext context) {
-                                return Container(
-                                  child: const RadioButton(),
-                                );
+                                return const RadioButton();
                               },
                             );
                           },
@@ -174,8 +172,8 @@ class _HomePageState extends State<HomePage> {
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Row(
-                            children: [
-                              const Text("Buka Sekarang"),
+                            children: const [
+                              Text("Buka Sekarang"),
                             ],
                           ),
                         ),
@@ -210,25 +208,25 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const cardCategory(
+                    children: const [
+                      cardCategory(
                           imageCategory: 'assets/aneka_nasi.png',
                           title: 'Aneka Nasi'),
-                      const SizedBox(
+                      SizedBox(
                         width: 10,
                       ),
-                      const cardCategory(
+                      cardCategory(
                           imageCategory: 'assets/minuman.png',
                           title: 'Minuman'),
-                      const SizedBox(
+                      SizedBox(
                         width: 10,
                       ),
-                      const cardCategory(
+                      cardCategory(
                           imageCategory: 'assets/seafood.png', title: 'Seafod'),
-                      const SizedBox(
+                      SizedBox(
                         width: 10,
                       ),
-                      const cardCategory(
+                      cardCategory(
                           imageCategory: 'assets/lainnya.png', title: 'Lainnya')
                     ],
                   ),
@@ -366,36 +364,55 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Container(
+                          SizedBox(
                             height: 290,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                const cardPopular(
-                                  imagePopular: 'assets/warkop_add.jpg',
-                                  restoName: 'Warkop ADD',
-                                  distance: '1.6 km',
-                                  time: '00.00 - 23.59',
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const cardPopular(
-                                  imagePopular: 'assets/warkop_add.jpg',
-                                  restoName: 'Warunk Uhuyy',
-                                  distance: '2.2 km',
-                                  time: '00.00 - 23.59',
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const cardPopular(
-                                  imagePopular: 'assets/warkop_add.jpg',
-                                  restoName: 'Jardin Cafe',
-                                  distance: '3.4 km',
-                                  time: '10.00 - 22.00',
-                                ),
-                              ],
+                            child: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('Restoran')
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  final restaurants = snapshot.data!.docs;
+
+                                  return ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: restaurants.length,
+                                    itemBuilder: (context, index) {
+                                      final restaurantData = restaurants[index]
+                                          .data() as Map<String, dynamic>;
+                                      final imagePopular =
+                                          restaurantData['imageUrl'] as String;
+                                      final restoName =
+                                          restaurantData['username'] as String;
+                                      final distance = distances[index];
+                                      final openingTime =
+                                          restaurantData['jamBuka'] as String;
+                                      final closingTime =
+                                          restaurantData['jamTutup'] as String;
+                                      final time = openingTime.isNotEmpty &&
+                                              closingTime.isNotEmpty
+                                          ? '$openingTime - $closingTime'
+                                          : '00.00 - 00.00';
+
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 20),
+                                        child: cardPopular(
+                                          imagePopular: imagePopular,
+                                          restoName: restoName,
+                                          distance: distance,
+                                          time: time,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return const Text(
+                                      'Error loading data from Firestore');
+                                }
+
+                                return const CircularProgressIndicator();
+                              },
                             ),
                           ),
                         ],
@@ -605,7 +622,7 @@ class _RadioButtonState extends State<RadioButton> {
               padding: const EdgeInsets.only(left: 20, bottom: 20),
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     height: 60,
                     width: 166,
                     child: ElevatedButton(
@@ -626,7 +643,7 @@ class _RadioButtonState extends State<RadioButton> {
                   const SizedBox(
                     width: 20,
                   ),
-                  Container(
+                  SizedBox(
                     height: 60,
                     width: 166,
                     child: ElevatedButton(
