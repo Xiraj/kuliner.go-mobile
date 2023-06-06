@@ -48,474 +48,468 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 // Halaman pertama onboarding
                 ListView(
                   children: [
-                    Container(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 20),
-                            child: Column(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Image.asset('assets/logo.png',
-                                            width: 200)
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const OptionLoginPage()));
-                                          },
-                                          child: const Text(
-                                            'Lewati',
-                                            style: TextStyle(
-                                                color: greyColor,
-                                                fontSize: 16.0,
-                                                decoration:
-                                                    TextDecoration.underline),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 40.0,
-                          ),
-                          Column(
-                            children: [
-                              Stack(
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 20),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Image.asset(
-                                    'assets/vector.png',
-                                    color: blueColor,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Image.asset('assets/logo.png',
+                                          width: 200)
+                                    ],
                                   ),
-                                  Center(
-                                    child: Image.asset(
-                                      'assets/inrestaurant.png',
-                                      width: 350,
-                                      height: 320,
-                                    ),
-                                  )
+                                  Row(
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const OptionLoginPage()));
+                                        },
+                                        child: const Text(
+                                          'Lewati',
+                                          style: TextStyle(
+                                              color: greyColor,
+                                              fontSize: 16.0,
+                                              decoration:
+                                                  TextDecoration.underline),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Pilih restoran\nfavoritemu',
-                                    style: TextStyle(
-                                        color: blackColor,
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 30),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20.0,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Bingung mau makan dimana? Kuliner.Go\nnyediain banyak resto terkenal',
-                                    style: TextStyle(color: blackColor),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 40.0,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 20.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            DotsIndicator(
-                                              dotsCount: 3,
-                                              position: currentPage.toDouble(),
-                                              decorator: const DotsDecorator(
-                                                color: greyColor,
-                                                activeColor: blackColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            ElevatedButton(
-                                                onPressed: () {
-                                                  controller.nextPage(
-                                                      duration: const Duration(
-                                                          milliseconds: 500),
-                                                      curve: Curves.ease);
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                    minimumSize: const Size(167, 66),
-                                                    backgroundColor: blueColor,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30))),
-                                                child: const Text('Selanjutnya')),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(
+                          height: 40.0,
+                        ),
+                        Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Image.asset(
+                                  'assets/vector.png',
+                                  color: blueColor,
+                                ),
+                                Center(
+                                  child: Image.asset(
+                                    'assets/inrestaurant.png',
+                                    width: 350,
+                                    height: 320,
+                                  ),
+                                )
+                              ],
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Pilih restoran\nfavoritemu',
+                                  style: TextStyle(
+                                      color: blackColor,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 30),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Bingung mau makan dimana? Kuliner.Go\nnyediain banyak resto terkenal',
+                                  style: TextStyle(color: blackColor),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 40.0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 20.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          DotsIndicator(
+                                            dotsCount: 3,
+                                            position: currentPage.toDouble(),
+                                            decorator: const DotsDecorator(
+                                              color: greyColor,
+                                              activeColor: blackColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                controller.nextPage(
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.ease);
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  minimumSize: const Size(167, 66),
+                                                  backgroundColor: blueColor,
+                                                  shape:
+                                                      RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      30))),
+                                              child: const Text('Selanjutnya')),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
                 // Halaman kedua onboarding
                 ListView(
                   children: [
-                    Container(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 20),
-                            child: Column(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Image.asset('assets/logo.png',
-                                            width: 200)
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const OptionLoginPage()));
-                                          },
-                                          child: const Text(
-                                            'Lewati',
-                                            style: TextStyle(
-                                                color: greyColor,
-                                                fontSize: 16.0,
-                                                decoration:
-                                                    TextDecoration.underline),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 40.0,
-                          ),
-                          Column(
-                            children: [
-                              Stack(
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 20),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Image.asset(
-                                    'assets/vector.png',
-                                    color: blueColor,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Image.asset('assets/logo.png',
+                                          width: 200)
+                                    ],
                                   ),
-                                  Center(
-                                    child: Image.asset(
-                                      'assets/reviews.png',
-                                      width: 350,
-                                      height: 274,
-                                    ),
-                                  )
+                                  Row(
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const OptionLoginPage()));
+                                        },
+                                        child: const Text(
+                                          'Lewati',
+                                          style: TextStyle(
+                                              color: greyColor,
+                                              fontSize: 16.0,
+                                              decoration:
+                                                  TextDecoration.underline),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 60.0,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Temukan harga\ndan review terbaik',
-                                    style: TextStyle(
-                                        color: blackColor,
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 30),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20.0,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Bingung mau makan dimana? Kuliner.Go\nnyediain banyak resto terkenal',
-                                    style: TextStyle(color: blackColor),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 40.0,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 20.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            DotsIndicator(
-                                              dotsCount: 3,
-                                              position: currentPage.toDouble(),
-                                              decorator: const DotsDecorator(
-                                                color: greyColor,
-                                                activeColor: blackColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            ElevatedButton(
-                                                onPressed: () {
-                                                  controller.nextPage(
-                                                      duration: const Duration(
-                                                          milliseconds: 500),
-                                                      curve: Curves.ease);
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                    minimumSize: const Size(167, 66),
-                                                    backgroundColor: blueColor,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30))),
-                                                child: const Text('Selanjutnya')),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ],
-                          )
-                        ],
-                      ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 40.0,
+                        ),
+                        Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Image.asset(
+                                  'assets/vector.png',
+                                  color: blueColor,
+                                ),
+                                Center(
+                                  child: Image.asset(
+                                    'assets/reviews.png',
+                                    width: 350,
+                                    height: 274,
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 60.0,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Temukan harga\ndan review terbaik',
+                                  style: TextStyle(
+                                      color: blackColor,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 30),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Bingung mau makan dimana? Kuliner.Go\nnyediain banyak resto terkenal',
+                                  style: TextStyle(color: blackColor),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 40.0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 20.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          DotsIndicator(
+                                            dotsCount: 3,
+                                            position: currentPage.toDouble(),
+                                            decorator: const DotsDecorator(
+                                              color: greyColor,
+                                              activeColor: blackColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                controller.nextPage(
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.ease);
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  minimumSize: const Size(167, 66),
+                                                  backgroundColor: blueColor,
+                                                  shape:
+                                                      RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      30))),
+                                              child: const Text('Selanjutnya')),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ],
                 ),
                 // Halaman ketiga onboarding
                 ListView(
                   children: [
-                    Container(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 20),
-                            child: Column(
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Image.asset('assets/logo.png',
-                                            width: 200)
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const OptionLoginPage()));
-                                          },
-                                          child: const Text(
-                                            'Lewati',
-                                            style: TextStyle(
-                                                color: greyColor,
-                                                fontSize: 16.0,
-                                                decoration:
-                                                    TextDecoration.underline),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 40.0,
-                          ),
-                          Column(
-                            children: [
-                              Stack(
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 20),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Image.asset(
-                                    'assets/vector.png',
-                                    color: blueColor,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Image.asset('assets/logo.png',
+                                          width: 200)
+                                    ],
                                   ),
-                                  Center(
-                                    child: Image.asset(
-                                      'assets/payprocessed.png',
-                                      width: 350,
-                                      height: 274,
-                                    ),
-                                  )
+                                  Row(
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const OptionLoginPage()));
+                                        },
+                                        child: const Text(
+                                          'Lewati',
+                                          style: TextStyle(
+                                              color: greyColor,
+                                              fontSize: 16.0,
+                                              decoration:
+                                                  TextDecoration.underline),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
-                              ),
-                              const SizedBox(
-                                height: 60.0,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Reservasi tempat\ndan pesan makanan',
-                                    style: TextStyle(
-                                        color: blackColor,
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 26),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20.0,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Ga perlu dateng ke restoran buat reservasi\ntempat dan pesan makanannya',
-                                    style: TextStyle(color: blackColor),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 40.0,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 20.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            DotsIndicator(
-                                              dotsCount: 3,
-                                              position: currentPage.toDouble(),
-                                              decorator: const DotsDecorator(
-                                                color: greyColor,
-                                                activeColor: blackColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const OptionLoginPage()));
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                  minimumSize: const Size(167, 66),
-                                                  backgroundColor: blueColor,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              30))),
-                                              child: const Text('Mari Jelajahi!'),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(
+                          height: 40.0,
+                        ),
+                        Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Image.asset(
+                                  'assets/vector.png',
+                                  color: blueColor,
+                                ),
+                                Center(
+                                  child: Image.asset(
+                                    'assets/payprocessed.png',
+                                    width: 350,
+                                    height: 274,
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 60.0,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Reservasi tempat\ndan pesan makanan',
+                                  style: TextStyle(
+                                      color: blackColor,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 26),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Ga perlu dateng ke restoran buat reservasi\ntempat dan pesan makanannya',
+                                  style: TextStyle(color: blackColor),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 40.0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 20.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          DotsIndicator(
+                                            dotsCount: 3,
+                                            position: currentPage.toDouble(),
+                                            decorator: const DotsDecorator(
+                                              color: greyColor,
+                                              activeColor: blackColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const OptionLoginPage()));
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                                minimumSize: const Size(167, 66),
+                                                backgroundColor: blueColor,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30))),
+                                            child: const Text('Mari Jelajahi!'),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 )

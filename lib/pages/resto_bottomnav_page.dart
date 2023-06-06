@@ -55,11 +55,11 @@ class _RestoNavState extends State<RestoNav> {
         onPageChanged: (index) {
           pageChanged(index);
         },
-        children: <Widget>[
-          const RestoMenu(),
-          const RestoBookingList(),
-          const RestoReviewList(),
-          const RestoProfile()
+        children: const <Widget>[
+          RestoMenu(),
+          RestoBookingList(),
+          RestoReviewList(),
+          RestoProfile()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

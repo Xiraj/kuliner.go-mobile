@@ -156,7 +156,7 @@ class _RegisterUserState extends State<RegisterUser> {
                               ],
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             height: screenHeight * 0.86,
                             child: Container(
                               decoration: const BoxDecoration(
@@ -260,7 +260,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                             Row(
                                               children: <Widget>[
                                                 Expanded(
-                                                  child: new Container(
+                                                  child: Container(
                                                     margin: const EdgeInsets.only(
                                                         left: 10.0,
                                                         right: 20.0),
@@ -277,7 +277,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                                   ),
                                                 ),
                                                 Expanded(
-                                                  child: new Container(
+                                                  child: Container(
                                                     margin: const EdgeInsets.only(
                                                         left: 20.0,
                                                         right: 10.0),

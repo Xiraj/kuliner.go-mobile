@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/cardReview.dart';
+import 'package:kuliner_go_mobile/pages/home_page.dart';
 import 'package:kuliner_go_mobile/pages/review_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './booking.dart';
-import '../components/custom_app_bar.dart';
+
 
 class restaurantPage extends StatelessWidget {
   final DocumentSnapshot resto;
@@ -20,10 +21,34 @@ class restaurantPage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(
-                  Icons.arrow_back_ios_outlined,
-                  Icons.share,
-                  Icons.favorite,
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(top: 24, left: 8),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(),
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 24, left: 84),
+                      child: Text(
+                        '${resto['username']}',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+                    )
+                  ],
                 ),
                 Column(
                   children: [

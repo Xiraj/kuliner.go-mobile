@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kuliner_go_mobile/components/product_list.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:kuliner_go_mobile/components/rounded_input_field.dart';
-import 'package:kuliner_go_mobile/pages/menu_resto.dart';
+import 'package:kuliner_go_mobile/pages/payment.dart';
+
 import 'package:kuliner_go_mobile/pages/restaurant_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
@@ -437,77 +439,122 @@ class _bookingPageState extends State<bookingPage> {
                 ),
                 const SizedBox(height: 28),
                 Container(
-                    margin: const EdgeInsets.only(left: 2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 110,
-                          width: 350,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          padding: const EdgeInsets.only(
-                            top: 15,
-                            bottom: 5,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[250],
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding:
-                                    const EdgeInsets.only(left: 5, top: 40),
-                                child: IconButton(
-                                  icon: const Icon(Icons.remove),
-                                  onPressed: decrement,
-                                ),
+                  margin: const EdgeInsets.only(left: 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 110,
+                        width: 350,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        padding: const EdgeInsets.only(
+                          top: 15,
+                          bottom: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[250],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(left: 5, top: 40),
+                              child: IconButton(
+                                icon: const Icon(Icons.remove),
+                                onPressed: decrement,
                               ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    left: 110, bottom: 15),
-                                child: Column(
-                                  children: [
-                                    Image.asset('assets/user.png'),
-                                    const SizedBox(
-                                      height: 30,
+                            ),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(left: 110, bottom: 15),
+                              child: Column(
+                                children: [
+                                  Image.asset('assets/user.png'),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Text(
+                                    counter.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xff0190ff),
                                     ),
-                                    Text(
-                                      counter.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xff0190ff),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              Container(
-                                padding:
-                                    const EdgeInsets.only(left: 100, top: 40),
-                                child: IconButton(
-                                  icon: const Icon(Icons.add),
-                                  onPressed: increment,
-                                ),
+                            ),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(left: 100, top: 40),
+                              child: IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: increment,
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PaymentPage(),
+                      ),
+                    );
+                  },
+                  child: ExpansionTile(
+                    title: const Text('Kartu / Rekening Bank'),
+                    tilePadding: const EdgeInsets.symmetric(
+                        horizontal: 0.5, vertical: 0.5),
+                    childrenPadding: const EdgeInsets.only(left: 10),
+                    leading: const Icon(Icons.wallet_rounded),
+                    children: <Widget>[
+                      Column(
+                        children: [
+                          Container(
+                            width: 420,
+                            padding: const EdgeInsets.only(left: 40, right: 30),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 70,
+                                  padding: const EdgeInsets.only(
+                                    right: 60,
+                                  ),
+                                  child: Image.asset('assets/Mandiri.png'),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(top: 16),
+                                  child: const Text('| \t Mandiri'),
+                                )
+                              ],
+                            ),
                           ),
-                        )
-                      ],
-                    )),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 20),
                 RoundedButton(
                   text: 'Pesan Tempat',
                   press: () {
                     saveBookingData();
                     formKey.currentState?.reset();
-                    setState(() {
-                      name = '';
-                      phone = '';
-                      email = '';
-                    });
+                    setState(
+                      () {
+                        name = '';
+                        phone = '';
+                        email = '';
+                      },
+                    );
                   },
                   height: 60,
                 ),
@@ -516,6 +563,18 @@ class _bookingPageState extends State<bookingPage> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ProductListScreen(),
+            ),
+          );
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.shopping_bag_sharp),
       ),
     );
   }

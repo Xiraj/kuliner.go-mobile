@@ -607,7 +607,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
         return Dialog(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0)), //this right here
-          child: Container(
+          child: SizedBox(
             height: 150,
             child: Padding(
               padding: const EdgeInsets.all(5.0),
