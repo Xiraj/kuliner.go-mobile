@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/pages/aneka_nasi_page.dart';
 
 class cardNasi extends StatelessWidget {
+  const cardNasi({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

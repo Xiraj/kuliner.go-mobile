@@ -6,18 +6,76 @@ class CardResto extends StatelessWidget {
   final String restoName;
   final String rate;
   final String distance;
+  final Map<String, dynamic> resto;
 
-  const CardResto(
-      {required this.imageUrl,
-      required this.restoName,
-      required this.rate,
-      required this.distance});
+  CardResto({
+    super.key,
+    required this.imageUrl,
+    required this.restoName,
+    required this.rate,
+    required this.distance,
+    required this.resto,
+  });
+  DateTime currentTime = DateTime.now();
+  late TimeOfDay jamBuka;
+  late TimeOfDay jamTutup;
+
+  bool isOpen() {
+    if (resto['jamBuka'] == null || resto['jamTutup'] == null) {
+      return true;
+    }
+
+    try {
+      List<String> jamBukaParts = resto['jamBuka'].split(':');
+      List<String> jamTutupParts = resto['jamTutup'].split(':');
+
+      int jamBukaHour = int.parse(jamBukaParts[0]);
+      int jamBukaMinute = int.parse(jamBukaParts[1]);
+      int jamTutupHour = int.parse(jamTutupParts[0]);
+      int jamTutupMinute = int.parse(jamTutupParts[1]);
+
+      jamBuka = TimeOfDay(hour: jamBukaHour, minute: jamBukaMinute);
+      jamTutup = TimeOfDay(hour: jamTutupHour, minute: jamTutupMinute);
+
+      final current = TimeOfDay.fromDateTime(currentTime);
+
+      DateTime currentDateTime = DateTime(
+        currentTime.year,
+        currentTime.month,
+        currentTime.day,
+        current.hour,
+        current.minute,
+      );
+
+      DateTime jamBukaDateTime = DateTime(
+        currentTime.year,
+        currentTime.month,
+        currentTime.day,
+        jamBukaHour,
+        jamBukaMinute,
+      );
+
+      DateTime jamTutupDateTime = DateTime(
+        currentTime.year,
+        currentTime.month,
+        currentTime.day,
+        jamTutupHour,
+        jamTutupMinute,
+      );
+
+      return currentDateTime.isAfter(jamBukaDateTime) &&
+          currentDateTime.isBefore(jamTutupDateTime);
+    } catch (e) {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool restaurantOpen = isOpen();
     return Row(
       children: [
-        imageUrl != null && imageUrl!.isNotEmpty
+        imageUrl!.isNotEmpty
             ? Image.network(imageUrl!, width: 140, height: 120)
             : Image.asset("assets/emptyresto.png", width: 140, height: 120),
         const SizedBox(
@@ -66,8 +124,12 @@ class CardResto extends StatelessWidget {
                   width: 4,
                 ),
                 Text(
-                  "Buka Sekarang",
-                  style: blueTextStyle,
+                  restaurantOpen ? 'Buka Sekarang' : 'Tutup',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800,
+                    color: restaurantOpen ? Colors.blue : Colors.red,
+                  ),
                 ),
               ],
             ),

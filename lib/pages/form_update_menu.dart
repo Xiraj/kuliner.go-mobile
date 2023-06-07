@@ -14,7 +14,7 @@ class UpdateMenu extends StatefulWidget {
   final int quantity;
   final String imageUrl;
 
-  UpdateMenu({
+  const UpdateMenu({super.key, 
     required this.menuId,
     required this.menuName,
     required this.description,
@@ -291,7 +291,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
         return Dialog(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0)), //this right here
-          child: Container(
+          child: SizedBox(
             height: 150,
             child: Padding(
               padding: const EdgeInsets.all(5.0),
@@ -308,8 +308,6 @@ class _UpdateMenuState extends State<UpdateMenu> {
                       GestureDetector(
                         onTap: () async {
                           selectedImagePath = await selectImageFromGallery();
-                          print('Image_Path:-');
-                          print(selectedImagePath);
                           if (selectedImagePath != '') {
                             Navigator.pop(context);
                             setState(() {});
@@ -339,8 +337,6 @@ class _UpdateMenuState extends State<UpdateMenu> {
                       GestureDetector(
                         onTap: () async {
                           selectedImagePath = await selectImageFromCamera();
-                          print('Image_Path:-');
-                          print(selectedImagePath);
 
                           if (selectedImagePath != '') {
                             Navigator.pop(context);

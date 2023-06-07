@@ -1,19 +1,73 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/cardReview.dart';
-import 'package:kuliner_go_mobile/pages/home_page.dart';
+import 'package:kuliner_go_mobile/pages/home_bottomnav.dart';
 import 'package:kuliner_go_mobile/pages/review_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './booking.dart';
 
-
 class restaurantPage extends StatelessWidget {
   final DocumentSnapshot resto;
-  const restaurantPage({super.key, required this.resto});
+  restaurantPage({super.key, required this.resto});
+  DateTime currentTime = DateTime.now();
+  late TimeOfDay jamBuka;
+  late TimeOfDay jamTutup;
+
+  bool isOpen() {
+    if (resto['jamBuka'] == null || resto['jamTutup'] == null) {
+      return true;
+    }
+
+    try {
+      List<String> jamBukaParts = resto['jamBuka'].split(':');
+      List<String> jamTutupParts = resto['jamTutup'].split(':');
+
+      int jamBukaHour = int.parse(jamBukaParts[0]);
+      int jamBukaMinute = int.parse(jamBukaParts[1]);
+      int jamTutupHour = int.parse(jamTutupParts[0]);
+      int jamTutupMinute = int.parse(jamTutupParts[1]);
+
+      jamBuka = TimeOfDay(hour: jamBukaHour, minute: jamBukaMinute);
+      jamTutup = TimeOfDay(hour: jamTutupHour, minute: jamTutupMinute);
+
+      final current = TimeOfDay.fromDateTime(currentTime);
+
+      DateTime currentDateTime = DateTime(
+        currentTime.year,
+        currentTime.month,
+        currentTime.day,
+        current.hour,
+        current.minute,
+      );
+
+      DateTime jamBukaDateTime = DateTime(
+        currentTime.year,
+        currentTime.month,
+        currentTime.day,
+        jamBukaHour,
+        jamBukaMinute,
+      );
+
+      DateTime jamTutupDateTime = DateTime(
+        currentTime.year,
+        currentTime.month,
+        currentTime.day,
+        jamTutupHour,
+        jamTutupMinute,
+      );
+
+      return currentDateTime.isAfter(jamBukaDateTime) &&
+          currentDateTime.isBefore(jamTutupDateTime);
+    } catch (e) {
+      print('Error parsing opening and closing times: $e');
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool open = isOpen();
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -30,7 +84,7 @@ class restaurantPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const HomePage(),
+                              builder: (context) => const homeBottomNav(),
                             ),
                           );
                         },
@@ -58,8 +112,7 @@ class restaurantPage extends StatelessWidget {
                           left: 12.0, top: 15.0, right: 12.0, bottom: 10),
                       child: Column(
                         children: <Widget>[
-                          if (resto['imageUrl'] != null &&
-                              resto['imageUrl'].isNotEmpty)
+                          if (resto['imageUrl'].isNotEmpty)
                             Image.network(
                               resto['imageUrl'],
                               width: 700,
@@ -96,17 +149,18 @@ class restaurantPage extends StatelessWidget {
                             color: Colors.blue,
                           ),
                         ),
-                        const Expanded(
+                        Expanded(
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Padding(
-                              padding: EdgeInsets.only(right: 40, bottom: 8),
+                              padding:
+                                  const EdgeInsets.only(right: 40, bottom: 8),
                               child: Text(
-                                'Buka Sekarang',
+                                open ? 'Buka Sekarang' : 'Tutup',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w800,
-                                  color: Colors.blue,
+                                  color: open ? Colors.blue : Colors.red,
                                 ),
                               ),
                             ),
@@ -320,8 +374,8 @@ class restaurantPage extends StatelessWidget {
                                     width: 300,
                                     decoration: const BoxDecoration(
                                       color: Colors.blue,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(50)),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(50)),
                                     ),
                                     child: TextButton(
                                       style: ButtonStyle(

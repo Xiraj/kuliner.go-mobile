@@ -9,7 +9,7 @@ class CardFavoriteResto extends StatelessWidget {
   final String place;
 
   const CardFavoriteResto(
-      {required this.imageUrl,
+      {super.key, required this.imageUrl,
       required this.restoName,
       required this.rate,
       required this.distance,

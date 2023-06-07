@@ -89,7 +89,7 @@ class _NearRestoState extends State<NearResto> {
                                   imageUrl: resto['imageUrl'],
                                   restoName: resto['username'],
                                   rate: rate,
-                                  distance: distance,
+                                  distance: distance, resto: resto.data() as Map<String, dynamic>,
                                 ),
                               ],
                             ),

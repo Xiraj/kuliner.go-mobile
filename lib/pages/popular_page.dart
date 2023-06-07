@@ -57,7 +57,7 @@ class _PopularRestoState extends State<PopularResto> {
                                   imageUrl: resto['imageUrl'],
                                   restoName: resto['username'],
                                   rate: "4.8",
-                                  distance: "0.6",
+                                  distance: "0.6", resto: resto.data() as Map<String, dynamic>,
                                 ),
                               ],
                             ),

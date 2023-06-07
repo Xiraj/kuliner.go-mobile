@@ -167,7 +167,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                       ),
                                     )
                                         .then((value) {
-                                      print('Menu telah ditambahkan');
                                       cart.addTotalPrice(
                                         double.parse(
                                           productPrice[index].toString(),
@@ -175,7 +174,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                       );
                                       cart.addCounter();
                                     }).onError((error, stackTrace) {
-                                      print(error.toString());
                                     });
                                   },
                                   child: Container(

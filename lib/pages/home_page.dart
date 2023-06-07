@@ -21,8 +21,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<String> rates = [
+    "4.7",
     "4.6",
-    "3.5",
     "4.2",
     "4.8",
     "4.0",
@@ -335,6 +335,8 @@ class _HomePageState extends State<HomePage> {
                                             restoName: resto['username'],
                                             rate: rate,
                                             distance: distance,
+                                            resto: resto.data()
+                                                as Map<String, dynamic>,
                                           ),
                                         ),
                                       ],

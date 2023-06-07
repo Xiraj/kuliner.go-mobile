@@ -9,7 +9,7 @@ class CardReview extends StatelessWidget {
   final String comments;
   final dynamic timeUpload;
   final double rating;
-  const CardReview({
+  const CardReview({super.key, 
     required this.imageUrl,
     required this.username,
     required this.comments,
