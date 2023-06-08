@@ -244,8 +244,6 @@ class CartScreenState extends State<CartScreen> {
                                                                         .toString()));
                                                               }).onError((error,
                                                                       stackTrace) {
-                                                                print(error
-                                                                    .toString());
                                                               });
                                                             }
                                                           },
@@ -317,8 +315,6 @@ class CartScreenState extends State<CartScreen> {
                                                                       .toString()));
                                                             }).onError((error,
                                                                     stackTrace) {
-                                                              print(error
-                                                                  .toString());
                                                             });
                                                           },
                                                           child: const Icon(

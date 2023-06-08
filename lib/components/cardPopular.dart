@@ -7,7 +7,7 @@ class cardPopular extends StatelessWidget {
   final String distance;
   final String time;
   const cardPopular(
-      {required this.imagePopular,
+      {super.key, required this.imagePopular,
       required this.restoName,
       required this.distance,
       required this.time});

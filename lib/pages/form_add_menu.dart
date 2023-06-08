@@ -276,8 +276,6 @@ class _FormAddMenuState extends State<FormAddMenu> {
                       GestureDetector(
                         onTap: () async {
                           selectedImagePath = await selectImageFromGallery();
-                          print('Image_Path:-');
-                          print(selectedImagePath);
                           if (selectedImagePath != '') {
                             Navigator.pop(context);
                             setState(() {});
@@ -307,8 +305,6 @@ class _FormAddMenuState extends State<FormAddMenu> {
                       GestureDetector(
                         onTap: () async {
                           selectedImagePath = await selectImageFromCamera();
-                          print('Image_Path:-');
-                          print(selectedImagePath);
 
                           if (selectedImagePath != '') {
                             Navigator.pop(context);

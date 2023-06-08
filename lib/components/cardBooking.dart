@@ -9,7 +9,7 @@ class CardBooking extends StatelessWidget {
   final String status;
   final Color textColor;
   const CardBooking(
-      {required this.imageUrl,
+      {super.key, required this.imageUrl,
       required this.bookingCode,
       required this.username,
       required this.date,

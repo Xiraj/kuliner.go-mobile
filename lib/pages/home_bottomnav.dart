@@ -54,11 +54,11 @@ class _homeBottomNavState extends State<homeBottomNav> {
         onPageChanged: (index) {
           pageChanged(index);
         },
-        children: <Widget>[
-          const HomePage(),
-          const FavoritePage(),
-          const HistoryPage(),
-          const ProfilePage()
+        children: const <Widget>[
+          HomePage(),
+          FavoritePage(),
+          HistoryPage(),
+          ProfilePage()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

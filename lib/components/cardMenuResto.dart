@@ -9,7 +9,7 @@ class CardMenu extends StatelessWidget {
   final int quantity;
 
   const CardMenu(
-      {required this.imageUrl,
+      {super.key, required this.imageUrl,
       required this.menuName,
       required this.desc,
       required this.harga,

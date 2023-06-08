@@ -5,7 +5,7 @@ class ButtonProfile extends StatelessWidget {
   final String title;
   final List<Widget>? children;
 
-  const ButtonProfile({required this.icon, required this.title, this.children});
+  const ButtonProfile({super.key, required this.icon, required this.title, this.children});
 
   @override
   Widget build(BuildContext context) {
