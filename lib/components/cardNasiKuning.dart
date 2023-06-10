@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/pages/aneka_nasi_page.dart';
 
-class cardNasi extends StatelessWidget {
-  const cardNasi({super.key});
+class cardNasiKuning extends StatelessWidget {
+  const cardNasiKuning({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class cardNasi extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(top: 24, left: 84),
                 child: const Text(
-                  'Nasi Lemak',
+                  'Nasi Kuning',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -44,7 +44,7 @@ class cardNasi extends StatelessWidget {
           SizedBox(
             width: 320,
             height: 320,
-            child: Image.asset('assets/nasi_page/1.png'),
+            child: Image.asset('assets/nasi_page/2.png'),
           ),
           const SizedBox(
             height: 25,
@@ -57,7 +57,7 @@ class cardNasi extends StatelessWidget {
                     padding: EdgeInsets.only(left: 20),
                   ),
                   Text(
-                    'Nasi Lemak',
+                    'Nasi Kuning',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -74,7 +74,7 @@ class cardNasi extends StatelessWidget {
                     padding: EdgeInsets.only(left: 20),
                   ),
                   Text(
-                    'Makanan Khas Malaysia',
+                    'Makanan Khas Indonesia',
                     style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w200,
@@ -86,7 +86,7 @@ class cardNasi extends StatelessWidget {
                   SizedBox(
                     width: 30,
                     height: 30,
-                    child: Image.asset('assets/malaysia.png'),
+                    child: Image.asset('assets/indonesia.png'),
                   ),
                 ],
               ),
@@ -95,7 +95,7 @@ class cardNasi extends StatelessWidget {
           Column(
             children: const <Widget>[
               ExpansionTile(
-                title: Text('Detail Nasi Lemak'),
+                title: Text('Detail Nasi Kuning'),
                 leading: Icon(Icons.description_outlined),
                 children: <Widget>[
                   SizedBox(
@@ -104,7 +104,7 @@ class cardNasi extends StatelessWidget {
                   SizedBox(
                     width: 350,
                     child: Text(
-                      'Nasi lemak adalah salah satu makanan khas Malaysia yang terkenal dan sangat populer di negara itu. Makanan ini terdiri dari nasi yang dimasak dengan santan, sehingga memberikan cita rasa kaya dan lezat. Nasi lemak biasanya disajikan dengan lauk-pauk dan bumbu khas yang membuatnya menjadi hidangan yang menggugah selera.',
+                      'Nasi kuning adalah salah satu makanan khas Indonesia yang populer dan memiliki peran penting dalam berbagai acara dan perayaan, seperti ulang tahun, pernikahan, atau acara keluarga. Nasi kuning merupakan hidangan nasi yang berwarna kuning kemerahan dan memiliki aroma yang khas. Warna kuning pada nasi kuning biasanya dihasilkan dari bumbu kunyit yang digunakan dalam proses pengolahannya.',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w200,
@@ -121,7 +121,7 @@ class cardNasi extends StatelessWidget {
           Column(
             children: <Widget>[
               ExpansionTile(
-                title: const Text('Bahan - Bahan Nasi Lemak'),
+                title: const Text('Bahan - Bahan Nasi Kuning'),
                 leading: const Icon(Icons.food_bank),
                 children: <Widget>[
                   const SizedBox(
@@ -131,7 +131,7 @@ class cardNasi extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Text(
-                        'Bahan-bahan: \n• 2 Gelas beras \n• 2 Gelas air \n• 1 Lembar daun pandan \n• 1 Garam dapur \n• 1 Sendok makan minyak kelapa / minyak sayur',
+                        'Bahan-bahan: \n• 2 Gelas beras \n• 2 Gelas air \n• 2 Gelas Santan Kelapa \n• 3 Lembar Daun Salam \n• 2 Batang Serai \n• 2-3 Sendok Makan Bumbu Kunyit Halus \n• 3 Buah Bawang Putih dan Merah \n• 1 Sendok Makan Garam  \n• 1 Sendok makan minyak kelapa / minyak sayur',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w200,
@@ -151,7 +151,7 @@ class cardNasi extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        'Bahan untuk sambal: \n• 10 Cabai merah keriting \n• 5 Cabai rawit (sesuai selera pedas) \n• 5 Bawang merah \n• 3 Siung bawang putih \n• 2 Lembar daun jeruk \n• 1 Sendok teh terasi (udang rebon) \n• Gula dan Garam \n• 2 Sendok makan minyak sayur ',
+                        'Bahan untuk sambal goreng kentang: \n• Potongan Kentang Kecil Kotak Secukupnya \n• 10 Cabai merah keriting \n• 5 Cabai rawit (sesuai selera pedas) \n• 5 Bawang merah \n• 3 Siung bawang putih \n• 2 Lembar daun jeruk \n• 1 Sendok teh terasi (udang rebon) \n• Gula dan Garam \n• 2 Sendok makan minyak sayur ',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w200,
@@ -161,7 +161,7 @@ class cardNasi extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        'Bahan untuk lauk:  \n• 4 Buah telur \n• 200 Gram ikan teri / ikan bilis \n• Minyak goreng',
+                        'Bahan untuk lauk:  \n• 1 Sendok Makan Tempe Orek \n• Bihun Goreng Secukupnya \n• Telur Dadar Gulung Sesuai Selera \n• Mentimun (Jika dirasa perlu)',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w200,
@@ -169,13 +169,6 @@ class cardNasi extends StatelessWidget {
                       ),
                       SizedBox(
                         height: 12,
-                      ),
-                      Text(
-                        'Bahan untuk lauk:  \n• Daun pandan potong kecil-kecil \n• Timur iris tipis \n• Kacang tanah panggang',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w200,
-                        ),
                       ),
                     ],
                   ),
@@ -189,7 +182,7 @@ class cardNasi extends StatelessWidget {
           Column(
             children: <Widget>[
               ExpansionTile(
-                title: const Text('Langkah Pembuatan Nasi Lemak'),
+                title: const Text('Langkah Pembuatan Nasi Kuning'),
                 leading: const Icon(Icons.local_restaurant_rounded),
                 children: <Widget>[
                   const SizedBox(
@@ -201,7 +194,7 @@ class cardNasi extends StatelessWidget {
                       SizedBox(
                         width: 360,
                         child: Text(
-                          'Cara membuat: \n• Cuci beras hingga bersih, kemudian tambahkan air dan daun pandan. Masak beras dengan menggunakan rice cooker atau panci hingga matang dan beraroma harum. \n• Sementara itu, panaskan minyak kelapa atau minyak sayur dalam wajan. Tumis bawang merah, bawang putih, dan terasi hingga harum. \n• Masukkan cabai merah keriting dan cabai rawit, tumis hingga cabai layu dan matang. Kemudian tambahkan daun jeruk, gula, dan garam. Aduk rata dan masak hingga bumbu tercampur sempurna. Angkat dan sisihkan. \n• Panaskan minyak dalam wajan untuk menggoreng telur dan ikan teri. Goreng telur hingga matang sesuai selera (boleh digoreng dadar atau rebus). Goreng ikan teri hingga kering dan renyah. Tiriskan di atas kertas minyak. \n• Panaskan kacang tanah panggang dalam wajan kering, aduk hingga kacang tanah berwarna kecokelatan dan harum. Angkat dan dinginkan, lalu kupas kulitnya. \n• Setelah nasi matang, tambahkan santan dan garam secukupnya ke dalam nasi panas. Aduk rata hingga santan tercampur merata. Tutup nasi dan biarkan selama beberapa menit agar nasi lemak menjadi lezat. \n• Sajikan nasi lemak dengan menempatkan nasi dalam piring atau daun pisang. Tambahkan sambal, telur, ikan teri, kacang tanah panggang, irisan timun, dan daun pandan sebagai hiasan di atas nasi.',
+                          'Cara membuat: \n• Cuci beras: Cuci beras dengan air bersih hingga air cucian menjadi jernih. Tiriskan beras. \n• Persiapan bumbu: Haluskan bawang merah, bawang putih, dan kunyit (jika menggunakan kunyit segar). Anda juga dapat menggunakan bubuk kunyit jika lebih praktis. \n• Tumis bumbu: Panaskan sedikit minyak dalam panci atau wajan, lalu tumis bumbu halus (bawang merah, bawang putih, dan kunyit) bersama dengan serai dan daun salam. Tumis hingga harum dan bumbu matang. \n• Masukkan beras: Setelah bumbu matang, masukkan beras yang telah dicuci ke dalam panci atau wajan. Aduk rata dengan bumbu tumis. \n• Tambahkan santan dan air: Tuangkan santan kelapa ke dalam panci atau wajan. Tambahkan air secukupnya, sesuai dengan takaran memasak nasi yang biasa Anda gunakan. \n• Masak nasi: Masak nasi dengan api sedang hingga air mendidih. Setelah itu, kecilkan api dan tutup panci dengan rapat. Biarkan nasi matang dengan proses pemasakan yang biasa Anda lakukan. \n• Biarkan nasi mengukus: Setelah nasi matang, biarkan nasi mengukus selama beberapa saat dengan panci tetap tertutup. Hal ini akan membantu nasi kuning menjadi lebih pulen dan meresap aroma bumbu. \n• Aduk dan hidangkan: Setelah nasi cukup mengukus, gunakan sendok atau garpu untuk mengaduk nasi kuning agar bumbu dan warna kuning merata. Angkat dan hidangkan nasi kuning dengan pelengkap seperti ayam goreng, telur dadar, tumpeng, serundeng, irisan mentimun, irisan tomat, dan kerupuk.',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w200,
@@ -220,7 +213,7 @@ class cardNasi extends StatelessWidget {
           Column(
             children: <Widget>[
               ExpansionTile(
-                title: const Text('Sejarah Nasi Lemak'),
+                title: const Text('Sejarah Nasi Kuning'),
                 leading: const Icon(Icons.more_horiz),
                 children: <Widget>[
                   const SizedBox(
@@ -232,7 +225,7 @@ class cardNasi extends StatelessWidget {
                       SizedBox(
                         width: 360,
                         child: Text(
-                          'Asal usul Nasi Lemak dapat ditelusuri ke abad ke-15, pada zaman Kesultanan Melaka di Malaysia. Pada masa itu, nasi yang dimasak dengan santan kelapa dan dibungkus dalam daun pisang merupakan hidangan yang umum di kalangan masyarakat Melayu. Hidangan ini awalnya dikenal sebagai "nasi lemak" karena nasi dimasak dengan santan kelapa yang memberikan rasa lemak yang kaya. Nasi Lemak mulai populer di kalangan masyarakat Malaysia pada abad ke-19. Selama periode ini, masyarakat mulai menambahkan berbagai pelengkap untuk meningkatkan citra rasa hidangan tersebut. Pelengkap yang biasa ditemui dalam Nasi Lemak adalah ikan teri, kacang, timun, telur rebus, dan sambal (saus pedas). Beberapa variasi juga menyertakan daging, sotong (cumi-cumi), ayam goreng, atau rendang.',
+                          'Sejarah nasi kuning sebagai hidangan khas Indonesia tidak memiliki catatan yang pasti, tetapi hidangan ini telah menjadi bagian integral dari budaya makan di Indonesia selama berabad-abad. Nasi kuning memiliki akar dalam tradisi kuliner Nusantara yang kaya dan beragam.',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w200,
