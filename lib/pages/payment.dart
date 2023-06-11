@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kuliner_go_mobile/pages/profile_page.dart';
+import 'package:kuliner_go_mobile/pages/home_bottomnav.dart';
 
 import '../components/rounded_input_field.dart';
 
@@ -24,7 +24,7 @@ class PaymentPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ProfilePage(),
+                          builder: (context) => const homeBottomNav(),
                         ),
                       );
                     },

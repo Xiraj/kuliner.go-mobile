@@ -21,54 +21,71 @@ class CardResto extends StatelessWidget {
   late TimeOfDay jamTutup;
 
   bool isOpen() {
-    if (resto['jamBuka'] == null || resto['jamTutup'] == null) {
-      return true;
-    }
+  if (resto['jamBuka'] == null || resto['jamTutup'] == null) {
+    return true;
+  }
 
-    try {
-      List<String> jamBukaParts = resto['jamBuka'].split(':');
-      List<String> jamTutupParts = resto['jamTutup'].split(':');
+  try {
+    List<String> jamBukaParts = resto['jamBuka'].split(':');
+    List<String> jamTutupParts = resto['jamTutup'].split(':');
 
-      int jamBukaHour = int.parse(jamBukaParts[0]);
-      int jamBukaMinute = int.parse(jamBukaParts[1]);
-      int jamTutupHour = int.parse(jamTutupParts[0]);
-      int jamTutupMinute = int.parse(jamTutupParts[1]);
+    int jamBukaHour = int.parse(jamBukaParts[0]);
+    int jamBukaMinute = int.parse(jamBukaParts[1]);
+    int jamTutupHour = int.parse(jamTutupParts[0]);
+    int jamTutupMinute = int.parse(jamTutupParts[1]);
 
-      jamBuka = TimeOfDay(hour: jamBukaHour, minute: jamBukaMinute);
-      jamTutup = TimeOfDay(hour: jamTutupHour, minute: jamTutupMinute);
+    final currentTime = DateTime.now();
+    final current = TimeOfDay.fromDateTime(currentTime);
 
-      final current = TimeOfDay.fromDateTime(currentTime);
+    DateTime currentDateTime = DateTime(
+      currentTime.year,
+      currentTime.month,
+      currentTime.day,
+      current.hour,
+      current.minute,
+    );
 
-      DateTime currentDateTime = DateTime(
+    DateTime jamBukaDateTime = DateTime(
+      currentTime.year,
+      currentTime.month,
+      currentTime.day,
+      jamBukaHour,
+      jamBukaMinute,
+    );
+
+    DateTime jamTutupDateTime;
+    if (jamTutupHour < jamBukaHour) {
+      jamTutupDateTime = DateTime(
         currentTime.year,
         currentTime.month,
-        currentTime.day,
-        current.hour,
-        current.minute,
+        currentTime.day + 1,
+        jamTutupHour,
+        jamTutupMinute,
       );
-
-      DateTime jamBukaDateTime = DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        jamBukaHour,
-        jamBukaMinute,
-      );
-
-      DateTime jamTutupDateTime = DateTime(
+    } else {
+      jamTutupDateTime = DateTime(
         currentTime.year,
         currentTime.month,
         currentTime.day,
         jamTutupHour,
         jamTutupMinute,
       );
-
-      return currentDateTime.isAfter(jamBukaDateTime) &&
-          currentDateTime.isBefore(jamTutupDateTime);
-    } catch (e) {
-      return false;
     }
+
+    if (jamTutupHour < jamBukaHour) {
+      if (currentDateTime.isBefore(jamBukaDateTime)) {
+        currentDateTime = currentDateTime.subtract(const Duration(days: 1));
+      }
+    }
+
+    return currentDateTime.isAfter(jamBukaDateTime) &&
+        currentDateTime.isBefore(jamTutupDateTime);
+  } catch (e) {
+    print('Error parsing opening and closing times: $e');
+    return false;
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
