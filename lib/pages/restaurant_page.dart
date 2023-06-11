@@ -28,9 +28,7 @@ class restaurantPage extends StatelessWidget {
       int jamTutupHour = int.parse(jamTutupParts[0]);
       int jamTutupMinute = int.parse(jamTutupParts[1]);
 
-      jamBuka = TimeOfDay(hour: jamBukaHour, minute: jamBukaMinute);
-      jamTutup = TimeOfDay(hour: jamTutupHour, minute: jamTutupMinute);
-
+      final currentTime = DateTime.now();
       final current = TimeOfDay.fromDateTime(currentTime);
 
       DateTime currentDateTime = DateTime(
@@ -49,13 +47,30 @@ class restaurantPage extends StatelessWidget {
         jamBukaMinute,
       );
 
-      DateTime jamTutupDateTime = DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        jamTutupHour,
-        jamTutupMinute,
-      );
+      DateTime jamTutupDateTime;
+      if (jamTutupHour < jamBukaHour) {
+        jamTutupDateTime = DateTime(
+          currentTime.year,
+          currentTime.month,
+          currentTime.day + 1,
+          jamTutupHour,
+          jamTutupMinute,
+        );
+      } else {
+        jamTutupDateTime = DateTime(
+          currentTime.year,
+          currentTime.month,
+          currentTime.day,
+          jamTutupHour,
+          jamTutupMinute,
+        );
+      }
+
+      if (jamTutupHour < jamBukaHour) {
+        if (currentDateTime.isBefore(jamBukaDateTime)) {
+          currentDateTime = currentDateTime.subtract(const Duration(days: 1));
+        }
+      }
 
       return currentDateTime.isAfter(jamBukaDateTime) &&
           currentDateTime.isBefore(jamTutupDateTime);
