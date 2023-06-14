@@ -106,7 +106,7 @@ class _RestoReviewListState extends State<RestoReviewList> {
             ),
             Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height + 110,
               padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(
@@ -154,25 +154,47 @@ class _RestoReviewListState extends State<RestoReviewList> {
                             return const Text(
                                 'Belum ada pelanggan yang review restoran mu');
                           }
+                          final sortedDocs = snapshot.data!.docs
+                              .map((doc) => doc.data() as Map<String, dynamic>)
+                              .toList()
+                            ..sort((a, b) {
+                              final timestampA = a['timestamp'];
+                              final timestampB = b['timestamp'];
 
-                          return Column(
-                            children: snapshot.data!.docs
-                                .map((DocumentSnapshot document) {
-                              Map<String, dynamic> reviewData =
-                                  document.data() as Map<String, dynamic>;
-                              double rating = reviewData['rate'] ?? 0.0;
-                              dynamic timestamp = reviewData['timestamp'];
-                              return Padding(
-                                padding: const EdgeInsets.all(2),
-                                child: CardReview(
-                                  imageUrl: 'assets/users_init.png',
-                                  username: reviewData['username'],
-                                  rating: rating,
-                                  timeUpload: timestamp,
-                                  comments: '"${reviewData['commentText']}"',
-                                ),
-                              );
-                            }).toList(),
+                              if (timestampA == null || timestampB == null) {
+                                return 0;
+                              }
+
+                              return timestampB.compareTo(timestampA);
+                            });
+
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) =>
+                                  const Divider(
+                                thickness: 0.5,
+                                color: Colors.grey,
+                              ),
+                              itemCount: sortedDocs.length,
+                              itemBuilder: (context, index) {
+                                Map<String, dynamic> reviewData =
+                                    sortedDocs[index];
+                                double rating = reviewData['rate'] ?? 0.0;
+                                dynamic timestamp = reviewData['timestamp'];
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: CardReview(
+                                    imageUrl: 'assets/users_init.png',
+                                    username: reviewData['username'],
+                                    rating: rating,
+                                    timeUpload: timestamp,
+                                    comments: '"${reviewData['commentText']}"',
+                                  ),
+                                );
+                              },
+                            ),
                           );
                         },
                       ),

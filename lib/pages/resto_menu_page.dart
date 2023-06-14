@@ -212,24 +212,23 @@ class RestoMenu extends StatelessWidget {
                                               final imageFileName =
                                                   snapshot.data!.docs[index]
                                                       ['image_filename'];
-
                                               try {
-                                                // Construct the reference to the file in Firebase Storage
+                                                
                                                 final storageRef =
                                                     FirebaseStorage.instance
                                                         .ref()
                                                         .child('menu_images')
                                                         .child(imageFileName);
 
-                                                // Delete the image file from Firebase Storage
+                                               
                                                 await storageRef.delete();
                                               } catch (error) {
-                                                // Handle any errors that occur during image deletion
+                                                
                                                 print(
                                                     'Error deleting image: $error');
                                               }
 
-                                              // Delete the menu document from Firestore
+                                              
                                               await docData.delete();
                                             }
                                           },
