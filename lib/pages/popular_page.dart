@@ -11,6 +11,30 @@ class PopularResto extends StatefulWidget {
 }
 
 class _PopularRestoState extends State<PopularResto> {
+  List<String> rates = [
+    "4.8",
+    "4.6",
+    "4.4",
+    "4.2",
+    "4.1",
+    "4.0",
+    "3.8",
+    "3.6",
+    "3.4",
+    "3.2"
+  ];
+  List<String> distances = [
+    "0.6",
+    "0.9",
+    "1.2",
+    "1.4",
+    "1.6",
+    "1.8",
+    "2.0",
+    "2.2",
+    "2.4",
+    "2.6"
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +72,14 @@ class _PopularRestoState extends State<PopularResto> {
                           const SizedBox(height: 16),
                       itemBuilder: (context, index) {
                         final resto = docs[index];
+                        final rate = rates[index];
+                        final distance = distances[index];
+                        if (resto['imageUrl'].isEmpty ||
+                            resto['username'].isEmpty ||
+                            rate.isEmpty ||
+                            distance.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
                         return Column(
                           children: [
                             Row(
@@ -56,8 +88,9 @@ class _PopularRestoState extends State<PopularResto> {
                                 CardResto(
                                   imageUrl: resto['imageUrl'],
                                   restoName: resto['username'],
-                                  rate: "4.8",
-                                  distance: "0.6", resto: resto.data() as Map<String, dynamic>,
+                                  rate: rate,
+                                  distance: distance,
+                                  resto: resto.data() as Map<String, dynamic>,
                                 ),
                               ],
                             ),

@@ -512,13 +512,24 @@ class restaurantPage extends StatelessWidget {
                                       return const Text(
                                           'Belum ada yang review restoran ini');
                                     }
+                                    final sortedDocs = snapshot.data!.docs
+                                        .map((doc) =>
+                                            doc.data() as Map<String, dynamic>)
+                                        .toList()
+                                      ..sort((a, b) {
+                                        final timestampA = a['timestamp'];
+                                        final timestampB = b['timestamp'];
+
+                                        if (timestampA == null ||
+                                            timestampB == null) {
+                                          return 0; 
+                                        }
+
+                                        return timestampB.compareTo(timestampA);
+                                      });
 
                                     return Column(
-                                      children: snapshot.data!.docs
-                                          .map((DocumentSnapshot document) {
-                                        Map<String, dynamic> reviewData =
-                                            document.data()
-                                                as Map<String, dynamic>;
+                                      children: sortedDocs.map((reviewData) {
                                         double rating =
                                             reviewData['rate'] ?? 0.0;
                                         dynamic timestamp =

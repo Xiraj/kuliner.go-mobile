@@ -230,6 +230,14 @@ class _FormAddMenuState extends State<FormAddMenu> {
                       RoundedButton(
                         text: 'Tambah',
                         press: () async {
+                          if (selectedImagePath.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Upload gambar terlebih dahulu'),
+                              ),
+                            );
+                            return;
+                          }
                           if (formKey.currentState!.validate()) {
                             await tambahMenu();
                           } else {
