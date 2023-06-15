@@ -45,6 +45,7 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
               Container(
                 width: double.infinity,
+                height: MediaQuery.of(context).size.height + 110,
                 padding: const EdgeInsets.all(30),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(
