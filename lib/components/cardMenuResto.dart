@@ -38,7 +38,6 @@ class CardMenu extends StatelessWidget {
               children: [
                 Text(
                   desc,
-                  overflow: TextOverflow.clip,
                   style: blackTextStyle.copyWith(
                       fontSize: 12, fontWeight: FontWeight.w600),
                 ),

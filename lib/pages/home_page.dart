@@ -22,28 +22,28 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<String> rates = [
-    "4.7",
-    "4.6",
-    "4.2",
     "4.8",
-    "4.0",
+    "4.6",
+    "4.4",
+    "4.2",
     "4.1",
-    "4.3",
     "4.0",
-    "3.2",
-    "3.8"
+    "3.8",
+    "3.6",
+    "3.4",
+    "3.2"
   ];
   List<String> distances = [
     "0.6",
     "0.9",
     "1.2",
-    "0.3",
-    "1.6",
-    "1.0",
     "1.4",
-    "1.9",
-    "4.0",
-    "2.4"
+    "1.6",
+    "1.8",
+    "2.0",
+    "2.2",
+    "2.4",
+    "2.6"
   ];
   @override
   Widget build(BuildContext context) {
@@ -402,7 +402,9 @@ class _HomePageState extends State<HomePage> {
 
                                   return ListView.builder(
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: restaurants.length,
+                                    itemCount: restaurants.length > 3
+                                        ? 3
+                                        : restaurants.length,
                                     itemBuilder: (context, index) {
                                       final restaurantData = restaurants[index]
                                           .data() as Map<String, dynamic>;

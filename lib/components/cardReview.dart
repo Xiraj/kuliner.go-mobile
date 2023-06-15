@@ -9,7 +9,8 @@ class CardReview extends StatelessWidget {
   final String comments;
   final dynamic timeUpload;
   final double rating;
-  const CardReview({super.key, 
+  const CardReview({
+    super.key,
     required this.imageUrl,
     required this.username,
     required this.comments,
@@ -105,8 +106,15 @@ class CardReview extends StatelessWidget {
     } else if (difference.inDays < 7) {
       int days = difference.inDays;
       return '$days day${days > 1 ? 's' : ''} ago';
+    } else if (difference.inDays < 30) {
+      int weeks = (difference.inDays / 7).floor();
+      return '$weeks week${weeks > 1 ? 's' : ''} ago';
+    } else if (difference.inDays < 365) {
+      int months = (difference.inDays / 30).floor();
+      return '$months month${months > 1 ? 's' : ''} ago';
     } else {
-      return uploadTime.toString();
+      int years = (difference.inDays / 365).floor();
+      return '$years year${years > 1 ? 's' : ''} ago';
     }
   }
 }

@@ -113,7 +113,9 @@ class _SearchState extends State<Search> {
                           child: ListTile(
                             title: Text(name),
                             subtitle: Text(location),
-                            leading: Image.network(image),
+                            leading: image.isNotEmpty
+                                ? Image.network(image)
+                                : Image.asset('assets/emptyresto.png'),
                             onTap: () {
                               Navigator.push(
                                 context,

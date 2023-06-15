@@ -60,7 +60,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (BuildContext context) => const LoginResto()),
+          MaterialPageRoute(
+              builder: (BuildContext context) => const LoginResto()),
           (route) => false);
       Fluttertoast.showToast(
           msg: "Registration successful!",
@@ -186,8 +187,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                                   return 'Please enter a username';
                                                 } else if (value.length < 3) {
                                                   return 'Username must be at least 3 characters long';
+                                                } else if (value.length > 15) {
+                                                  return 'Username must be less than 15 characters';
                                                 }
-                                                return null; // input is valid
+                                                return null;
                                               },
                                             ),
                                             RoundedInputField(
@@ -206,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                     .hasMatch(value)) {
                                                   return 'Please enter a valid email';
                                                 }
-                                                return null; // input is valid
+                                                return null;
                                               },
                                             ),
                                             RoundedPasswordField(

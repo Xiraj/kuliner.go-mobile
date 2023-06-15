@@ -6,23 +6,30 @@ class CardBooking extends StatelessWidget {
   final String bookingCode;
   final String username;
   final String date;
-  final String status;
-  final Color textColor;
-  const CardBooking(
-      {super.key, required this.imageUrl,
-      required this.bookingCode,
-      required this.username,
-      required this.date,
-      required this.status,
-      required this.textColor});
+  final String time;
+  final int people;
+
+  const CardBooking({
+    super.key,
+    required this.imageUrl,
+    required this.bookingCode,
+    required this.username,
+    required this.date,
+    required this.people,
+    required this.time,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(imageUrl),
+        Image.asset(
+          imageUrl,
+          height: 70,
+          width: 70,
+        ),
         const SizedBox(
-          width: 14,
+          width: 20,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,10 +55,15 @@ class CardBooking extends StatelessWidget {
             ),
             Row(
               children: [
+                Text(date),
                 const SizedBox(
                   width: 4,
                 ),
-                Text(date),
+                const Text(','),
+                const SizedBox(
+                  width: 4,
+                ),
+                Text(time),
               ],
             ),
             const SizedBox(
@@ -59,15 +71,11 @@ class CardBooking extends StatelessWidget {
             ),
             Row(
               children: [
-                const SizedBox(
-                  width: 4,
-                ),
                 Text(
-                  status,
-                  style: TextStyle(color: textColor),
+                  '$people Orang',
                 ),
               ],
-            )
+            ),
           ],
         ),
       ],

@@ -34,9 +34,7 @@ class CardResto extends StatelessWidget {
       int jamTutupHour = int.parse(jamTutupParts[0]);
       int jamTutupMinute = int.parse(jamTutupParts[1]);
 
-      jamBuka = TimeOfDay(hour: jamBukaHour, minute: jamBukaMinute);
-      jamTutup = TimeOfDay(hour: jamTutupHour, minute: jamTutupMinute);
-
+      final currentTime = DateTime.now();
       final current = TimeOfDay.fromDateTime(currentTime);
 
       DateTime currentDateTime = DateTime(
@@ -55,17 +53,35 @@ class CardResto extends StatelessWidget {
         jamBukaMinute,
       );
 
-      DateTime jamTutupDateTime = DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        jamTutupHour,
-        jamTutupMinute,
-      );
+      DateTime jamTutupDateTime;
+      if (jamTutupHour < jamBukaHour) {
+        jamTutupDateTime = DateTime(
+          currentTime.year,
+          currentTime.month,
+          currentTime.day + 1,
+          jamTutupHour,
+          jamTutupMinute,
+        );
+      } else {
+        jamTutupDateTime = DateTime(
+          currentTime.year,
+          currentTime.month,
+          currentTime.day,
+          jamTutupHour,
+          jamTutupMinute,
+        );
+      }
+
+      if (jamTutupHour < jamBukaHour) {
+        if (currentDateTime.isBefore(jamBukaDateTime)) {
+          currentDateTime = currentDateTime.subtract(const Duration(days: 1));
+        }
+      }
 
       return currentDateTime.isAfter(jamBukaDateTime) &&
           currentDateTime.isBefore(jamTutupDateTime);
     } catch (e) {
+      print('Error parsing opening and closing times: $e');
       return false;
     }
   }
@@ -76,7 +92,14 @@ class CardResto extends StatelessWidget {
     return Row(
       children: [
         imageUrl!.isNotEmpty
-            ? Image.network(imageUrl!, width: 140, height: 120)
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  imageUrl!,
+                  width: 140,
+                  height: 120,
+                ),
+              )
             : Image.asset("assets/emptyresto.png", width: 140, height: 120),
         const SizedBox(
           width: 14,
