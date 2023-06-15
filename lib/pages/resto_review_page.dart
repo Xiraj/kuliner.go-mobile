@@ -151,8 +151,10 @@ class _RestoReviewListState extends State<RestoReviewList> {
                           }
 
                           if (snapshot.data!.docs.isEmpty) {
-                            return const Text(
-                                'Belum ada pelanggan yang review restoran mu');
+                            return const Center(
+                              child: Text(
+                                  'Belum ada pelanggan yang review restoranmu'),
+                            );
                           }
                           final sortedDocs = snapshot.data!.docs
                               .map((doc) => doc.data() as Map<String, dynamic>)
