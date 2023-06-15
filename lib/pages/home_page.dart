@@ -229,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         width: 10,
                       ),
-                       InkWell(
+                      InkWell(
                         onTap: () {
                           Navigator.push(
                             context,
@@ -240,7 +240,7 @@ class _HomePageState extends State<HomePage> {
                         },
                         child: const cardCategory(
                             imageCategory: 'assets/minuman.png',
-                            title: 'Aneka Minum'),
+                            title: 'Minuman'),
                       ),
                       const SizedBox(
                         width: 10,

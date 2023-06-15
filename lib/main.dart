@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 fontFamily: GoogleFonts.poppins().fontFamily,
               ),
-              home: const SplashScreen());
+              home: const SplashScreen(),
+              title: 'Kuliner.Go');
         },
       ),
     );
