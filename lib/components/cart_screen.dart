@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/cart_model.dart';
 import 'package:kuliner_go_mobile/components/cart_provider.dart';
+import 'package:kuliner_go_mobile/components/payment_succes.dart';
 import 'package:kuliner_go_mobile/components/rounded_button_field.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
@@ -109,7 +110,8 @@ class CartScreenState extends State<CartScreen> {
                                               children: [
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.only(left: 12),
+                                                      const EdgeInsets.only(
+                                                          left: 12),
                                                   child: Text(
                                                     snapshot.data![index]
                                                         .productName
@@ -145,8 +147,8 @@ class CartScreenState extends State<CartScreen> {
                                               height: 12,
                                             ),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.only(left: 12),
+                                              padding: const EdgeInsets.only(
+                                                  left: 12),
                                               child: Text(
                                                 r"Rp" +
                                                     snapshot.data![index]
@@ -243,8 +245,7 @@ class CartScreenState extends State<CartScreen> {
                                                                         .initialPrice!
                                                                         .toString()));
                                                               }).onError((error,
-                                                                      stackTrace) {
-                                                              });
+                                                                      stackTrace) {});
                                                             }
                                                           },
                                                           child: const Icon(
@@ -256,9 +257,10 @@ class CartScreenState extends State<CartScreen> {
                                                           snapshot.data![index]
                                                               .quantity
                                                               .toString(),
-                                                          style: const TextStyle(
-                                                              color:
-                                                                  Colors.white),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
                                                         ),
                                                         InkWell(
                                                           onTap: () {
@@ -314,8 +316,7 @@ class CartScreenState extends State<CartScreen> {
                                                                       .initialPrice!
                                                                       .toString()));
                                                             }).onError((error,
-                                                                    stackTrace) {
-                                                            });
+                                                                    stackTrace) {});
                                                           },
                                                           child: const Icon(
                                                             Icons.add,
@@ -370,7 +371,8 @@ class CartScreenState extends State<CartScreen> {
                                 child: Image.asset('assets/Mandiri.png'),
                               ),
                               Container(
-                                padding: const EdgeInsets.only(top: 16, right: 42),
+                                padding:
+                                    const EdgeInsets.only(top: 16, right: 42),
                                 child: const Text('| Mandiri'),
                               )
                             ],
@@ -409,8 +411,15 @@ class CartScreenState extends State<CartScreen> {
               },
             ),
             RoundedButton(
-              text: 'Konfirmasi Pembayaran',
-              press: () {},
+              text: 'Checkout',
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PaymentSucces(),
+                  ),
+                );
+              },
             )
           ],
         ),
@@ -423,7 +432,8 @@ class ReusableWidget extends StatelessWidget {
   final String tile;
   final String value;
 
-  const ReusableWidget({super.key, 
+  const ReusableWidget({
+    super.key,
     required this.tile,
     required this.value,
   });
