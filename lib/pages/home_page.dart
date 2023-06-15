@@ -391,7 +391,9 @@ class _HomePageState extends State<HomePage> {
 
                                   return ListView.builder(
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: restaurants.length,
+                                    itemCount: restaurants.length > 3
+                                        ? 3
+                                        : restaurants.length,
                                     itemBuilder: (context, index) {
                                       final restaurantData = restaurants[index]
                                           .data() as Map<String, dynamic>;

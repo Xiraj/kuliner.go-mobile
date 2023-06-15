@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kuliner_go_mobile/components/cardBooking.dart';
 import 'package:kuliner_go_mobile/theme.dart';
@@ -82,6 +84,7 @@ class _RestoBookingListState extends State<RestoBookingList> {
             ),
             Container(
               width: double.infinity,
+              height: MediaQuery.of(context).size.height + 110,
               padding: const EdgeInsets.all(30),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(
@@ -105,47 +108,64 @@ class _RestoBookingListState extends State<RestoBookingList> {
                     height: 10,
                   ),
                   Column(
-                    children: const [
-                      CardBooking(
-                        imageUrl: 'assets/mcd.png',
-                        bookingCode: '#BOOK12495813735',
-                        username: 'Jeremia Carlo',
-                        date: '10-10-2023',
-                        status: 'Pending',
-                        textColor: greyColor,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CardBooking(
-                        imageUrl: 'assets/mcd.png',
-                        bookingCode: '#BOOK21351516575',
-                        username: 'Jeremia Carlo',
-                        date: '10-10-2023',
-                        status: 'Success',
-                        textColor: Colors.greenAccent,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CardBooking(
-                        imageUrl: 'assets/mcd.png',
-                        bookingCode: '#BOOK21351516575',
-                        username: 'Jeremia Carlo',
-                        date: '10-10-2023',
-                        status: 'Cancel',
-                        textColor: Colors.red,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CardBooking(
-                        imageUrl: 'assets/mcd.png',
-                        bookingCode: '#BOOK21351516575',
-                        username: 'Jeremia Carlo',
-                        date: '10-10-2023',
-                        status: 'Pending',
-                        textColor: greyColor,
+                    children: [
+                      const SizedBox(height: 10),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('Booking')
+                            .where('restoId',
+                                isEqualTo:
+                                    FirebaseAuth.instance.currentUser!.uid)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+
+                          List<QueryDocumentSnapshot> bookingList =
+                              snapshot.data!.docs;
+
+                          if (bookingList.isEmpty) {
+                            return const Center(
+                              child: Text('Belum ada yang melakukan booking'),
+                            );
+                          }
+
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) =>
+                                  const Divider(
+                                thickness: 0.5,
+                                color: Colors.grey,
+                              ),
+                              itemCount: bookingList.length,
+                              itemBuilder: (context, index) {
+                                Map<String, dynamic> bookingData =
+                                    bookingList[index].data()
+                                        as Map<String, dynamic>;
+
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: CardBooking(
+                                    imageUrl: 'assets/ticket.png',
+                                    bookingCode: bookingData['bookingId'],
+                                    username: bookingData['name'],
+                                    date: bookingData['selectedDate'],
+                                    people: bookingData['people'],
+                                    time: bookingData['selectedTime'],
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

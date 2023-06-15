@@ -252,7 +252,7 @@ class _bookingPageState extends State<bookingPage> {
                               style: TextStyle(fontSize: 12),
                             ),
                             Text(
-                              '| ${widget.resto['alamatRestoran']}',
+                              '| ${widget.resto['alamatRestoran'].length > 19 ? widget.resto['alamatRestoran'].substring(0, 19) + '...' : widget.resto['alamatRestoran']}',
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],

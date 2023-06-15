@@ -133,7 +133,7 @@ class _AnekaNasiPageState extends State<AnekaNasiPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => cardNasi(),
+                                builder: (context) => const cardNasi(),
                               ),
                             );
                           },
@@ -209,7 +209,7 @@ class _AnekaNasiPageState extends State<AnekaNasiPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => cardNasiKuning(),
+                                builder: (context) => const cardNasiKuning(),
                               ),
                             );
                           },
@@ -284,7 +284,7 @@ class _AnekaNasiPageState extends State<AnekaNasiPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => cardNasiKebuli(),
+                                builder: (context) => const cardNasiKebuli(),
                               ),
                             );
                           },
@@ -358,7 +358,7 @@ class _AnekaNasiPageState extends State<AnekaNasiPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => cardNasiBibimbap(),
+                                builder: (context) => const cardNasiBibimbap(),
                               ),
                             );
                           },
@@ -432,7 +432,7 @@ class _AnekaNasiPageState extends State<AnekaNasiPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => cardNasiRissoto(),
+                                builder: (context) => const cardNasiRissoto(),
                               ),
                             );
                           },
