@@ -10,6 +10,7 @@ import 'package:kuliner_go_mobile/pages/aneka_nasi_page.dart';
 import 'package:kuliner_go_mobile/pages/near_resto_page.dart';
 import 'package:kuliner_go_mobile/pages/popular_page.dart';
 import 'package:kuliner_go_mobile/pages/restaurant_page.dart';
+import 'package:kuliner_go_mobile/pages/aneka_minuman_page.dart';
 import 'package:kuliner_go_mobile/theme.dart';
 
 class HomePage extends StatefulWidget {
@@ -228,9 +229,19 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         width: 10,
                       ),
-                      const cardCategory(
-                          imageCategory: 'assets/minuman.png',
-                          title: 'Minuman'),
+                       InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AnekaMinumanPage(),
+                            ),
+                          );
+                        },
+                        child: const cardCategory(
+                            imageCategory: 'assets/minuman.png',
+                            title: 'Aneka Minum'),
+                      ),
                       const SizedBox(
                         width: 10,
                       ),
