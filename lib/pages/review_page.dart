@@ -152,7 +152,7 @@ class _reviewPageState extends State<reviewPage> {
                               style: TextStyle(fontSize: 14),
                             ),
                             Text(
-                              '| ${widget.resto['alamatRestoran']}',
+                              '| ${widget.resto['alamatRestoran'].length > 19 ? widget.resto['alamatRestoran'].substring(0, 19) + '...' : widget.resto['alamatRestoran']}',
                               style: const TextStyle(fontSize: 14),
                             ),
                           ],
