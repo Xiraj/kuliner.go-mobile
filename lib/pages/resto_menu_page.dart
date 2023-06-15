@@ -140,8 +140,12 @@ class RestoMenu extends StatelessWidget {
                                   children: [
                                     CardMenu(
                                       imageUrl: menu['imageUrl'],
-                                      desc: menu['deskripsi'],
-                                      menuName: menu['namaMenu'],
+                                      desc: menu['deskripsi'].length > 23
+                                          ? '${menu['deskripsi'].substring(0, 22)}...'
+                                          : menu['deskripsi'],
+                                      menuName: menu['namaMenu'].length > 23
+                                          ? '${menu['namaMenu'].substring(0, 22)}...'
+                                          : menu['namaMenu'],
                                       quantity: menu['quantity'],
                                       harga: menu['harga'],
                                     ),
@@ -213,22 +217,18 @@ class RestoMenu extends StatelessWidget {
                                                   snapshot.data!.docs[index]
                                                       ['image_filename'];
                                               try {
-                                                
                                                 final storageRef =
                                                     FirebaseStorage.instance
                                                         .ref()
                                                         .child('menu_images')
                                                         .child(imageFileName);
 
-                                               
                                                 await storageRef.delete();
                                               } catch (error) {
-                                                
                                                 print(
                                                     'Error deleting image: $error');
                                               }
 
-                                              
                                               await docData.delete();
                                             }
                                           },
